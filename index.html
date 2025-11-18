@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thomas Giraud | Administrateur Systèmes & Réseaux</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;500;700&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0f172a;
+            --primary: #06b6d4; /* Cyan */
+            --secondary: #8b5cf6; /* Violet */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.08);
+            --blur-amount: 12px;
+            --font-heading: 'Orbitron', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- ANIMATED BACKGROUND --- */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .orb-1 {
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, var(--primary), transparent 70%);
+            top: -10%;
+            left: -20%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--secondary), transparent 70%);
+            bottom: -10%;
+            right: -10%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 30vw;
+            height: 30vw;
+            background: radial-gradient(circle, #3b82f6, transparent 70%);
+            top: 40%;
+            left: 40%;
+            opacity: 0.4;
+            animation-duration: 25s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* --- GLASSMORPHISM CARD --- */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.3);
+            background: var(--glass-highlight);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            transition: 0.4s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span { color: var(--primary); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-content h1 .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .typewriter {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-family: 'Courier New', monospace;
+            min-height: 1.5em;
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--primary);
+            animation: blink 1s infinite;
+        }
+
+        .btn-main {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-family: var(--font-heading);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s;
+            z-index: 1;
+        }
+
+        .btn-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary);
+            z-index: -1;
+            transition: width 0.4s ease;
+        }
+
+        .btn-main:hover {
+            color: #fff;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+        }
+
+        .btn-main:hover::before { width: 100%; }
+
+        /* --- ABOUT SECTION --- */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .soft-skills {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .skill-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+        }
+
+        .skill-tag i { color: var(--secondary); }
+
+        /* --- SKILLS GRID --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card h3 {
+            font-family: var(--font-heading);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--primary);
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+        }
+
+        .skill-list li i {
+            font-size: 0.8rem;
+            color: var(--secondary);
+        }
+
+        /* --- TIMELINE --- */
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 20px; /* Ligne à gauche */
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 60px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 11px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--bg-color);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .timeline-date {
+            color: var(--primary);
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .timeline-content h3 {
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-muted);
+        }
+
+        /* --- CONTACT --- */
+        .contact-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--font-body);
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+        }
+
+        textarea.form-control { resize: vertical; min-height: 150px; }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover { color: var(--primary); transform: scale(1.1); }
+
+        /* --- ANIMATIONS UTILS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+            z-index: 900;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        .scroll-to-top.active { opacity: 1; pointer-events: all; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                right: 0;
+                width: 100%;
+                background: rgba(15, 23, 42, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transform: translateX(100%);
+                transition: 0.3s ease-in-out;
+            }
+
+            .nav-links.active { transform: translateX(0); }
+            .hamburger { display: block; }
+            
+            .about-content { grid-template-columns: 1fr; }
+            .timeline-container::before { left: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">TG<span>.Dev</span></a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#about">À Propos</a></li>
+                <li><a href="#skills">Compétences</a></li>
+                <li><a href="#timeline">Parcours</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero">
+        <div class="container hero-content">
+            <h1 class="reveal">Thomas <span class="gradient-text">Giraud</span></h1>
+            <div class="typewriter reveal">
+                <span id="typewriter-text"></span><span class="cursor"></span>
+            </div>
+            <div class="reveal" style="transition-delay: 0.2s;">
+                <a href="#about" class="btn-main">Explorer mon univers</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- À Propos -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title reveal">À Propos</h2>
+            <div class="glass-card about-content reveal">
+                <div class="about-text">
+                    <p>Passionné par l'infrastructure et la sécurité numérique, je construis les fondations de demain. Mon approche ? Transformer la théorie complexe en systèmes fiables, sécurisés et performants.</p>
+                    <p>Actuellement étudiant en BTS SIO, je combine rigueur technique et curiosité insatiable pour relever les défis de l'administration système.</p>
+                </div>
+                <div class="soft-skills">
+                    <div class="skill-tag"><i class="fas fa-check-circle"></i> Rigueur</div>
+                    <div class="skill-tag"><i class="fas fa-lightbulb"></i> Curiosité</div>
+                    <div class="skill-tag"><i class="fas fa-users"></i> Esprit d'équipe</div>
+                    <div class="skill-tag"><i class="fas fa-shield-alt"></i> Sécurité</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compétences -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title reveal">Arsenal Technique</h2>
+            <div class="skills-grid">
+                <!-- Systèmes -->
+                <div class="glass-card skill-card reveal">
+                    <h3><i class="fab fa-windows"></i> Systèmes</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-chevron-right"></i> Windows Server (AD, GPO, DHCP)</li>
+                        <li><i class="fas fa-chevron-right"></i> Linux (Debian, Ubuntu, Apache)</li>
+                        <li><i class="fas fa-chevron-right"></i> Virtualisation (VMware, Hyper-V)</li>
+                        <li><i class="fas fa-chevron-right"></i> PowerShell / Bash Scripting</li>
+                    </ul>
+                </div>
+
+                <!-- Réseaux -->
+                <div class="glass-card skill-card reveal" style="transition-delay: 0.1s;">
+                    <h3><i class="fas fa-network-wired"></i> Réseaux</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-chevron-right"></i> Modèle OSI / TCP/IP</li>
+                        <li><i class="fas fa-chevron-right"></i> Cisco Packet Tracer & CLI</li>
+                        <li><i class="fas fa-chevron-right"></i> Analyse de trames (Wireshark)</li>
+                        <li><i class="fas fa-chevron-right"></i> VLANs, Routing, Switching</li>
+                    </ul>
+                </div>
+
+                <!-- Dev & Web -->
+                <div class="glass-card skill-card reveal" style="transition-delay: 0.2s;">
+                    <h3><i class="fas fa-code"></i> Dev & Web</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-chevron-right"></i> HTML5 / CSS3 Moderne</li>
+                        <li><i class="fas fa-chevron-right"></i> Python (Automation)</li>
+                        <li><i class="fas fa-chevron-right"></i> SQL & Base de données</li>
+                        <li><i class="fas fa-chevron-right"></i> Git / GitHub</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parcours Timeline -->
+    <section id="timeline">
+        <div class="container">
+            <h2 class="section-title reveal">Timeline</h2>
+            <div class="timeline-container">
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-date">2024 - Présent</span>
+                    <div class="glass-card timeline-content">
+                        <h3>BTS SIO - Option SISR</h3>
+                        <p>Solutions d'Infrastructures, Systèmes et Réseaux. <br>Focus sur l'administration système, la cybersécurité et la gestion de parc informatique.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-date">2023</span>
+                    <div class="glass-card timeline-content">
+                        <h3>Bac Pro Systèmes Numériques</h3>
+                        <p>Obtention du diplôme avec mention. <br>Première approche concrète du hardware, des réseaux domestiques et de la programmation embarquée.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title reveal">Me Contacter</h2>
+            <div class="glass-card contact-wrapper reveal">
+                <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Votre Nom" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="Votre Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" class="form-control" placeholder="Votre Message..." required></textarea>
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn-main">Envoyer le message</button>
+                    </div>
+                    <p id="form-status" style="margin-top: 1rem; text-align: center; display: none;"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="mailto:thomas.giraud@email.com"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p>&copy; 2025 Thomas Giraud. Designed with <i class="fas fa-code" style="color: var(--primary)"></i> & <i class="fas fa-coffee" style="color: var(--secondary)"></i>.</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <div class="scroll-to-top" onclick="window.scrollTo(0,0)">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 1. TYPEWRITER EFFECT
+        const textToType = "Futur Administrateur Systèmes & Réseaux | BTS SIO SISR";
+        const typeWriterElement = document.getElementById('typewriter-text');
+        let i = 0;
+
+        function typeWriter() {
+            if (i < textToType.length) {
+                typeWriterElement.innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50); // Vitesse de frappe
+            }
+        }
+
+        // Lancer l'effet un peu après le chargement
+        setTimeout(typeWriter, 1000);
+
+
+        // 2. NAVBAR SCROLL EFFECT
+        const navbar = document.getElementById('navbar');
+        const scrollTopBtn = document.querySelector('.scroll-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+                scrollTopBtn.classList.add('active');
+            } else {
+                navbar.classList.remove('scrolled');
+                scrollTopBtn.classList.remove('active');
+            }
+        });
+
+
+        // 3. MOBILE MENU TOGGLE
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            // Transformation de l'icône hamburger (optionnel)
+            const icon = hamburger.querySelector('i');
+            if(navLinks.classList.contains('active')){
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Fermer le menu quand on clique sur un lien
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.querySelector('i').classList.remove('fa-times');
+                hamburger.querySelector('i').classList.add('fa-bars');
+            });
+        });
+
+
+        // 4. INTERSECTION OBSERVER (Animation au scroll)
+        const observerOptions = {
+            threshold: 0.15, // Déclenche quand 15% de l'élément est visible
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // On arrête d'observer une fois animé
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+
+        // 5. FORM HANDLING (Simulation AJAX)
+        const form = document.getElementById('contact-form');
+        const status = document.getElementById('form-status');
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const data = new FormData(e.target);
+            
+            // Ici, on simule un envoi réussi pour la démo
+            // Dans la réalité, enlevez le commentaire fetch ci-dessous :
+            /*
+            fetch(e.target.action, {
+                method: form.method,
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            }).then(...)
+            */
+            
+            // Simulation UI :
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = "Envoi en cours...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                status.style.display = "block";
+                status.style.color = "#4ade80"; // Green
+                status.innerText = "Message envoyé avec succès ! Merci.";
+                form.reset();
+                btn.innerText = originalText;
+                btn.disabled = false;
+                
+                // Cacher le message après 5 secondes
+                setTimeout(() => { status.style.display = "none"; }, 5000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
