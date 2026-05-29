@@ -1,0 +1,45 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [ 3 0 R ] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [ 0 0 595.275 841.889 ] /Resources << >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 209 >>
+stream
+q
+BT
+/F1 24 Tf
+70 750 Td
+(Thomas Giraud - CV) Tj
+/F1 14 Tf
+0 -30 Td
+(Administrateur Systemes & Reseaux) Tj
+0 -20 Td
+(Email: tgiraud0604@gmail.com) Tj
+0 -20 Td
+(Github: https://github.com/tgiraud2007) Tj
+0 -20 Td
+(Linkedin: thomas-giraud-403baa25a) Tj
+0 -40 Td
+(Veuillez vous referer au site web interactif pour le detail complet de mes labs et competences.) Tj
+ET
+Q
+endstream
+endobj
+xref
+0 5
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000120 00000 n 
+0000000234 00000 n 
+trailer
+<< /Size 5 /Root 1 0 R >>
+startxref
+510
+%%EOF
