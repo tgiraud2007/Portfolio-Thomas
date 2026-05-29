@@ -296,23 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(updateClock, 1000);
     updateClock(); // Initial boot update
 
-    /* --- 8. SKILL BARS FILL TRIGGER --- */
-    const skillFills = document.querySelectorAll(".cv-skill-bar__fill");
-    
-    const skillsObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const bar = entry.target;
-                const width = bar.getAttribute("data-width");
-                bar.style.width = width;
-                observer.unobserve(bar);
-            }
-        });
-    }, { threshold: 0.2 });
 
-    skillFills.forEach(bar => {
-        skillsObserver.observe(bar);
-    });
 
     /* --- 9. KEYBOARD SHORTCUTS CONTROLLER (VIM STYLE & JUMPS) --- */
     let lastKey = "";
@@ -890,5 +874,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     revealTargets.forEach(el => {
         revealObserver.observe(el);
+    });
+
+    /* --- 16. SKILL BARS ENTRANCE ANIMATION --- */
+    const skillFills = document.querySelectorAll(".cv-skill-bar__fill");
+    const skillObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const fill = entry.target;
+                const targetWidth = fill.getAttribute("data-width");
+                // Trigger width transition dynamically
+                fill.style.width = targetWidth;
+                observer.unobserve(fill);
+            }
+        });
+    }, { 
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    });
+
+    skillFills.forEach(fill => {
+        skillObserver.observe(fill);
     });
 });
