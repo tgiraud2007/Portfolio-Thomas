@@ -1407,8 +1407,10 @@ a:hover {
   -webkit-backdrop-filter: blur(0px);
   z-index: var(--z-modal);
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Align near the top for scrolling support */
   justify-content: center;
+  overflow-y: auto; /* Enable scroll if content is taller than screen */
+  padding: var(--space-9) var(--space-4); /* Add spacing at top and bottom */
   pointer-events: none;
   transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1496,15 +1498,24 @@ a:hover {
 }
 
 .modal-close {
-  background: transparent;
-  border: none;
-  font-size: var(--text-lg);
-  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border-radius: 50%;
+  background-color: var(--surface-subtle);
+  border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  transition: color var(--motion-fast);
+  cursor: pointer;
+  transition: all var(--motion-fast);
 }
 .modal-close:hover {
-  color: var(--text-primary);
+  background-color: var(--color-red);
+  color: white;
+  border-color: var(--color-red);
+  box-shadow: 0 0 12px rgba(255, 95, 87, 0.4);
 }
 
 .modal-body {
@@ -1627,14 +1638,22 @@ input:checked + .toggle-slider:before {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   border: 1px solid var(--border-color);
-  background: transparent;
+  background-color: var(--surface-subtle);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all var(--motion-fast);
+  transition: all var(--motion-fast) var(--ease-standard);
+  border-radius: 4px;
+}
+.theme-btn:hover {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+  background-color: var(--color-blue-subtle);
 }
 .theme-btn.is-active {
   background-color: var(--text-primary);
   color: var(--bg-primary);
   border-color: var(--text-primary);
+  font-weight: 700;
 }
 
 .modal-footer {
@@ -1688,20 +1707,29 @@ input:checked + .toggle-slider:before {
 
 @media (max-width: 768px) {
   :root {
-    --text-xxl: 32px;
-    --text-3xl: 40px;
+    --text-xxl: 28px;
+    --text-3xl: 36px;
   }
 
   .hero {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centrage vertical complet sur mobile */
+    min-height: 80vh; /* Magnifique présence plein écran de l'introduction */
     padding-top: 100px;
+    padding-bottom: var(--space-6);
     gap: var(--space-5);
     text-align: center;
   }
 
   .hero__visual {
-    order: -1; /* visual above content on mobile */
-    max-width: 280px;
+    display: none !important; /* Masque le diagramme réseau uniquement sur mobile */
+  }
+
+  .hero__content {
+    width: 100%;
+    max-width: 540px; /* Largeur de lecture optimale */
     margin: 0 auto;
   }
 
@@ -2246,4 +2274,48 @@ input:checked + .toggle-slider:before {
 @keyframes download-bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(4px); }
+}
+
+/* --- 23. MEDIA QUERY COMPLÉMENTAIRE POUR LES MODALES SUR MOBILE --- */
+@media (max-width: 560px) {
+  .modal-overlay {
+    padding: var(--space-4) var(--space-3); /* Espacement minimal haut/bas */
+  }
+  
+  .modal-content {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
+  .modal-body {
+    padding: var(--space-4);
+  }
+  
+  .project-modal-subtitle {
+    font-size: 16px;
+  }
+  
+  .project-modal-text,
+  .project-modal-bullets li {
+    font-size: 13px;
+  }
+  
+  .modal-footer {
+    padding: var(--space-3) var(--space-4);
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+    text-align: center;
+  }
+  
+  .modal-footer-tech-text {
+    font-size: 10px;
+    order: 2; /* Texte explicatif en bas */
+  }
+  
+  .btn--close-modal {
+    width: 100%;
+    order: 1; /* Bouton de fermeture prioritaire (en haut dans la colonne) */
+  }
 }

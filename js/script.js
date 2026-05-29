@@ -352,19 +352,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Two key sequences starting with 'g'
         if (key === "g") {
-            lastKey = "g";
-            clearTimeout(keyTimeout);
-            keyTimeout = setTimeout(() => { lastKey = ""; }, 1000); // 1s window for double key
+            if (lastKey === "g") {
+                lastKey = "";
+                clearTimeout(keyTimeout);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            } else {
+                lastKey = "g";
+                clearTimeout(keyTimeout);
+                keyTimeout = setTimeout(() => { lastKey = ""; }, 1000); // 1s window for double key
+            }
         } else if (lastKey === "g") {
             lastKey = "";
             clearTimeout(keyTimeout);
             
-            // gg: Go to top
-            if (key === "g") {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            }
             // gh: Jump to Home
-            else if (key === "h") {
+            if (key === "h") {
                 jumpToSection("#hero");
             }
             // gp: Jump to Projects/Work
@@ -401,7 +403,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    /* --- 10. MODALS LOGIC --- */
+    /* --- 10. MODALS LOGIC (HASH ROUTING & MOBILE UX INTEGRATED) --- */
     const shortcutsModal = document.getElementById("shortcuts-modal");
     const settingsModal = document.getElementById("settings-modal");
     
@@ -415,74 +417,137 @@ document.addEventListener("DOMContentLoaded", () => {
     const footerSettingsTrigger = document.getElementById("footer-settings-trigger");
     
     const saveSettingsBtn = document.getElementById("save-settings-btn");
+    const projectModals = document.querySelectorAll(".project-modal");
+    const workCards = document.querySelectorAll(".work-card");
 
-    function openModal(modal) {
-        closeAllModals();
+    function openModalDirectly(modal) {
         modal.classList.add("is-open");
         document.body.style.overflow = "hidden"; // Prevent background scroll
     }
 
-    function closeModal(modal) {
+    function closeModalDirectly(modal) {
         modal.classList.remove("is-open");
-        document.body.style.overflow = "auto";
+        
+        // Restore background scroll ONLY if no other modal is open
+        const anyOpen = Array.from(document.querySelectorAll(".modal-overlay")).some(m => m.classList.contains("is-open"));
+        if (!anyOpen) {
+            document.body.style.overflow = "auto";
+        }
+    }
+
+    function closeActiveModal() {
+        const hash = window.location.hash;
+        if (hash && (hash.startsWith("#project-") || hash === "#shortcuts" || hash === "#settings")) {
+            // Standard SPA hash removal from history stack
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.hash = "";
+            }
+        } else {
+            closeAllModalsDirectly();
+        }
+    }
+
+    function closeAllModalsDirectly() {
+        document.querySelectorAll(".modal-overlay").forEach(modal => {
+            closeModalDirectly(modal);
+        });
+    }
+
+    // Compatibility alias for other sections (like keydown listener)
+    function closeAllModals() {
+        closeActiveModal();
+    }
+
+    function closeModal(modal) {
+        closeActiveModal();
     }
 
     function toggleModal(modal) {
         if (modal.classList.contains("is-open")) {
-            closeModal(modal);
+            closeActiveModal();
         } else {
-            openModal(modal);
+            const modalId = modal.getAttribute("id");
+            if (modalId === "shortcuts-modal") {
+                window.location.hash = "shortcuts";
+            } else if (modalId === "settings-modal") {
+                window.location.hash = "settings";
+            }
         }
     }
 
-    function closeAllModals() {
-        document.querySelectorAll(".modal-overlay").forEach(modal => {
-            closeModal(modal);
-        });
+    // Hash change event router
+    function handleHashChange() {
+        const hash = window.location.hash;
+        
+        // First close all modals directly
+        closeAllModalsDirectly();
+        
+        if (hash.startsWith("#project-")) {
+            const projectId = hash.replace("#project-", "");
+            const modal = document.getElementById(`project-modal-${projectId}`);
+            if (modal) openModalDirectly(modal);
+        } else if (hash === "#shortcuts") {
+            openModalDirectly(shortcutsModal);
+        } else if (hash === "#settings") {
+            openModalDirectly(settingsModal);
+        }
     }
 
-    // Modal Close Triggers
-    if (closeShortcutsBtn) closeShortcutsBtn.addEventListener("click", () => closeModal(shortcutsModal));
-    if (closeSettingsBtn) closeSettingsBtn.addEventListener("click", () => closeModal(settingsModal));
+    // Connect Hash change listener
+    window.addEventListener("hashchange", handleHashChange);
 
-    // Project Modals Elements & Listeners
-    const projectModals = document.querySelectorAll(".project-modal");
-    const workCards = document.querySelectorAll(".work-card");
+    // Initial load handler (Deep linking support!)
+    if (window.location.hash) {
+        handleHashChange();
+    }
 
+    // Bind triggers to update hashes instead of opening directly
     workCards.forEach(card => {
         card.addEventListener("click", (e) => {
             e.preventDefault();
             const projectId = card.getAttribute("data-project");
-            const modal = document.getElementById(`project-modal-${projectId}`);
-            if (modal) {
-                openModal(modal);
-            }
+            window.location.hash = `project-${projectId}`;
         });
     });
+
+    // Close buttons mappings
+    if (closeShortcutsBtn) closeShortcutsBtn.addEventListener("click", (e) => { e.preventDefault(); closeActiveModal(); });
+    if (closeSettingsBtn) closeSettingsBtn.addEventListener("click", (e) => { e.preventDefault(); closeActiveModal(); });
 
     projectModals.forEach(modal => {
         const closeBtn = modal.querySelector(".modal-close");
         if (closeBtn) {
-            closeBtn.addEventListener("click", () => closeModal(modal));
+            closeBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                closeActiveModal();
+            });
         }
+    });
+
+    // Footers Close buttons mapping (including Project Modals & shortcuts)
+    document.querySelectorAll(".btn--close-modal").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            closeActiveModal();
+        });
     });
 
     // Modal click outside close
     window.addEventListener("click", (e) => {
-        if (e.target === shortcutsModal) closeModal(shortcutsModal);
-        if (e.target === settingsModal) closeModal(settingsModal);
-        projectModals.forEach(modal => {
-            if (e.target === modal) closeModal(modal);
-        });
+        if (e.target.classList.contains("modal-overlay")) {
+            closeActiveModal();
+        }
     });
 
     // Help Panel Trigger Links
-    if (statusBarHelpBtn) statusBarHelpBtn.addEventListener("click", (e) => { e.stopPropagation(); toggleModal(shortcutsModal); });
-    if (footerShortcutsTrigger) footerShortcutsTrigger.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); openModal(shortcutsModal); });
+    if (statusBarHelpBtn) statusBarHelpBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); toggleModal(shortcutsModal); });
+    if (footerShortcutsTrigger) footerShortcutsTrigger.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); window.location.hash = "shortcuts"; });
 
     // Settings Panel Trigger Links
-    if (statusBarSettingsBtn) statusBarSettingsBtn.addEventListener("click", (e) => { e.stopPropagation(); toggleModal(settingsModal); });
-    if (footerSettingsTrigger) footerSettingsTrigger.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); openModal(settingsModal); });
+    if (statusBarSettingsBtn) statusBarSettingsBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); toggleModal(settingsModal); });
+    if (footerSettingsTrigger) footerSettingsTrigger.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); window.location.hash = "settings"; });
 
     /* --- 11. OPTIONS PREFERENCES MANAGEMENT --- */
     function updateSettingsForm() {
