@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>404 — Thomas Giraud | Page introuvable</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <style>
+        :root {
+            --bg: #0a0b0d;
+            --fg: #f4f4f4;
+            --dim: rgba(244, 244, 244, 0.55);
+            --blue: #4a7ff7;
+            --orange: #e8734b;
+            --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: var(--mono);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .terminal {
+            max-width: 560px;
+            width: 100%;
+            border: 1px solid rgba(244, 244, 244, 0.15);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+        .terminal__bar {
+            background: #111215;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(244, 244, 244, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--dim);
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot--red { background: #ff5f57; }
+        .dot--yellow { background: #ffbd2e; }
+        .dot--green { background: #2ecc71; }
+        .terminal__body { padding: 28px; }
+        .err {
+            color: var(--orange);
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+        .err::before { content: "> "; }
+        .hint {
+            color: var(--dim);
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+        .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn {
+            font-family: var(--mono);
+            font-size: 13px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .btn--primary {
+            background: var(--blue);
+            color: #fff;
+        }
+        .btn--secondary {
+            border-color: rgba(244, 244, 244, 0.25);
+            color: var(--fg);
+        }
+        .btn--secondary:hover { border-color: var(--blue); color: var(--blue); }
+        .status {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px dashed rgba(244, 244, 244, 0.15);
+            font-size: 11px;
+            color: var(--dim);
+        }
+    </style>
+</head>
+<body>
+    <main class="terminal" role="alert">
+        <header class="terminal__bar">
+            <span class="dot dot--red"></span>
+            <span class="dot dot--yellow"></span>
+            <span class="dot dot--green"></span>
+            <span>// thomasgiraud.me — route introuvable</span>
+        </header>
+        <div class="terminal__body">
+            <p class="err">ERR_404 : ressource non trouvée</p>
+            <p class="hint">
+                La page demandée n'existe pas ou a été déplacée.<br>
+                Vérifiez l'adresse, ou revenez à l'accueil du portfolio.
+            </p>
+            <div class="actions">
+                <a class="btn btn--primary" href="./">Retour à l'accueil</a>
+                <a class="btn btn--secondary" href="CV/cv.pdf">Télécharger mon CV</a>
+            </div>
+            <p class="status">exit_status: 404 // system.continues</p>
+        </div>
+    </main>
+</body>
+</html>

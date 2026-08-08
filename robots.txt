@@ -1,0 +1,11 @@
+# robots.txt — Thomas Giraud Portfolio
+# https://thomasgiraud.me/
+
+User-agent: *
+Allow: /
+
+# Les pages sont en single-page app ; on autorise l'indexation de la racine.
+# Les ancres (#project-*, #shortcuts, #settings) sont des états d'interface,
+# pas des pages distinctes : pas besoin de règles spécifiques.
+
+Sitemap: https://thomasgiraud.me/sitemap.xml
