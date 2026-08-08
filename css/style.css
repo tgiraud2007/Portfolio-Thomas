@@ -532,17 +532,25 @@ a:hover {
   background-color: var(--bg-secondary);
 }
 
+/* Ancrage des numéros de section : alignés sur le conteneur (pas sur le
+   bord de l'écran) et au-dessus des fonds canvas de section. */
+.page-section .container {
+  position: relative;
+  z-index: 2;
+}
+
 .section-number__text {
   font-family: var(--font-mono);
   font-size: 72px;
   font-weight: 900;
   color: var(--border-color);
   position: absolute;
-  top: var(--space-6);
+  top: 0;
   right: var(--container-pad);
   line-height: 1;
   user-select: none;
   opacity: 0.5;
+  pointer-events: none;
 }
 
 .section-title {
@@ -1684,7 +1692,9 @@ input:checked + .toggle-slider:before {
   }
 
   .section-number__text {
-    display: none;
+    font-size: 44px;
+    opacity: 0.4;
+    top: var(--space-2);
   }
   
 }
@@ -2056,16 +2066,6 @@ input:checked + .toggle-slider:before {
 .btn:hover::after {
   transform: translateX(250%) skewX(-25deg);
   transition: transform 0.85s var(--ease-standard);
-}
-
-/* Floating Active Nav / Section Numbers */
-.section-number__text {
-  animation: float-number 6s ease-in-out infinite alternate;
-}
-
-@keyframes float-number {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-8px); }
 }
 
 /* Counter Value Pop Animation at completion */
