@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Thomas Giraud | Étudiant BTS SIO (SISR) — Administration Systèmes & Réseaux. Spécialisé dans la virtualisation d’Active Directory, la sécurisation par IPFire et le routage Cisco.">
+    <meta name="description" content="Thomas Giraud | Étudiant BTS SIO option SISR — Administration Systèmes & Réseaux. Conception et déploiement d’infrastructures virtualisées : Active Directory, pare-feu IPFire, commutation & routage Cisco. Recherche de stage.">
+    <meta name="keywords" content="Thomas Giraud, BTS SIO, SISR, Systèmes et Réseaux, Active Directory, Cisco, IPFire, VirtualBox, Windows Server, Linux, stage informatique, Béziers, Sérignan">
     <meta name="author" content="Thomas Giraud">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#1b5def">
@@ -15,18 +16,18 @@
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
     <link rel="manifest" href="manifest.webmanifest">
 
-    <!-- Preconnect to font/CDN origins (performance) -->
+    <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Fonts : auto-hébergées de Google Fonts (weights utilisés uniquement) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap">
+    <!-- Typography: Outfit (display), Plus Jakarta Sans (body), JetBrains Mono (tech/code) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://thomasgiraud.me/">
     <meta property="og:title" content="Thomas Giraud | Étudiant BTS SIO (SISR) — Administration Systèmes & Réseaux">
-    <meta property="og:description" content="Découvrez mon portfolio technique : Active Directory, filtrage IPFire, routage Cisco et maquettage d’infrastructures.">
+    <meta property="og:description" content="Portfolio technique : maquettes d’infrastructures réseau virtualisées (Active Directory, filtrage IPFire, routage Cisco). En recherche de stage.">
     <meta property="og:image" content="https://thomasgiraud.me/assets/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -37,18 +38,16 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Thomas Giraud | BTS SIO SISR — Systèmes & Réseaux">
-    <meta name="twitter:description" content="Portfolio technique : Active Directory, filtrage IPFire, routage Cisco et maquettage d’infrastructures.">
+    <meta name="twitter:description" content="Portfolio technique : maquettes d’infrastructures réseau virtualisées (Active Directory, filtrage IPFire, routage Cisco).">
     <meta name="twitter:image" content="https://thomasgiraud.me/assets/og-image.png">
     <meta name="twitter:image:alt" content="Thomas Giraud — Portfolio Systèmes & Réseaux">
 
-    <title>Thomas Giraud | Étudiant BTS SIO (SISR) — Administration Systèmes & Réseaux</title>
+    <title>Thomas Giraud | BTS SIO (SISR) — Administration Systèmes & Réseaux</title>
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/style.css?v=a0b89a86">
+    <link rel="stylesheet" href="css/style.css?v=cdbbbdc8">
 
-
-    <!-- Anti-FOUC theme bootstrap: applies saved theme BEFORE first paint
-         to avoid a light→dark flash on reload. Runs synchronously in <head>. -->
+    <!-- Anti-FOUC theme bootstrap -->
     <script>
         (function () {
             try {
@@ -65,42 +64,67 @@
         })();
     </script>
 
-    <!-- Structured data: schema.org/Person for rich results / recruitment SEO -->
+    <!-- Structured data: schema.org/Person & WebSite -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Thomas Giraud",
-      "givenName": "Thomas",
-      "familyName": "Giraud",
-      "jobTitle": "Étudiant BTS SIO (option SISR) — Administration Systèmes & Réseaux",
-      "email": "tgiraud0604@gmail.com",
-      "url": "https://thomasgiraud.me/",
-      "image": "https://thomasgiraud.me/assets/og-image.png",
-      "alumniOf": [
+      "@graph": [
         {
-          "@type": "EducationalOrganization",
-          "name": "Lycée Marc Bloch, Sérignan"
+          "@type": "Person",
+          "@id": "https://thomasgiraud.me/#person",
+          "name": "Thomas Giraud",
+          "givenName": "Thomas",
+          "familyName": "Giraud",
+          "jobTitle": "Étudiant BTS SIO option SISR — Administration Systèmes & Réseaux",
+          "email": "tgiraud0604@gmail.com",
+          "url": "https://thomasgiraud.me/",
+          "image": "https://thomasgiraud.me/assets/og-image.png",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Servian",
+            "addressRegion": "Occitanie",
+            "addressCountry": "FR"
+          },
+          "alumniOf": [
+            {
+              "@type": "EducationalOrganization",
+              "name": "Lycée Marc Bloch, Sérignan",
+              "program": "BTS SIO (SISR)"
+            },
+            {
+              "@type": "EducationalOrganization",
+              "name": "Lycée Jean Moulin, Béziers",
+              "program": "Bac Pro Systèmes Numériques (SN)"
+            }
+          ],
+          "knowsAbout": [
+            "Active Directory DS",
+            "Windows Server 2022",
+            "Linux Debian",
+            "Cisco IOS",
+            "VLAN 802.1Q",
+            "IPFire Firewall",
+            "ZeroShell",
+            "VirtualBox",
+            "DHCP & DNS",
+            "Filtrage NAT / PAT",
+            "Routage inter-VLAN"
+          ],
+          "sameAs": [
+            "https://github.com/tgiraud2007",
+            "https://www.linkedin.com/in/thomas-giraud-403baa25a"
+          ]
         },
         {
-          "@type": "EducationalOrganization",
-          "name": "Lycée Jean Moulin, Béziers"
+          "@type": "WebSite",
+          "@id": "https://thomasgiraud.me/#website",
+          "url": "https://thomasgiraud.me/",
+          "name": "Thomas Giraud — Portfolio Systèmes & Réseaux",
+          "publisher": {
+            "@id": "https://thomasgiraud.me/#person"
+          },
+          "inLanguage": "fr-FR"
         }
-      ],
-      "knowsAbout": [
-        "Active Directory",
-        "Windows Server",
-        "Cisco IOS",
-        "IPFire",
-        "Virtualisation",
-        "Routage réseau",
-        "Sécurité périmétrique",
-        "DHCP",
-        "DNS"
-      ],
-      "sameAs": [
-        "https://github.com/tgiraud2007",
-        "https://www.linkedin.com/in/thomas-giraud-403baa25a"
       ]
     }
     </script>
@@ -112,546 +136,677 @@
         <div class="reading-progress__bar" id="reading-progress-bar"></div>
     </div>
 
-    <!-- Retro overlays -->
-    <div class="dot-grid"></div>
-    <div class="noise-overlay"></div>
+    <!-- Subtle texture & grid overlays -->
+    <div class="dot-grid" aria-hidden="true"></div>
+    <div class="noise-overlay" aria-hidden="true"></div>
 
-    <!-- Custom Cursor elements -->
-    <div class="custom-cursor" id="custom-cursor"></div>
-    <div class="custom-cursor-ring" id="custom-cursor-ring"></div>
+    <!-- Custom Cursor elements (Desktop) -->
+    <div class="custom-cursor" id="custom-cursor" aria-hidden="true"></div>
+    <div class="custom-cursor-ring" id="custom-cursor-ring" aria-hidden="true"></div>
+
+    <!-- Toast Notification element -->
+    <div class="toast-notification" id="toast-notification" role="status" aria-live="polite" aria-hidden="true">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toast-message">Texte copié</span>
+    </div>
 
     <!-- Skip link for accessibility -->
-    <a href="#main-content" class="skip-link">Passer au contenu</a>
+    <a href="#main-content" class="skip-link">Passer au contenu principal</a>
 
     <!-- Top Navigation Header -->
-    <header class="top-nav">
+    <header class="top-nav" id="top-nav">
         <div class="top-nav__inner">
-            <a class="top-nav__wordmark nav-link" href="#hero">
-                thomasgiraud<span>.me</span>
+            <a class="top-nav__wordmark nav-link" href="#hero" aria-label="Thomas Giraud — Accueil">
+                <span class="wordmark-prompt">&gt;</span> thomasgiraud<span class="wordmark-ext">.me</span>
+                <span class="wordmark-tag">SISR</span>
             </a>
             
-            <nav aria-label="Navigation principale">
+            <nav class="top-nav__navigation" aria-label="Navigation principale">
                 <ul class="top-nav__links">
-                    <li><a class="top-nav__link nav-link is-active" href="#hero">Accueil</a></li>
-                    <li><a class="top-nav__link nav-link" href="#about">À propos</a></li>
-                    <li><a class="top-nav__link nav-link" href="#services">Compétences</a></li>
-                    <li><a class="top-nav__link nav-link" href="#work">Projets</a></li>
-                    <li><a class="top-nav__link nav-link" href="#cv">Mon CV</a></li>
-                    <li><a class="top-nav__link nav-link" href="#contact">Me contacter</a></li>
+                    <li><a class="top-nav__link nav-link is-active" href="#hero"><span class="nav-idx">00</span>Accueil</a></li>
+                    <li><a class="top-nav__link nav-link" href="#about"><span class="nav-idx">01</span>À propos</a></li>
+                    <li><a class="top-nav__link nav-link" href="#services"><span class="nav-idx">02</span>Compétences</a></li>
+                    <li><a class="top-nav__link nav-link" href="#work"><span class="nav-idx">03</span>Projets</a></li>
+                    <li><a class="top-nav__link nav-link" href="#cv"><span class="nav-idx">04</span>Mon CV</a></li>
+                    <li><a class="top-nav__link nav-link" href="#contact"><span class="nav-idx">05</span>Contact</a></li>
                 </ul>
             </nav>
-            
-            <button type="button" class="top-nav__burger" aria-label="Menu principal" aria-expanded="false" aria-controls="mobile-menu" id="burger-btn">
-                <span class="top-nav__burger-icon">
-                     <span></span>
-                     <span></span>
-                     <span></span>
-                </span>
-            </button>
+
+            <div class="top-nav__actions">
+                <!-- Direct Theme Toggle Switcher in Header -->
+                <button type="button" class="theme-quick-toggle" id="theme-quick-toggle" aria-label="Changer le thème d’affichage" title="Basculer le thème (Clair / Sombre)">
+                    <span class="theme-icon theme-icon--sun" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    </span>
+                    <span class="theme-icon theme-icon--moon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </span>
+                </button>
+
+                <!-- Keyboard shortcuts indicator button -->
+                <button type="button" class="top-nav__shortcut-btn" id="nav-shortcuts-btn" aria-label="Ouvrir l'aide raccourcis clavier" title="Raccourcis clavier [?]">
+                    <span class="kbd-key">?</span>
+                </button>
+                
+                <!-- Burger button for mobile -->
+                <button type="button" class="top-nav__burger" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mobile-menu" id="burger-btn">
+                    <span class="top-nav__burger-icon">
+                         <span></span>
+                         <span></span>
+                         <span></span>
+                    </span>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile navigation drawer -->
         <div class="top-nav__overlay" id="mobile-menu" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title" aria-hidden="true" inert>
             <div class="top-nav__overlay-header">
-                <span class="top-nav__overlay-title" id="mobile-menu-title">Navigation</span>
+                <span class="top-nav__overlay-title" id="mobile-menu-title">// navigation.terminal</span>
                 <button type="button" class="top-nav__overlay-close" id="close-menu-btn" aria-label="Fermer le menu">×</button>
             </div>
             <nav aria-label="Navigation mobile">
                 <ul class="top-nav__overlay-links">
-                    <li><a class="top-nav__overlay-link nav-link" href="#hero">Accueil</a></li>
-                    <li><a class="top-nav__overlay-link nav-link" href="#about">À propos</a></li>
-                    <li><a class="top-nav__overlay-link nav-link" href="#services">Compétences</a></li>
-                    <li><a class="top-nav__overlay-link nav-link" href="#work">Projets</a></li>
-                    <li><a class="top-nav__overlay-link nav-link" href="#cv">Mon CV</a></li>
-                    <li><a class="top-nav__overlay-link nav-link" href="#contact">Me contacter</a></li>
+                    <li><a class="top-nav__overlay-link nav-link" href="#hero"><span class="drawer-idx">00</span>Accueil</a></li>
+                    <li><a class="top-nav__overlay-link nav-link" href="#about"><span class="drawer-idx">01</span>À propos</a></li>
+                    <li><a class="top-nav__overlay-link nav-link" href="#services"><span class="drawer-idx">02</span>Compétences</a></li>
+                    <li><a class="top-nav__overlay-link nav-link" href="#work"><span class="drawer-idx">03</span>Projets & Labs</a></li>
+                    <li><a class="top-nav__overlay-link nav-link" href="#cv"><span class="drawer-idx">04</span>Mon CV</a></li>
+                    <li><a class="top-nav__overlay-link nav-link" href="#contact"><span class="drawer-idx">05</span>Me contacter</a></li>
                 </ul>
             </nav>
+            <div class="top-nav__overlay-footer">
+                <div class="mobile-theme-switcher">
+                    <span class="mobile-theme-label">Thème :</span>
+                    <div class="theme-select-group theme-select-group--mobile">
+                        <button type="button" class="theme-btn" data-theme-val="light">Clair</button>
+                        <button type="button" class="theme-btn" data-theme-val="dark">Sombre</button>
+                        <button type="button" class="theme-btn" data-theme-val="system">Système</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
     <!-- Main Content Area -->
     <main id="main-content" tabindex="-1">
 
-        <!-- 01: HERO SECTION -->
+        <!-- 00: HERO SECTION -->
         <section class="hero container" id="hero">
             <!-- Data Rain canvas background -->
             <div class="data-rain-bg" aria-hidden="true">
                 <canvas class="data-rain-bg__canvas" id="hero-rain-canvas"></canvas>
-                <div class="bg-fade bg-fade--radial"></div>
             </div>
             
             <div class="hero__content">
+                <div class="hero__badge-container">
+                    <span class="availability-badge" role="status">
+                        <span class="availability-badge__dot" aria-hidden="true"></span>
+                        <span class="availability-badge__text">Stage de 6 sem. · Du 04/01/2027 au 12/02/2027 · Béziers & alentours</span>
+                    </span>
+                </div>
+
                 <h1 class="hero__title">
-                    <span class="hero__greeting">Bonjour, je suis</span>
+                    <span class="hero__greeting">Bonjour, je m'appelle</span>
                     <span class="hero__name">Thomas Giraud</span>
                 </h1>
                 
-                <p class="hero__role">Étudiant BTS SIO (SISR) — Administration Systèmes & Réseaux</p>
+                <p class="hero__role" id="hero-typed-role">Étudiant en BTS SIO (SISR) — Systèmes & Réseaux</p>
                 
                 <p class="hero__tagline">
-                    Je conçois et sécurise des infrastructures réseau virtualisées (Active Directory, IPFire, Cisco). À la recherche d’un stage — disponible pour collaborer avec vos équipes.
+                    Passionné par l'informatique et les réseaux, j'apprends à administrer des serveurs (Windows Server, Linux Debian, Active Directory) et à configurer des équipements réseaux (switchs et routeurs Cisco, pare-feux). Rigoureux et curieux, je recherche un stage de 6 semaines (du 04/01/2027 au 12/02/2027) dans le secteur de Béziers et ses alentours.
                 </p>
                 
                 <div class="hero__actions">
-                    <a class="btn btn--primary" href="CV/cv.pdf" download><svg aria-hidden="true" class="icon-inline" style="margin-right: 8px;" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V304H176c-35.3 0-64 28.7-64 64V512H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56H192v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V448 368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24H192v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48H304c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H320v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16H448v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H448v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V432 368z"/></svg>Télécharger mon CV</a>
-                    <a class="btn btn--secondary" href="#work">Voir mes réalisations</a>
-                </div>
-                
-                <div class="system-annotation system-annotation--muted" style="margin-top: var(--space-6);">
+                    <a class="btn btn--primary" href="CV/cv.pdf" download id="hero-download-cv">
+                        <svg aria-hidden="true" class="icon-inline" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V304H176c-35.3 0-64 28.7-64 64V512H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56H192v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V448 368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24H192v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48H304c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H320v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16H448v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H448v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V432 368z"/></svg>
+                        <span>Télécharger mon CV</span>
+                    </a>
+                    <a class="btn btn--secondary" href="#work">
+                        <span>Voir mes projets & TP</span>
+                        <span class="btn-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <button type="button" class="btn btn--ghost copy-email-btn" data-email="tgiraud0604@gmail.com" aria-label="Copier mon adresse e-mail dans le presse-papier" title="Copier l'e-mail">
+                        <svg aria-hidden="true" class="icon-inline" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M288 448H64V224h64V160H64c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H288c35.3 0 64-28.7 64-64V384H288v64zm-64-96H448c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H224c-35.3 0-64 28.7-64 64V288c0 35.3 28.7 64 64 64zM224 64H448V288H224V64z"/></svg>
+                        <span class="copy-text">Copier mon e-mail</span>
+                    </button>
                 </div>
             </div>
 
-            <div class="hero__visual" aria-hidden="true">
-                <!-- Immersive Live Systems & Networks Diagram SVG -->
-                <svg width="450" height="420" viewBox="0 0 450 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <!-- Glow filter -->
-                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="6" result="blur" />
-                            <feMerge>
-                                <feMergeNode in="blur" />
-                                <feMergeNode in="SourceGraphic" />
-                            </femerge>
-                        </filter>
-                        
-                        <!-- Linear gradients -->
-                        <linearGradient id="gradient-blue" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="var(--color-blue)" />
-                            <stop offset="100%" stop-color="#3080ff" stop-opacity="0.3" />
-                        </lineargradient>
-                        <linearGradient id="gradient-orange" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="var(--color-orange)" />
-                            <stop offset="100%" stop-color="#ff7a50" stop-opacity="0.3" />
-                        </lineargradient>
-                    </defs>
+            <!-- Interactive Live Systems & Networks Diagram SVG -->
+            <div class="hero__visual" aria-label="Schéma interactif d’infrastructure réseau virtualisée" role="img">
+                <div class="diagram-wrapper">
+                    <svg class="hero-diagram-svg" width="460" height="420" viewBox="0 0 460 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <title>Schéma d'infrastructure réseau virtualisée sous VirtualBox</title>
 
-                    <style>
-                        /* Live packet flows along routes */
-                        .route-line {
-                            stroke: var(--border-color);
-                            stroke-width: 1.5;
-                            stroke-dasharray: 6, 6;
-                        }
-                        
-                        .packet-flow {
-                            stroke-width: 2;
-                            stroke-linecap: round;
-                            animation: packet-move 4s linear infinite;
-                        }
-                        .packet-flow--blue {
-                            stroke: var(--color-blue);
-                            stroke-dasharray: 10, 100;
-                        }
-                        .packet-flow--orange {
-                            stroke: var(--color-orange);
-                            stroke-dasharray: 10, 80;
-                            animation-duration: 3s;
-                        }
-                        .packet-flow--green {
-                            stroke: var(--color-green);
-                            stroke-dasharray: 8, 90;
-                            animation-duration: 5s;
-                        }
+                        <!-- ROUTING FLOW PATHS -->
+                        <!-- WAN -> IPFire -->
+                        <path class="route-line" d="M230,45 L230,115" />
+                        <path class="packet-flow packet-flow--orange" d="M230,45 L230,115" />
 
-                        @keyframes packet-move {
-                            to { stroke-dashoffset: -120; }
-                        }
+                        <!-- IPFire -> ZeroShell -->
+                        <path class="route-line" d="M230,115 L230,195" />
+                        <path class="packet-flow packet-flow--blue" d="M230,115 L230,195" />
 
-                        /* Floating active nodes pulsing */
-                        .node-bg {
-                            fill: var(--bg-secondary);
-                            stroke: var(--border-color);
-                            stroke-width: 1.5;
-                            transition: all 0.3s;
-                        }
-                        
-                        .node-group:hover .node-bg {
-                            stroke: var(--color-blue);
-                            fill: var(--color-blue-subtle);
-                            filter: url(#glow);
-                            transform: scale(1.05);
-                            transform-origin: center;
-                        }
+                        <!-- ZeroShell -> Cisco Switch -->
+                        <path class="route-line" d="M230,195 L230,270" />
+                        <path class="packet-flow packet-flow--green" d="M230,195 L230,270" />
 
-                        .node-group--alert:hover .node-bg {
-                            stroke: var(--color-orange);
-                            fill: var(--color-orange-subtle);
-                        }
+                        <!-- Switch -> Active Directory Server (Left) -->
+                        <path class="route-line" d="M230,270 L90,345" />
+                        <path class="packet-flow packet-flow--blue" d="M230,270 L90,345" />
 
-                        .node-text {
-                            font-family: 'JetBrains Mono', monospace;
-                            font-size: 10px;
-                            fill: var(--text-secondary);
-                            text-anchor: middle;
-                        }
-                        .node-group:hover .node-text {
-                            fill: var(--text-primary);
-                            font-weight: bold;
-                        }
+                        <!-- Switch -> Intern PC (Center) -->
+                        <path class="route-line" d="M230,270 L230,345" />
+                        <path class="packet-flow packet-flow--green" d="M230,270 L230,345" />
 
-                        .icon-path {
-                            stroke: var(--text-primary);
-                            stroke-width: 1.5;
-                            fill: none;
-                        }
-                        .node-group:hover .icon-path {
-                            stroke: var(--color-blue);
-                        }
-                        .node-group--alert:hover .icon-path {
-                            stroke: var(--color-orange);
-                        }
-                    </style>
+                        <!-- Switch -> Mail Server (Right) -->
+                        <path class="route-line" d="M230,270 L370,345" />
+                        <path class="packet-flow packet-flow--orange" d="M230,270 L370,345" />
 
-                    <!-- --- NETWORK SEGMENT ROUTES (PATHS) --- -->
-                    <!-- WAN -> IPFire -->
-                    <path class="route-line" d="M225,45 L225,115" />
-                    <path class="packet-flow packet-flow--orange" d="M225,45 L225,115" />
+                        <!-- NODE 1: WAN INTERNET -->
+                        <g class="node-group" tabindex="0" role="group" aria-label="Nœud WAN Internet">
+                            <circle class="node-bg" cx="230" cy="45" r="22" />
+                            <circle class="icon-path" cx="230" cy="45" r="11" />
+                            <path class="icon-path" d="M219,45 L241,45" />
+                            <path class="icon-path" d="M230,34 C234,38 234,52 230,56 C226,52 226,38 230,34 Z" />
+                            <text class="node-text" x="230" y="80">WAN (INTERNET)</text>
+                        </g>
 
-                    <!-- IPFire -> ZeroShell -->
-                    <path class="route-line" d="M225,115 L225,195" />
-                    <path class="packet-flow packet-flow--blue" d="M225,115 L225,195" />
+                        <!-- NODE 2: IPFIRE FIREWALL -->
+                        <g class="node-group node-group--alert" tabindex="0" role="group" aria-label="Pare-feu IPFire">
+                            <circle class="node-bg" cx="230" cy="120" r="22" />
+                            <path class="icon-path" d="M230,109 L221,113 L221,123 C221,128 226,132 230,134 C234,132 239,128 239,123 L239,113 L230,109 Z" />
+                            <path class="icon-path" d="M225,118 L235,118 M230,114 L230,128" stroke-dasharray="2, 2" />
+                            <text class="node-text node-text--orange" x="230" y="154">FW: IPFIRE (NAT/DROP)</text>
+                        </g>
 
-                    <!-- ZeroShell -> Cisco Switch -->
-                    <path class="route-line" d="M225,195 L225,275" />
-                    <path class="packet-flow packet-flow--green" d="M225,195 L225,275" />
+                        <!-- NODE 3: ZEROSHELL ROUTER -->
+                        <g class="node-group" tabindex="0" role="group" aria-label="Routeur ZeroShell">
+                            <circle class="node-bg" cx="230" cy="198" r="22" />
+                            <circle class="icon-path" cx="230" cy="198" r="11" />
+                            <path class="icon-path" d="M225,198 L235,198 M230,193 L230,203" />
+                            <path class="icon-path" d="M223,195 L220,198 L223,201 M237,195 L240,198 L237,201" />
+                            <text class="node-text" x="230" y="232">RT: ZEROSHELL</text>
+                        </g>
 
-                    <!-- Switch -> Active Directory Server (Left) -->
-                    <path class="route-line" d="M225,275 L85,345" />
-                    <path class="packet-flow packet-flow--blue" d="M225,275 L85,345" />
+                        <!-- NODE 4: CISCO CATALYST SWITCH -->
+                        <g class="node-group" tabindex="0" role="group" aria-label="Commutateur Cisco 2960">
+                            <rect class="node-bg" x="190" y="258" width="80" height="24" rx="4" />
+                            <path class="icon-path" d="M200,270 L210,270 M207,267 L210,270 L207,273 M260,270 L250,270 M253,267 L250,270 L253,273" />
+                            <circle cx="220" cy="270" r="1.5" fill="var(--color-green)" />
+                            <circle cx="230" cy="270" r="1.5" fill="var(--color-green)" />
+                            <circle cx="240" cy="270" r="1.5" fill="var(--color-green)" />
+                            <text class="node-text" x="230" y="294">SW: CISCO 2960</text>
+                        </g>
 
-                    <!-- Switch -> Intern PC (Center) -->
-                    <path class="route-line" d="M225,275 L225,345" />
-                    <path class="packet-flow packet-flow--green" d="M225,275 L225,345" />
+                        <!-- NODE 5: ACTIVE DIRECTORY / DNS -->
+                        <g class="node-group" tabindex="0" role="group" aria-label="Serveur Active Directory et DNS">
+                            <circle class="node-bg" cx="90" cy="350" r="22" />
+                            <rect class="icon-path" x="78" y="339" width="24" height="8" rx="1" />
+                            <rect class="icon-path" x="78" y="349" width="24" height="8" rx="1" />
+                            <circle cx="83" cy="343" r="1" fill="var(--color-blue)" />
+                            <circle cx="83" cy="353" r="1" fill="var(--color-blue)" />
+                            <text class="node-text" x="90" y="386">AD / DNS SERVER</text>
+                            <text class="node-text system-annotation system-annotation--muted" x="90" y="398">[VLAN 10]</text>
+                        </g>
 
-                    <!-- Switch -> Mail Server (Right) -->
-                    <path class="route-line" d="M225,275 L365,345" />
-                    <path class="packet-flow packet-flow--orange" d="M225,275 L365,345" />
+                        <!-- NODE 6: GUEST CLIENT PC -->
+                        <g class="node-group" tabindex="0" role="group" aria-label="Poste Client Virtuel">
+                            <circle class="node-bg" cx="230" cy="350" r="22" />
+                            <rect class="icon-path" x="218" y="340" width="24" height="15" rx="2" />
+                            <path class="icon-path" d="M226,355 L226,359 L234,359 L234,355" />
+                            <text class="node-text" x="230" y="386">CLIENT WIN 10</text>
+                            <text class="node-text system-annotation system-annotation--muted" x="230" y="398">[VLAN 20]</text>
+                        </g>
 
-                    <!-- --- NETWORK NODE 1: WAN (INTERNET) --- -->
-                    <g class="node-group" transform="translate(0, 0)">
-                        <circle class="node-bg" cx="225" cy="45" r="24" />
-                        <!-- Globe Icon -->
-                        <circle class="icon-path" cx="225" cy="45" r="12" />
-                        <path class="icon-path" d="M213,45 L237,45" />
-                        <path class="icon-path" d="M225,33 C229,37 229,53 225,57 C221,53 221,37 225,33 Z" />
-                        <text class="node-text" x="225" y="82">WAN (INTERNET)</text>
-                    </g>
-
-                    <!-- --- NETWORK NODE 2: IPFIRE FIREWALL (SECURE EDGE) --- -->
-                    <g class="node-group node-group--alert" transform="translate(0, 0)">
-                        <circle class="node-bg" cx="225" cy="120" r="24" />
-                        <!-- Shield/Firewall Icon -->
-                        <path class="icon-path" d="M225,108 L215,112 L215,122 C215,128 221,132 225,134 C229,132 235,128 235,122 L235,112 L225,108 Z" />
-                        <path class="icon-path" d="M220,118 L230,118 M225,113 L225,129" stroke-dasharray="2, 2" />
-                        <text class="node-text" x="225" y="157" style="fill: var(--color-orange);">FW: IPFIRE (NAT)</text>
-                    </g>
-
-                    <!-- --- NETWORK NODE 3: ZEROSHELL ROUTER (ROUTING LAYER) --- -->
-                    <g class="node-group" transform="translate(0, 0)">
-                        <circle class="node-bg" cx="225" cy="200" r="24" />
-                        <!-- Router Icon (Arrows) -->
-                        <circle class="icon-path" cx="225" cy="200" r="12" />
-                        <path class="icon-path" d="M220,200 L230,200 M225,195 L225,205" />
-                        <path class="icon-path" d="M218,197 L215,200 L218,203 M232,197 L235,200 L232,203" />
-                        <text class="node-text" x="225" y="237">RT: ZEROSHELL</text>
-                    </g>
-
-                    <!-- --- NETWORK NODE 4: CISCO CATALYST SWITCH (LAN LAYER) --- -->
-                    <g class="node-group" transform="translate(0, 0)">
-                        <rect class="node-bg" x="185" y="260" width="80" height="24" rx="3" />
-                        <!-- Switch arrows -->
-                        <path class="icon-path" d="M195,272 L205,272 M202,269 L205,272 L202,275 M255,272 L245,272 M248,269 L245,272 L248,275" />
-                        <circle cx="215" cy="272" r="1.5" fill="var(--color-green)" />
-                        <circle cx="225" cy="272" r="1.5" fill="var(--color-green)" />
-                        <circle cx="235" cy="272" r="1.5" fill="var(--color-green)" />
-                        <text class="node-text" x="225" y="297">SW: CISCO 2960</text>
-                    </g>
-
-                    <!-- --- NETWORK NODE 5: ACTIVE DIRECTORY / DNS SERVER --- -->
-                    <g class="node-group" transform="translate(0, 0)">
-                        <circle class="node-bg" cx="85" cy="350" r="24" />
-                        <!-- Server rack icon -->
-                        <rect class="icon-path" x="73" y="338" width="24" height="8" rx="1" />
-                        <rect class="icon-path" x="73" y="348" width="24" height="8" rx="1" />
-                        <circle cx="78" cy="342" r="1" fill="var(--color-blue)" />
-                        <circle cx="78" cy="352" r="1" fill="var(--color-blue)" />
-                        <text class="node-text" x="85" y="388">AD / DNS SERVER</text>
-                        <text class="node-text system-annotation system-annotation--muted" x="85" y="399">[VLAN 10]</text>
-                    </g>
-
-                    <!-- --- NETWORK NODE 6: INTERN WORKSTATION (PC) --- -->
-                    <g class="node-group" transform="translate(0, 0)">
-                        <circle class="node-bg" cx="225" cy="350" r="24" />
-                        <!-- Computer screen icon -->
-                        <rect class="icon-path" x="213" y="339" width="24" height="16" rx="2" />
-                        <path class="icon-path" d="M221,355 L221,359 L229,359 L229,355" />
-                        <text class="node-text" x="225" y="388">GUEST CLIENT</text>
-                        <text class="node-text system-annotation system-annotation--muted" x="225" y="399">[VLAN 20]</text>
-                    </g>
-
-                    <!-- --- NETWORK NODE 7: MAIL / EMAIL SERVER --- -->
-                    <g class="node-group" transform="translate(0, 0)">
-                        <circle class="node-bg" cx="365" cy="350" r="24" />
-                        <!-- Mail Server icon -->
-                        <rect class="icon-path" x="353" y="338" width="24" height="16" rx="2" />
-                        <path class="icon-path" d="M353,340 L365,348 L377,340" />
-                        <text class="node-text" x="365" y="388">MAIL SERVER</text>
-                        <text class="node-text system-annotation system-annotation--muted" x="365" y="399">[VLAN 30]</text>
-                    </g>
-                </svg>
+                        <!-- NODE 7: MAIL SERVER -->
+                        <g class="node-group" tabindex="0" role="group" aria-label="Serveur de messagerie">
+                            <circle class="node-bg" cx="370" cy="350" r="22" />
+                            <rect class="icon-path" x="358" y="340" width="24" height="15" rx="2" />
+                            <path class="icon-path" d="M358,342 L370,350 L382,342" />
+                            <text class="node-text" x="370" y="386">MAIL SERVER</text>
+                            <text class="node-text system-annotation system-annotation--muted" x="370" y="398">[VLAN 30]</text>
+                        </g>
+                    </svg>
+                    <div class="diagram-footer-hint">
+                        <span class="hint-dot"></span>
+                        <span>Topologie de laboratoire émulée · VirtualBox & Cisco</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- 02: WHO I AM (ABOUT) -->
+        <!-- 01: ABOUT (QUI SUIS-JE) -->
         <section class="page-section" id="about">
             <!-- Dynamic Network Constellation canvas background -->
             <div class="network-constellation-bg" aria-hidden="true">
                 <canvas class="network-constellation-bg__canvas" id="about-network-canvas"></canvas>
-                <div class="bg-fade bg-fade--radial"></div>
             </div>
             
             <div class="container">
-                <span class="section-number__text">02</span>
-                
-                <h2 class="section-title">Qui suis-je</h2>
+                <div class="section-header">
+                    <span class="section-badge">// 01. Présentation</span>
+                    <h2 class="section-title">À propos de moi</h2>
+                    <p class="section-subtitle">
+                        Mon parcours, mes études et mes objectifs en administration systèmes et réseaux.
+                    </p>
+                </div>
                 
                 <div class="about-layout">
                     <div class="about-content">
-                        <p class="about-preview__lead">
-                            <strong>BTS SIO option SISR</strong> au Lycée Marc Bloch (Sérignan) — spécialisation en administration systèmes & réseaux.
-                        </p>
-                        <p class="about-preview__text">
-                            <strong>Bac Pro SN au Lycée Jean Moulin (Béziers)</strong> — stages sur le terrain : câblage, maintenance, support utilisateur. Aujourd’hui en BTS SISR, je sandboxe mes projets : chaque maquette est une infrastructure complète virtualisée sous VirtualBox, testée et documentée — Active Directory, IPFire, routage Cisco.
-                        </p>
-                        <a class="btn btn--secondary" href="#cv">Consulter mon parcours →</a>
+                        <div class="about-card">
+                            <h3 class="about-card__title">Qui suis-je ?</h3>
+                            <p class="about-preview__lead">
+                                J'ai 19 ans et je suis actuellement en <strong>2ᵉ année de BTS SIO (option SISR)</strong> au <strong>Lycée Marc Bloch à Sérignan</strong>.
+                            </p>
+                            <p class="about-preview__text">
+                                Mon parcours dans l'informatique a commencé par un <strong>Bac Pro Systèmes Numériques (Lycée Jean Moulin à Béziers)</strong>, que j'ai obtenu avec la <strong>mention Très Bien</strong>. Ces trois années m'ont donné le goût du terrain, du contact utilisateur et du matériel à travers <strong>20 semaines de stages en entreprise</strong> (dépannage informatique, maintenance et support).
+                            </p>
+                            <p class="about-preview__text">
+                                En BTS SISR, je me spécialise dans la gestion et la sécurisation des infrastructures : mise en place d'annuaires Active Directory, création de GPO, configuration de switchs et routeurs Cisco en ligne de commande (CLI), découpage en VLANs et filtrage avec des pare-feux (IPFire, ZeroShell).
+                            </p>
+                            
+                            <div class="about-highlights">
+                                <div class="highlight-item">
+                                    <span class="highlight-icon">🛠️</span>
+                                    <div class="highlight-text">
+                                        <strong>Goût du terrain & Pratique</strong>
+                                        <span>4 stages en entreprise réalisés et de nombreux TP en laboratoire virtuel (VirtualBox).</span>
+                                    </div>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-icon">🎯</span>
+                                    <div class="highlight-text">
+                                        <strong>Objectif de stage</strong>
+                                        <span>Stage de 6 semaines en entreprise du 04/01/2027 au 12/02/2027 (secteur Béziers et alentours).</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="about-cta-row">
+                                <a class="btn btn--secondary" href="#cv">Voir mon CV détaillé →</a>
+                                <a class="btn btn--ghost" href="#work">Découvrir mes projets de TP →</a>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="counters-grid">
-                        <div class="counter-card">
-                            <span class="animated-counter__value" data-target="12">12</span>
-                            <span class="animated-counter__label">VMs déployées</span>
-                            <span class="animated-counter__sublabel">Serveurs et clients virtualisés</span>
+                    <div class="about-stats-column">
+                        <div class="counters-grid">
+                            <div class="counter-card" tabindex="0">
+                                <div class="counter-card__header">
+                                    <span class="counter-icon">🖥️</span>
+                                    <span class="counter-badge">Sandbox</span>
+                                </div>
+                                <span class="animated-counter__value" data-target="12">12</span>
+                                <span class="animated-counter__label">VMs Déployées</span>
+                                <span class="animated-counter__sublabel">Serveurs Windows/Debian et postes clients interconnectés</span>
+                            </div>
+                            
+                            <div class="counter-card" tabindex="0">
+                                <div class="counter-card__header">
+                                    <span class="counter-icon">🌐</span>
+                                    <span class="counter-badge">Cisco</span>
+                                </div>
+                                <span class="animated-counter__value" data-target="15">15</span>
+                                <span class="animated-counter__label">Topologies Réseau</span>
+                                <span class="animated-counter__sublabel">Packet Tracer : VLANs, Trunk 802.1Q, Inter-VLAN & DHCP</span>
+                            </div>
+                            
+                            <div class="counter-card" tabindex="0">
+                                <div class="counter-card__header">
+                                    <span class="counter-icon">🏢</span>
+                                    <span class="counter-badge">Terrain</span>
+                                </div>
+                                <span class="animated-counter__value" data-target="20">20</span>
+                                <span class="animated-counter__label">Semaines de Stage</span>
+                                <span class="animated-counter__sublabel">Immersion réelle en support, masterisation et maintenance</span>
+                            </div>
+                            
+                            <div class="counter-card" tabindex="0">
+                                <div class="counter-card__header">
+                                    <span class="counter-icon">🤝</span>
+                                    <span class="counter-badge">Entreprises</span>
+                                </div>
+                                <span class="animated-counter__value" data-target="4">4</span>
+                                <span class="animated-counter__label">Structures d’Accueil</span>
+                                <span class="animated-counter__sublabel">Phone World, XEFI Béziers, Plénisud & TooBéziers</span>
+                            </div>
                         </div>
-                        <div class="counter-card">
-                            <span class="animated-counter__value" data-target="15">15</span>
-                            <span class="animated-counter__label">Topologies Cisco</span>
-                            <span class="animated-counter__sublabel">Packet Tracer validées</span>
-                        </div>
-                        <div class="counter-card">
-                            <span class="animated-counter__value" data-target="20">20</span>
-                            <span class="animated-counter__label">Semaines de stage</span>
-                            <span class="animated-counter__sublabel">Immersion en entreprise</span>
-                        </div>
-                        <div class="counter-card">
-                            <span class="animated-counter__value" data-target="4">4</span>
-                            <span class="animated-counter__label">Entreprises d’accueil</span>
-                            <span class="animated-counter__sublabel">Stages terrain et support</span>
+
+                        <!-- Technical Environment Quick Specs Box -->
+                        <div class="environment-specs-card">
+                            <div class="specs-header">
+                                <span class="specs-dot specs-dot--green"></span>
+                                <span class="specs-title">// environnement.laboratoire</span>
+                            </div>
+                            <ul class="specs-list">
+                                <li><span class="spec-k">Hyperviseur :</span> <span class="spec-v">VirtualBox (Réseaux internes isolés, NAT, Pont)</span></li>
+                                <li><span class="spec-k">Systèmes :</span> <span class="spec-v">Windows Server 2022, Windows 10/11 Pro, Debian 12</span></li>
+                                <li><span class="spec-k">Matériel/CLI :</span> <span class="spec-v">Cisco IOS (Switch 2960, Routeur 2911), Packet Tracer</span></li>
+                                <li><span class="spec-k">Pare-feu :</span> <span class="spec-v">IPFire 2.x, ZeroShell Linux</span></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 03: SERVICES (COMPÉTENCES) -->
-        <section class="page-section" id="services">
+        <!-- 02: SERVICES (COMPÉTENCES CLÉS) -->
+        <section class="page-section page-section--alt" id="services">
             <div class="container">
-                <span class="section-number__text">03</span>
-                
-                <h2 class="section-title">Compétences clés</h2>
-                <p class="section-subtitle">
-                    Mes domaines d’intervention et compétences opérationnelles en administration systèmes, ingénierie réseaux et cybersécurité.
-                </p>
+                <div class="section-header">
+                    <span class="section-badge">// 02. Savoir-faire technique</span>
+                    <h2 class="section-title">Matrice de Compétences</h2>
+                    <p class="section-subtitle">
+                        Compétences opérationnelles acquises en formation BTS SISR, éprouvées en laboratoire de maquettage et lors des stages professionnels.
+                    </p>
+                </div>
                 
                 <div class="services-grid">
-                    <div class="service-card">
-                        <span class="service-card__icon">[sys_admin]</span>
-                        <h3 class="service-card__title">Administration Systèmes</h3>
+                    <!-- Skill Card 1: Systems Admin -->
+                    <div class="service-card" tabindex="0">
+                        <div class="service-card__top">
+                            <div class="service-card__icon-wrap">
+                                <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="3" width="16" height="6" rx="1.5"/><rect x="4" y="15" width="16" height="6" rx="1.5"/><circle cx="7" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="7" cy="18" r="1" fill="currentColor" stroke="none"/><path d="M10 12h4M4 12h1M19 12h1"/></svg>
+                            </div>
+                            <span class="skill-category-badge">Systèmes</span>
+                        </div>
+                        <h3 class="service-card__title">Administration Systèmes & Annuaires</h3>
                         <p class="service-card__description">
-                            Déploiement d’environnements d’exploitation Windows Server et serveurs Linux. Gestion centralisée des utilisateurs et des parcs via Active Directory, politiques de groupe (GPO), configuration de serveurs d’infrastructure DNS et DHCP.
+                            Déploiement et maintien en condition opérationnelle de serveurs d’entreprise. Gestion centralisée des identités et des ressources.
                         </p>
+                        <div class="skill-items-list">
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Active Directory DS</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Stratégies de groupe (GPO)</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Windows Server 2022</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Services DNS & DHCP</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Linux Debian / Apache</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Droits NTFS & Partages</span>
+                        </div>
                     </div>
                     
-                    <div class="service-card">
-                        <span class="service-card__icon">[net_routing]</span>
-                        <h3 class="service-card__title">Réseaux & Routage Cisco</h3>
+                    <!-- Skill Card 2: Cisco Networks -->
+                    <div class="service-card" tabindex="0">
+                        <div class="service-card__top">
+                            <div class="service-card__icon-wrap">
+                                <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/><path d="M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></svg>
+                            </div>
+                            <span class="skill-category-badge">Réseaux</span>
+                        </div>
+                        <h3 class="service-card__title">Commutation & Routage Cisco</h3>
                         <p class="service-card__description">
-                            Architecture LAN/WAN, plan d’adressage IP (VLSM), commutation et routage. Configuration fine d’équipements actifs Cisco (CLI Cisco) avec gestion des VLANs, interfaces Trunk (dot1q), routage statique et gestion d’agents relais DHCP.
+                            Architecture de réseaux locaux d'entreprise, plans d’adressage optimisés et configuration d’équipements actifs en CLI.
                         </p>
+                        <div class="skill-items-list">
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>CLI Cisco IOS</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>VLANs & Trunk 802.1Q</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Routage Inter-VLAN</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Plan d’adressage VLSM</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Agent de relais DHCP (Helper IP)</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Sécurité des ports (Port Security)</span>
+                        </div>
                     </div>
                     
-                    <div class="service-card">
-                        <span class="service-card__icon">[cyber_security]</span>
-                        <h3 class="service-card__title">Filtrage & Sécurité Réseau</h3>
+                    <!-- Skill Card 3: Security & Firewall -->
+                    <div class="service-card" tabindex="0">
+                        <div class="service-card__top">
+                            <div class="service-card__icon-wrap">
+                                <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9.5 11.5l2 2 3.5-3.5"/></svg>
+                            </div>
+                            <span class="skill-category-badge">Sécurité</span>
+                        </div>
+                        <h3 class="service-card__title">Sécurité Périmétrique & Filtrage</h3>
                         <p class="service-card__description">
-                            Sécurisation des accès et isolation réseau à l’aide de pare-feux. Configuration de règles de filtrage (IPFire, pfSense/ZeroShell), masquage d’adresses (NAT / PAT) et publication sécurisée de ressources internes via redirection de ports.
+                            Cloisonnement des flux, isolation des réseaux invités/métier et publication sécurisée de services internes.
                         </p>
+                        <div class="skill-items-list">
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Pare-feu IPFire & ZeroShell</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Politique DROP stricte</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Traduction NAT / PAT</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Redirection de ports (Port Forward)</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Segmentation RED/GREEN/BLUE</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Failover de lien réseau</span>
+                        </div>
                     </div>
                     
-                    <div class="service-card">
-                        <span class="service-card__icon">[virt_sandbox]</span>
-                        <h3 class="service-card__title">Virtualisation & Maquettage</h3>
+                    <!-- Skill Card 4: Virtualization & Tools -->
+                    <div class="service-card" tabindex="0">
+                        <div class="service-card__top">
+                            <div class="service-card__icon-wrap">
+                                <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>
+                            </div>
+                            <span class="skill-category-badge">Méthodologie</span>
+                        </div>
+                        <h3 class="service-card__title">Virtualisation, Support & Outils</h3>
                         <p class="service-card__description">
-                            Création d’environnements de bac à sable (sandboxing) complets sous VirtualBox. Interconnexion de cartes réseau virtuelles (Accès par pont, NAT, Réseau interne) pour reproduire à 100 % une topologie d’entreprise sans aucun impact matériel.
+                            Maquettage d'architectures complètes sans surcoût matériel, diagnostic réseau et support informatique utilisateur.
                         </p>
+                        <div class="skill-items-list">
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Oracle VirtualBox</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Cisco Packet Tracer</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Analyse Wireshark & Ping/ARP</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Masterisation & Clonage</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Scripting PowerShell & Batch</span>
+                            <span class="skill-pill"><span class="skill-pill__dot"></span>Dépannage & Maintenance PC</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 04: WORK (PROJETS) -->
-        <section class="page-section page-section--alt" id="work">
+        <!-- 03: WORK (PROJETS & LABS) -->
+        <section class="page-section" id="work">
             <div class="container">
-                <span class="section-number__text">04</span>
-                
-                <h2 class="section-title">Mes Réalisations</h2>
-                <p class="section-subtitle">
-                    Une sélection de laboratoires techniques et d’architectures réseaux conçus de bout en bout pour répondre à des problématiques d’infrastructure réelles.
-                </p>
+                <div class="section-header">
+                    <span class="section-badge">// 03. Travaux Pratiques & Labs</span>
+                    <h2 class="section-title">Mes Réalisations Techniques</h2>
+                    <p class="section-subtitle">
+                        Une sélection de laboratoires d'infrastructure montés, configurés, sécurisés et documentés en environnement sandbox. Cliquez sur un projet pour consulter le dossier technique complet.
+                    </p>
+                </div>
                 
                 <div class="work-list">
                     <!-- Project 01 -->
-                    <div class="work-card card-glow-pulse" data-project="1" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Ouvrir le projet : Maquette Active Directory & Services Windows Server">
+                    <article class="work-card card-glow-pulse" data-project="1" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Consulter le projet : Maquette Active Directory & Services Windows Server">
                         <div class="work-card__meta">
                             <span class="work-card__year">2025 - 2026</span>
                             <span class="work-card__role">Admin Système</span>
+                            <span class="work-card__status-tag">Lab Finalisé</span>
                         </div>
                         <div class="work-card__content">
-                            <h3 class="work-card__title">Maquette Active Directory & Services Windows Server</h3>
-                            <p class="work-card__description">
-                                Déploiement complet d’une infrastructure réseau d’entreprise virtualisée sous VirtualBox. Installation et configuration du rôle Active Directory, gestion des rôles indispensables : DHCP pour l’adressage automatique, serveur DNS (zones de recherche directes et inverses) et implémentation d’un serveur de messagerie interne sécurisé.
-                            </p>
-                            <div class="work-card__tags">
-                                <span class="work-card__tag">Active Directory</span>
-                                <span class="work-card__tag">Windows Server</span>
-                                <span class="work-card__tag">DHCP & DNS</span>
-                                <span class="work-card__tag">VirtualBox</span>
-                                <span class="work-card__tag">Serveur Mail</span>
+                            <div class="work-card__header-line">
+                                <span class="project-domain-tag">// INFRASTRUCTURE & ANNUAIRE</span>
+                                <h3 class="work-card__title">Maquette Active Directory DS & Services Windows Server</h3>
                             </div>
-                            <span class="work-card__cta">Consulter les détails techniques <span class="arrow">→</span></span>
+                            <p class="work-card__description">
+                                Déploiement d’une infrastructure d’entreprise centralisée sous VirtualBox : contrôleur de domaine Active Directory avec arborescence d'unités d'organisation (OU), déploiement de stratégies de groupe (GPO), services DHCP et DNS avec zones directes/inverses, serveur de messagerie interne et validation sur clients Windows 10 et Debian.
+                            </p>
+                            <div class="work-card__highlights-grid">
+                                <div class="card-highlight"><span class="k">Architecture :</span> <span class="v">1 DC Windows Server + 1 Mail Server + 2 Clients</span></div>
+                                <div class="card-highlight"><span class="k">Sécurité :</span> <span class="v">GPO de restriction, partages avec droits NTFS stricts</span></div>
+                            </div>
+                            <div class="work-card__tags">
+                                <span class="work-card__tag">Active Directory DS</span>
+                                <span class="work-card__tag">Windows Server 2022</span>
+                                <span class="work-card__tag">GPO</span>
+                                <span class="work-card__tag">DNS & DHCP</span>
+                                <span class="work-card__tag">VirtualBox</span>
+                                <span class="work-card__tag">hMailServer</span>
+                            </div>
+                            <div class="work-card__cta-row">
+                                <span class="work-card__cta">Consulter la fiche technique & topologie <span class="arrow" aria-hidden="true">→</span></span>
+                                <span class="work-card__keyboard-hint">Entrée pour ouvrir</span>
+                            </div>
                         </div>
-                    </div>
+                    </article>
                     
                     <!-- Project 02 -->
-                    <div class="work-card card-glow-pulse" data-project="2" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Ouvrir le projet : Filtrage Périmétrique Strict & NAT avec IPFire">
+                    <article class="work-card card-glow-pulse" data-project="2" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Consulter le projet : Filtrage Périmétrique Strict & NAT avec IPFire">
                         <div class="work-card__meta">
                             <span class="work-card__year">2025</span>
                             <span class="work-card__role">Sécurité Réseau</span>
+                            <span class="work-card__status-tag">Lab Finalisé</span>
                         </div>
                         <div class="work-card__content">
-                            <h3 class="work-card__title">Filtrage Périmétrique Strict & NAT avec IPFire</h3>
+                            <div class="work-card__header-line">
+                                <span class="project-domain-tag">// SÉCURITÉ PÉRIMÉTRIQUE</span>
+                                <h3 class="work-card__title">Filtrage Périmétrique Strict & NAT avec IPFire</h3>
+                            </div>
                             <p class="work-card__description">
-                                Mise en place d’une passerelle de filtrage réseau avec la distribution pare-feu IPFire. Définition de politiques d’accès restrictives basées sur des règles de pare-feu fines (politique par défaut DROP). Configuration de la traduction d’adresses (NAT) et redirection sélective de ports (Port Forwarding) afin de publier des services internes tout en masquant l’infrastructure sous-jacente.
+                                Mise en œuvre d’une passerelle pare-feu dédiée IPFire isolant le réseau externe (WAN) des zones internes. Définition d'une politique de sécurité par défaut en rejet total (DROP), masquage d'adresses (NAT/PAT) pour la navigation sortante et redirection ciblée de ports (Port Forwarding) pour publier des services internes en DMZ.
                             </p>
+                            <div class="work-card__highlights-grid">
+                                <div class="card-highlight"><span class="k">Cloisonnement :</span> <span class="v">Zone RED (WAN), GREEN (LAN), BLUE (WiFi invité)</span></div>
+                                <div class="card-highlight"><span class="k">Règles :</span> <span class="v">Filtrage DROP, NAT/PAT, Port Forwarding 443/25</span></div>
+                            </div>
                             <div class="work-card__tags">
                                 <span class="work-card__tag">IPFire</span>
-                                <span class="work-card__tag">Pare-feu strict</span>
+                                <span class="work-card__tag">Filtrage Strict (DROP)</span>
                                 <span class="work-card__tag">NAT / PAT</span>
                                 <span class="work-card__tag">Port Forwarding</span>
-                                <span class="work-card__tag">Sécurité</span>
+                                <span class="work-card__tag">Zones RED/GREEN/BLUE</span>
                             </div>
-                            <span class="work-card__cta">Consulter les détails techniques <span class="arrow">→</span></span>
+                            <div class="work-card__cta-row">
+                                <span class="work-card__cta">Consulter la fiche technique & topologie <span class="arrow" aria-hidden="true">→</span></span>
+                                <span class="work-card__keyboard-hint">Entrée pour ouvrir</span>
+                            </div>
                         </div>
-                    </div>
+                    </article>
                     
                     <!-- Project 03 -->
-                    <div class="work-card card-glow-pulse" data-project="3" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Ouvrir le projet : Routage de Paquets Virtuel sous ZeroShell">
+                    <article class="work-card card-glow-pulse" data-project="3" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Consulter le projet : Interconnexion de Réseaux Virtuels avec ZeroShell">
                         <div class="work-card__meta">
                             <span class="work-card__year">2025</span>
-                            <span class="work-card__role">Routage Interne</span>
+                            <span class="work-card__role">Routage Multi-LAN</span>
+                            <span class="work-card__status-tag">Lab Finalisé</span>
                         </div>
                         <div class="work-card__content">
-                            <h3 class="work-card__title">Routage de Paquets Virtuel sous ZeroShell</h3>
+                            <div class="work-card__header-line">
+                                <span class="project-domain-tag">// ROUTAGE & MULTI-SEGMENTS</span>
+                                <h3 class="work-card__title">Interconnexion de Réseaux Virtuels avec ZeroShell</h3>
+                            </div>
                             <p class="work-card__description">
-                                Configuration et interconnexion de réseaux locaux complexes à l’aide de routeurs virtuels ZeroShell. Établissement de règles de routage statiques pour interconnecter différents segments LAN émulés dans VirtualBox, surveillance du trafic, priorisation des flux et mise en place d’une redondance de lien (failover).
+                                Interconnexion de réseaux locaux d'entreprise virtualisés sous VirtualBox à l'aide du routeur Linux ZeroShell. Établissement de tables de routage statiques entre 3 segments IP distincts, supervision en temps réel du trafic (bande passante, requêtes ARP) et mise en place d’un basculement de secours (failover).
                             </p>
+                            <div class="work-card__highlights-grid">
+                                <div class="card-highlight"><span class="k">Routage :</span> <span class="v">Interconnexion de 3 sous-réseaux (10.0.1.0/24, .2.0, .3.0)</span></div>
+                                <div class="card-highlight"><span class="k">Disponibilité :</span> <span class="v">Bascule de lien automatique (Failover)</span></div>
+                            </div>
                             <div class="work-card__tags">
                                 <span class="work-card__tag">ZeroShell</span>
-                                <span class="work-card__tag">Routage statique</span>
-                                <span class="work-card__tag">VirtualBox LANs</span>
-                                <span class="work-card__tag">Failover</span>
+                                <span class="work-card__tag">Routage Statique</span>
+                                <span class="work-card__tag">VirtualBox Multi-LAN</span>
+                                <span class="work-card__tag">Failover Réseau</span>
+                                <span class="work-card__tag">Tables ARP</span>
                             </div>
-                            <span class="work-card__cta">Consulter les détails techniques <span class="arrow">→</span></span>
+                            <div class="work-card__cta-row">
+                                <span class="work-card__cta">Consulter la fiche technique & topologie <span class="arrow" aria-hidden="true">→</span></span>
+                                <span class="work-card__keyboard-hint">Entrée pour ouvrir</span>
+                            </div>
                         </div>
-                    </div>
+                    </article>
                     
                     <!-- Project 04 -->
-                    <div class="work-card card-glow-pulse" data-project="4" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Ouvrir le projet : Topologies d’Entreprise Cisco (Cisco Packet Tracer)">
+                    <article class="work-card card-glow-pulse" data-project="4" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Consulter le projet : Topologies d’Entreprise Cisco">
                         <div class="work-card__meta">
                             <span class="work-card__year">2024 - 2026</span>
                             <span class="work-card__role">Architecture Cisco</span>
+                            <span class="work-card__status-tag">Lab Référent</span>
                         </div>
                         <div class="work-card__content">
-                            <h3 class="work-card__title">Topologies d’Entreprise Cisco (Cisco Packet Tracer)</h3>
-                            <p class="work-card__description">
-                                Modélisation de topologies physiques et logiques complexes incluant des parcs de PCs, des commutateurs (switches) de niveau 2/3 et des routeurs. Configuration par ligne de commande (CLI Cisco IOS) : adressage IP, serveurs et agents relais DHCP, VLANs pour séparer les flux métier, ports en mode Access et Trunk, routage inter-VLAN et sécurité des accès physiques (Port Security).
-                            </p>
-                            <div class="work-card__tags">
-                                <span class="work-card__tag">Cisco IOS</span>
-                                <span class="work-card__tag">VLAN Trunking</span>
-                                <span class="work-card__tag">DHCP Relais</span>
-                                <span class="work-card__tag">Routage inter-VLAN</span>
-                                <span class="work-card__tag">CLI Cisco</span>
+                            <div class="work-card__header-line">
+                                <span class="project-domain-tag">// ARCHITECTURE CISCO IOS</span>
+                                <h3 class="work-card__title">Topologies d’Entreprise Cisco (Packet Tracer)</h3>
                             </div>
-                            <span class="work-card__cta">Consulter les détails techniques <span class="arrow">→</span></span>
+                            <p class="work-card__description">
+                                Conception et configuration complète en ligne de commande (CLI Cisco IOS) d'architectures réseau commutées et routées : calcul de sous-réseaux VLSM, création de VLANs pour cloisonner les flux métiers, agrégation 802.1Q (Trunk), routage inter-VLAN (Router-on-a-Stick), relais DHCP (ip helper-address) et sécurisation des ports d'accès (Port Security).
+                            </p>
+                            <div class="work-card__highlights-grid">
+                                <div class="card-highlight"><span class="k">Équipements :</span> <span class="v">Routeurs Cisco 2911, Switchs Catalyst 2960 (L2/L3)</span></div>
+                                <div class="card-highlight"><span class="k">Sécurité L2 :</span> <span class="v">Port Security (max MAC, action violation shutdown)</span></div>
+                            </div>
+                            <div class="work-card__tags">
+                                <span class="work-card__tag">Cisco IOS CLI</span>
+                                <span class="work-card__tag">VLAN Trunking 802.1Q</span>
+                                <span class="work-card__tag">Routage Inter-VLAN</span>
+                                <span class="work-card__tag">DHCP Helper IP</span>
+                                <span class="work-card__tag">Port Security</span>
+                                <span class="work-card__tag">VLSM</span>
+                            </div>
+                            <div class="work-card__cta-row">
+                                <span class="work-card__cta">Consulter la fiche technique & topologie <span class="arrow" aria-hidden="true">→</span></span>
+                                <span class="work-card__keyboard-hint">Entrée pour ouvrir</span>
+                            </div>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- 05: MON CV INTERACTIF -->
+        <!-- 04: MON CV INTERACTIF -->
         <section class="page-section page-section--alt" id="cv">
             <div class="container">
-                <span class="section-number__text">05</span>
-                
-                <h2 class="section-title">Mon Curriculum Vitae</h2>
-                <p class="section-subtitle">
-                    Découvrez mon parcours académique, mes immersions en entreprise lors de mes stages et le niveau de maîtrise de mes compétences.
-                </p>
+                <div class="section-header">
+                    <span class="section-badge">// 04. Parcours & Expériences</span>
+                    <h2 class="section-title">Curriculum Vitae</h2>
+                    <p class="section-subtitle">
+                        Parcours académique, historique de stages en entreprise et compétences professionnelles. Optimisé pour l’impression et le téléchargement PDF.
+                    </p>
+                </div>
                 
                 <div class="cv-preview-card">
                     <!-- CV Editorial Header -->
                     <div class="cv-header">
                         <div class="cv-header__title">
                             <h3>Thomas Giraud</h3>
-                            <p>Étudiant BTS SIO (SISR) · Servian, France · Permis B</p>
+                            <p class="cv-header__subtitle">Étudiant BTS SIO (option SISR) · Servian (34), France · Permis B & Véhiculé</p>
                         </div>
                         <div class="cv-header__contacts">
-                            <a href="mailto:tgiraud0604@gmail.com"><svg aria-hidden="true" class="icon-inline" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg> tgiraud0604@gmail.com</a>
-                            <a href="https://github.com/tgiraud2007" target="_blank" rel="noopener"><svg aria-hidden="true" class="icon-inline" viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg> GitHub</a>
-                            <a href="https://linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener"><svg aria-hidden="true" class="icon-inline" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg> LinkedIn</a>
+                            <a href="mailto:tgiraud0604@gmail.com" class="cv-contact-link">
+                                <svg aria-hidden="true" class="icon-inline" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
+                                <span>tgiraud0604@gmail.com</span>
+                            </a>
+                            <a href="https://github.com/tgiraud2007" target="_blank" rel="noopener" class="cv-contact-link">
+                                <svg aria-hidden="true" class="icon-inline" viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                <span>github.com/tgiraud2007</span>
+                            </a>
+                            <a href="https://linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener" class="cv-contact-link">
+                                <svg aria-hidden="true" class="icon-inline" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+                                <span>linkedin.com/in/thomas-giraud</span>
+                            </a>
                         </div>
                     </div>
                     
                     <div class="cv-grid">
-                        <!-- Left Column: Experience & Formations -->
+                        <!-- Left Column: Formations & Stages -->
                         <div class="cv-col-left">
                             <div class="cv-block">
-                                <h4 class="cv-section-title">Formations</h4>
+                                <h4 class="cv-section-title">// Formations Académiques</h4>
                                 
                                 <div class="cv-item">
                                     <div class="cv-item__header">
-                                        <span class="cv-item__title">BTS SIO option SISR</span>
+                                        <span class="cv-item__title">BTS SIO (option SISR)</span>
                                         <span class="cv-item__date">2025 - Présent</span>
                                     </div>
                                     <div class="cv-item__subtitle">Lycée Marc Bloch, Sérignan</div>
                                     <p class="cv-item__desc">
-                                        Services Informatiques aux Organisations — option Solutions d’Infrastructure, Systèmes et Réseaux. Spécialisation dans la virtualisation d’architectures, l’administration de serveurs et la configuration de commutateurs/routeurs.
+                                        Option SISR (Solutions d’Infrastructure, Systèmes et Réseaux) : administration de parcs serveurs (Windows Server, Linux), conception et segmentation réseau (Cisco IOS, VLANs, Routage), politiques de sécurité et virtualisation.
                                     </p>
                                 </div>
                                 
                                 <div class="cv-item">
                                     <div class="cv-item__header">
-                                        <span class="cv-item__title">Bac Pro SN (Systèmes Numériques)</span>
+                                        <span class="cv-item__title">Baccalauréat Professionnel SN (Systèmes Numériques)</span>
                                         <span class="cv-item__date">2022 - 2025</span>
                                     </div>
                                     <div class="cv-item__subtitle">Lycée Jean Moulin, Béziers</div>
                                     <p class="cv-item__desc">
-                                        Apprentissage des bases du câblage, de la maintenance matérielle informatique, du dépannage matériel et de l’optimisation réseau client.
+                                        Acquisition des fondamentaux du câblage réseau cuivre et optique, maintenance préventive/curative, assemblage matériel de postes informatiques et assistance technique utilisateur.
                                     </p>
                                 </div>
 
-                                <div class="cv-item">
+                                <div class="cv-item cv-item--compact">
                                     <div class="cv-item__header">
                                         <span class="cv-item__title">Diplôme National du Brevet</span>
                                         <span class="cv-item__date">2022</span>
@@ -660,8 +815,8 @@
                                 </div>
                             </div>
                             
-                            <div class="cv-block" style="margin-top: var(--space-6);">
-                                <h4 class="cv-section-title">Expériences — Stages Pro</h4>
+                            <div class="cv-block">
+                                <h4 class="cv-section-title">// Expériences & Stages en Entreprise</h4>
                                 
                                 <div class="cv-item">
                                     <div class="cv-item__header">
@@ -669,98 +824,89 @@
                                         <span class="cv-item__date">2025 (3 sem.)</span>
                                     </div>
                                     <p class="cv-item__desc">
-                                        Remplacement d’écrans et de batteries de smartphones. Conseil clientèle et ventes directes sur téléphones et équipements mobiles.
+                                        Diagnostic méthodique de pannes matérielles/logicielles sur smartphones et terminaux mobiles, remplacement de composants (écrans, batteries, connecteurs de charge) et conseil personnalisé auprès des utilisateurs.
                                     </p>
                                 </div>
 
                                 <div class="cv-item">
                                     <div class="cv-item__header">
-                                        <span class="cv-item__title">Stagiaire Support · XEFI BÉZIERS</span>
+                                        <span class="cv-item__title">Stagiaire Déploiement & Support · XEFI BÉZIERS</span>
                                         <span class="cv-item__date">2024 (3 sem.)</span>
                                     </div>
                                     <p class="cv-item__desc">
-                                        Configuration de logiciels (Windows, Office 365, VPN, antivirus), formatage d’ordinateurs et réinstallation de systèmes d’exploitation complets.
+                                        Masterisation et préparation de postes clients d’entreprise : installation et configuration système (Windows 10/11 Pro, suite Microsoft 365, clients VPN, antivirus managé), formatage, réinstallation complète et tests de bon fonctionnement.
                                     </p>
                                 </div>
 
                                 <div class="cv-item">
                                     <div class="cv-item__header">
-                                        <span class="cv-item__title">Stagiaire de Terrain · PLENISUD INFORMATIQUE</span>
-                                        <span class="cv-item__date">2023 - 2024 (8 sem. - 2 stages)</span>
+                                        <span class="cv-item__title">Stagiaire Maintenance Informatique · PLENISUD INFORMATIQUE</span>
+                                        <span class="cv-item__date">2023 - 2024 (8 sem. - 2 périodes)</span>
                                     </div>
                                     <p class="cv-item__desc">
-                                        Opérations de sauvegarde et de restauration sécurisée de partitions Windows. Configuration de machines et installations logicielles clients.
+                                        Sauvegarde et restauration d'images de disques et partitions système, nettoyage logiciel approfondi, intégration de postes au réseau local et configuration de profils utilisateurs.
                                     </p>
                                 </div>
 
                                 <div class="cv-item">
                                     <div class="cv-item__header">
-                                        <span class="cv-item__title">Technicien PC Stagiaire · TOOBÉZIERS.COM</span>
-                                        <span class="cv-item__date">2023 (6 sem. - 2 stages)</span>
+                                        <span class="cv-item__title">Technicien Support & Atelier · TOOBÉZIERS.COM</span>
+                                        <span class="cv-item__date">2023 (6 sem. - 2 périodes)</span>
                                     </div>
                                     <p class="cv-item__desc">
-                                        Configuration et optimisation fine de Windows sur postes clients. Montage complet de PCs sur mesure et interventions d’assistance informatique à domicile et en entreprise.
+                                        Assemblage de configurations PC sur mesure, optimisation de systèmes d'exploitation, dépannage matériel en atelier et interventions d'assistance informatique sur site.
                                     </p>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Right Column: Skills bars -->
+                        <!-- Right Column: Technical Skills & Languages -->
                         <div class="cv-col-right">
-                            <h4 class="cv-section-title">Index des Compétences</h4>
+                            <h4 class="cv-section-title">// Compétences Techniques</h4>
                             
-                            <div class="cv-skill-group">
-                                <div class="cv-item__header">
-                                    <span class="cv-skill-group__name">Systèmes d’Exploitation (Windows, Linux, Apache)</span>
-                                    <span class="cv-skill-level cv-skill-level--advanced">AVANCÉ</span>
+                            <div class="cv-skills-list">
+                                <div class="cv-skill-group">
+                                    <h5 class="cv-skill-group__title">Systèmes & Serveurs</h5>
+                                    <p class="cv-skill-group__items">Active Directory DS, GPO, Windows Server 2022, DNS, DHCP, Permissions NTFS, Linux Debian, Apache.</p>
                                 </div>
-                                <div class="cv-skill-bar">
-                                    <div class="cv-skill-bar__fill" data-width="90%" style="width: 0%;"></div>
+
+                                <div class="cv-skill-group">
+                                    <h5 class="cv-skill-group__title">Réseaux & Commutation</h5>
+                                    <p class="cv-skill-group__items">Cisco IOS CLI (Switchs 2960, Routeurs 2911), VLANs 802.1Q, Inter-VLAN, Adressage VLSM, Wireshark.</p>
                                 </div>
-                            </div>
-                            
-                            <div class="cv-skill-group">
-                                <div class="cv-item__header">
-                                    <span class="cv-skill-group__name">Maintenance & Support PC (Dépannage, Montage)</span>
-                                    <span class="cv-skill-level cv-skill-level--advanced">AVANCÉ</span>
+
+                                <div class="cv-skill-group">
+                                    <h5 class="cv-skill-group__title">Sécurité & Filtrage</h5>
+                                    <p class="cv-skill-group__items">Pare-feux IPFire & ZeroShell, Règles de filtrage (DROP/ACCEPT), NAT/PAT, DMZ, Portail captif.</p>
                                 </div>
-                                <div class="cv-skill-bar">
-                                    <div class="cv-skill-bar__fill" data-width="90%" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="cv-skill-group">
-                                <div class="cv-item__header">
-                                    <span class="cv-skill-group__name">Administration Réseau (AD, GPO, Sécurité)</span>
-                                    <span class="cv-skill-level cv-skill-level--advanced">AVANCÉ</span>
-                                </div>
-                                <div class="cv-skill-bar">
-                                    <div class="cv-skill-bar__fill" data-width="85%" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="cv-skill-group">
-                                <div class="cv-item__header">
-                                    <span class="cv-skill-group__name">Développement & Scripting (Python, PowerShell, Batch)</span>
-                                    <span class="cv-skill-level cv-skill-level--beginner">DÉBUTANT</span>
-                                </div>
-                                <div class="cv-skill-bar">
-                                    <div class="cv-skill-bar__fill" data-width="40%" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="cv-skill-group">
-                                <div class="cv-item__header">
-                                    <span class="cv-skill-group__name">Anglais technique (Niveau B1 européen)</span>
-                                    <span class="cv-skill-level cv-skill-level--intermediate">INTERMÉDIAIRE</span>
-                                </div>
-                                <div class="cv-skill-bar">
-                                    <div class="cv-skill-bar__fill" data-width="80%" style="width: 0%;"></div>
+
+                                <div class="cv-skill-group">
+                                    <h5 class="cv-skill-group__title">Support, Outils & Matériel</h5>
+                                    <p class="cv-skill-group__items">VirtualBox, Cisco Packet Tracer, Dépannage matériel & logiciel, Masterisation, Scripting Batch/PowerShell.</p>
                                 </div>
                             </div>
 
-                            <div class="cv-block" style="margin-top: var(--space-6);">
-                                <h4 class="cv-section-title">Centres d’Intérêt</h4>
+                            <div class="cv-block" style="margin-top: var(--space-5);">
+                                <h4 class="cv-section-title">// Langues</h4>
+                                <div class="cv-lang-item">
+                                    <div class="cv-item__header">
+                                        <span class="cv-item__title">Français</span>
+                                        <span class="cv-skill-level cv-skill-level--advanced">LANGUE MATERNELLE</span>
+                                    </div>
+                                </div>
+                                <div class="cv-lang-item" style="margin-top: var(--space-2);">
+                                    <div class="cv-item__header">
+                                        <span class="cv-item__title">Anglais technique</span>
+                                        <span class="cv-skill-level cv-skill-level--intermediate">NIVEAU B1</span>
+                                    </div>
+                                    <p class="cv-item__desc" style="font-size: 12px; margin-top: 2px;">
+                                        Lecture fluide de documentations techniques, manuels constructeurs et RFC.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="cv-block" style="margin-top: var(--space-5);">
+                                <h4 class="cv-section-title">// Centres d’Intérêt</h4>
                                 <div class="cv-interests-group">
                                     <span class="cv-interest-tag"><svg aria-hidden="true" class="icon-inline" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg"><path d="M480 288c-50.1 0-93.6 28.8-114.6 70.8L132.9 126.3l.6-.6 60.1-60.1c87.5-87.5 229.3-87.5 316.8 0c67.1 67.1 82.7 166.3 46.8 248.3C535.8 297.6 509 288 480 288zM113.3 151.9L354.1 392.7c-1.4 7.5-2.1 15.3-2.1 23.3c0 23.2 6.2 44.9 16.9 63.7c-3 .2-6.1 .3-9.2 .3H357c-33.9 0-66.5-13.5-90.5-37.5l-9.8-9.8c-13.1-13.1-34.6-12.4-46.8 1.7L152.2 501c-5.8 6.7-14.2 10.7-23 11s-17.5-3.1-23.8-9.4l-32-32c-6.3-6.3-9.7-14.9-9.4-23.8s4.3-17.2 11-23l66.6-57.7c14-12.2 14.8-33.7 1.7-46.8l-9.8-9.8c-24-24-37.5-56.6-37.5-90.5v-2.7c0-22.8 6.1-44.9 17.3-64.3zM480 320a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg> Tennis</span>
                                     <span class="cv-interest-tag"><svg aria-hidden="true" class="icon-inline" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M192 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm51.3 182.7L224.2 307l49.7 49.7c9 9 14.1 21.2 14.1 33.9V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V397.3l-73.9-73.9c-15.8-15.8-22.2-38.6-16.9-60.3l20.4-84c8.3-34.1 42.7-54.9 76.7-46.4c19 4.8 35.6 16.4 46.4 32.7L305.1 208H336V184c0-13.3 10.7-24 24-24s24 10.7 24 24v55.8c0 .1 0 .2 0 .2s0 .2 0 .2V488c0 13.3-10.7 24-24 24s-24-10.7-24-24V272H296.6c-16 0-31-8-39.9-21.4l-13.3-20zM81.1 471.9L117.3 334c3 4.2 6.4 8.2 10.1 11.9l41.9 41.9L142.9 488.1c-4.5 17.1-22 27.3-39.1 22.8s-27.3-22-22.8-39.1zm55.5-346L101.4 266.5c-3 12.1-14.9 19.9-27.2 17.9l-47.9-8c-14-2.3-22.9-16.3-19.2-30L31.9 155c9.5-34.8 41.1-59 77.2-59h4.2c15.6 0 27.1 14.7 23.3 29.8z"/></svg> Randonnée</span>
@@ -772,54 +918,99 @@
                 
                 <div class="cv-actions">
                     <a class="btn btn--primary btn--large" href="CV/cv.pdf" download id="download-cv-btn">
-                        <svg aria-hidden="true" class="icon-inline" style="margin-right: 8px;" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V304H176c-35.3 0-64 28.7-64 64V512H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56H192v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V448 368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24H192v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48H304c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H320v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16H448v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H448v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V432 368z"/></svg> Télécharger le CV (PDF)
+                        <svg aria-hidden="true" class="icon-inline" style="margin-right: 8px;" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V304H176c-35.3 0-64 28.7-64 64V512H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56H192v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V448 368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24H192v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48H304c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H320v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16H448v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H448v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V432 368z"/></svg>
+                        <span>Télécharger le CV complet (PDF)</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- 06: CONTACT SECTION (TERMINAL-INPUT FORM) -->
+        <!-- 05: CONTACT SECTION -->
         <section class="page-section" id="contact">
             <div class="container">
-                <span class="section-number__text">06</span>
-                
-                <h2 class="section-title" id="contact-title">Me Contacter</h2>
-                
-                <div class="contact-container">
-                    <p class="section-subtitle" style="text-align: center; margin: 0 auto var(--space-6) auto;">
-                        Vous souhaitez discuter d’une opportunité de stage ou collaborer sur un projet technique ? N’hésitez pas à m’envoyer un message !
+                <div class="section-header">
+                    <span class="section-badge">// 05. Prise de Contact</span>
+                    <h2 class="section-title" id="contact-title">Entrons en Contact</h2>
+                    <p class="section-subtitle">
+                        Vous recherchez un profil rigoureux en administration systèmes & réseaux pour un stage ? Discutons-en dès aujourd'hui.
                     </p>
+                </div>
+                
+                <div class="contact-layout">
+                    <!-- Left: Contact Direct Info -->
+                    <div class="contact-info-card">
+                        <h3 class="contact-info-title">// Informations Directes</h3>
+                        <p class="contact-info-desc">
+                            Disponible pour un stage de 6 semaines du 04/01/2027 au 12/02/2027 et pour tout échange technique dans le secteur de Béziers, Sérignan, Agde et alentours.
+                        </p>
+                        
+                        <div class="contact-details-list">
+                            <div class="contact-detail-row">
+                                <span class="contact-detail-label">E-mail</span>
+                                <div class="contact-detail-val">
+                                    <a href="mailto:tgiraud0604@gmail.com">tgiraud0604@gmail.com</a>
+                                    <button type="button" class="mini-copy-btn copy-email-btn" data-email="tgiraud0604@gmail.com" aria-label="Copier l'adresse e-mail">Copier</button>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-detail-row">
+                                <span class="contact-detail-label">Localisation</span>
+                                <span class="contact-detail-val">Servian (34), Occitanie · Permis B</span>
+                            </div>
 
+                            <div class="contact-detail-row">
+                                <span class="contact-detail-label">Formation</span>
+                                <span class="contact-detail-val">Lycée Marc Bloch, Sérignan (BTS SIO)</span>
+                            </div>
 
-                    <!-- Modern Clean Premium Form Card -->
+                            <div class="contact-detail-row">
+                                <span class="contact-detail-label">Disponibilité</span>
+                                <span class="contact-detail-val"><span class="status-dot"></span> Recherche active de stage</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-socials">
+                            <a class="social-link-btn" href="https://github.com/tgiraud2007" target="_blank" rel="noopener">
+                                <svg aria-hidden="true" class="icon-inline" viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                <span>GitHub / tgiraud2007</span>
+                            </a>
+                            <a class="social-link-btn" href="https://www.linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener">
+                                <svg aria-hidden="true" class="icon-inline" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+                                <span>LinkedIn / thomas-giraud</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Modern Clean Form Card -->
                     <div class="contact-card">
-                        <form id="console-contact-form" action="https://formspree.io/f/xeovrdvk" method="POST" class="contact-form">
+                        <form id="console-contact-form" action="https://formspree.io/f/xeovrdvk" method="POST" class="contact-form" novalidate>
                             <div class="contact-form__row">
                                 <div class="contact-form__group">
-                                    <label for="contact-name" class="contact-form__label">Nom complet</label>
-                                    <input type="text" id="contact-name" name="name" class="contact-form__input" placeholder="ex : Jean Dupont" required autocomplete="name">
+                                    <label for="contact-name" class="contact-form__label">Nom complet <span class="req">*</span></label>
+                                    <input type="text" id="contact-name" name="name" class="contact-form__input" placeholder="ex : Jean Dupont" required autocomplete="name">
                                 </div>
                                 <div class="contact-form__group">
-                                    <label for="contact-email" class="contact-form__label">Adresse e-mail</label>
-                                    <input type="email" id="contact-email" name="email" class="contact-form__input" placeholder="ex : jean.dupont@email.com" required autocomplete="email">
+                                    <label for="contact-email" class="contact-form__label">Adresse e-mail <span class="req">*</span></label>
+                                    <input type="email" id="contact-email" name="email" class="contact-form__input" placeholder="ex : jean.dupont@entreprise.fr" required autocomplete="email">
                                 </div>
                             </div>
                             
                             <div class="contact-form__group">
-                                <label for="contact-subject" class="contact-form__label">Objet</label>
-                                <input type="text" id="contact-subject" name="subject" class="contact-form__input" placeholder="ex : Proposition de stage" required>
+                                <label for="contact-subject" class="contact-form__label">Objet <span class="req">*</span></label>
+                                <input type="text" id="contact-subject" name="subject" class="contact-form__input" placeholder="ex : Proposition de stage / Échange technique" required>
                             </div>
                             
                             <div class="contact-form__group">
-                                <label for="contact-message" class="contact-form__label">Votre message</label>
-                                <textarea id="contact-message" name="message" class="contact-form__input contact-form__textarea" placeholder="Saisissez votre message ici..." required></textarea>
+                                <label for="contact-message" class="contact-form__label">Votre message <span class="req">*</span></label>
+                                <textarea id="contact-message" name="message" class="contact-form__input contact-form__textarea" placeholder="Détaillez votre proposition ou question ici..." required></textarea>
                             </div>
                             
                             <div class="contact-form__actions">
                                 <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="contact-form__honeypot" aria-hidden="true">
 
                                 <button type="submit" class="btn btn--primary contact-form__submit-btn">
-                                    <svg aria-hidden="true" class="icon-inline" style="margin-right: 8px;" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"/></svg> Envoyer le message
+                                    <svg aria-hidden="true" class="icon-inline" style="margin-right: 8px;" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"/></svg>
+                                    <span>Envoyer le message</span>
                                 </button>
                             </div>
                         </form>
@@ -828,8 +1019,8 @@
                             <div class="success-icon-wrap">
                                 <svg aria-hidden="true" class="icon-inline" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
                             </div>
-                            <h3>Message transmis avec succès !</h3>
-                            <p>Merci pour votre prise de contact. Je vous répondrai dans les plus brefs délais.</p>
+                            <h3>Message transmis avec succès !</h3>
+                            <p>Merci pour votre message. Je vous répondrai dans les plus brefs délais.</p>
                         </div>
                     </div>
                 </div>
@@ -842,37 +1033,44 @@
     <footer class="site-footer">
         <div class="container">
             <div class="site-footer__grid">
-                <div>
+                <div class="site-footer__brand-col">
                     <span class="site-footer__brand">THOMAS GIRAUD</span>
-                    <span class="site-footer__tagline">conçu avec rigueur. sandboxing & architectures réseaux.</span>
+                    <span class="site-footer__tagline">Étudiant BTS SIO option SISR — Administration Systèmes & Réseaux. Conception et maquettage d’infrastructures virtualisées.</span>
+                    <div class="site-footer__location">
+                        <span class="loc-dot"></span> Lycée Marc Bloch, Sérignan · Servian (34)
+                    </div>
                 </div>
                 
-                <nav class="site-footer__nav">
+                <nav class="site-footer__nav" aria-label="Navigation pied de page">
                     <div class="site-footer__nav-col">
-                        <a class="site-footer__link site-footer__link--heading" href="#hero">Accueil</a>
+                        <span class="site-footer__link site-footer__link--heading">Navigation</span>
+                        <a class="site-footer__link" href="#hero">Accueil</a>
                         <a class="site-footer__link" href="#about">À propos</a>
+                        <a class="site-footer__link" href="#services">Compétences</a>
                     </div>
                     
                     <div class="site-footer__nav-col">
-                        <a class="site-footer__link site-footer__link--heading" href="#services">Compétences</a>
-                        <a class="site-footer__link" href="#work">Réalisations</a>
-                        <a class="site-footer__link" href="#cv">Curriculum vitae</a>
+                        <span class="site-footer__link site-footer__link--heading">Dossier</span>
+                        <a class="site-footer__link" href="#work">Réalisations & Labs</a>
+                        <a class="site-footer__link" href="#cv">Curriculum Vitae</a>
+                        <a class="site-footer__link" href="#contact">Me contacter</a>
                     </div>
                     
                     <div class="site-footer__nav-col">
-                        <span class="site-footer__link site-footer__link--heading">Réseaux</span>
+                        <span class="site-footer__link site-footer__link--heading">Profils</span>
                         <a class="site-footer__link" href="https://github.com/tgiraud2007" target="_blank" rel="noopener">GitHub</a>
                         <a class="site-footer__link" href="https://www.linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener">LinkedIn</a>
+                        <a class="site-footer__link" href="CV/cv.pdf" download>CV (Format PDF)</a>
                     </div>
                 </nav>
             </div>
             
             <div class="site-footer__bottom">
-                <span class="site-footer__copy">Lycée Marc Bloch, Sérignan</span>
+                <span class="site-footer__copy">© 2026 Thomas Giraud · Tous droits réservés.</span>
                 <div class="site-footer__legal">
-                    <button type="button" class="site-footer__legal-link" id="footer-shortcuts-trigger">raccourcis [?]</button>
+                    <button type="button" class="site-footer__legal-link" id="footer-shortcuts-trigger">Raccourcis [?]</button>
                     <span>·</span>
-                    <button type="button" class="site-footer__legal-link" id="footer-settings-trigger">options [S]</button>
+                    <button type="button" class="site-footer__legal-link" id="footer-settings-trigger">Options [S]</button>
                 </div>
             </div>
         </div>
@@ -881,11 +1079,11 @@
     <!-- Back to Top Button -->
     <button type="button" class="back-to-top" id="back-to-top" aria-label="Retourner en haut de la page">
         <svg aria-hidden="true" class="icon-inline" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
-        <span class="back-to-top__label">haut</span>
+        <span class="back-to-top__label">Haut</span>
     </button>
 
     <!-- Bottom Status Bar -->
-    <div class="status-bar">
+    <aside class="status-bar" aria-label="Barre d'état du terminal">
         <div class="status-bar__inner">
             <!-- Current section path -->
             <div class="status-bar__segment status-bar__path">
@@ -905,16 +1103,16 @@
             </div>
             
             <!-- Settings button segment -->
-            <button type="button" class="status-bar__btn" id="status-bar-settings-btn" title="Paramètres du site [g,]" aria-label="Paramètres du site">
-                S
+            <button type="button" class="status-bar__btn" id="status-bar-settings-btn" title="Options et préférences [S]" aria-label="Ouvrir les options">
+                <span class="btn-glyph">S</span> Options
             </button>
             
             <!-- Help button segment -->
-            <button type="button" class="status-bar__btn" id="status-bar-help-btn" title="Aide clavier [?]" aria-label="Aide clavier">
-                ?
+            <button type="button" class="status-bar__btn" id="status-bar-help-btn" title="Aide raccourcis clavier [?]" aria-label="Ouvrir l'aide clavier">
+                <span class="btn-glyph">?</span> Clavier
             </button>
         </div>
-    </div>
+    </aside>
 
     <!-- MODAL 1: KEYBOARD SHORTCUTS HELP -->
     <div class="modal-overlay" id="shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="shortcuts-modal-title">
@@ -926,69 +1124,73 @@
             <div class="modal-body">
                 <div class="shortcuts-grid">
                     <div class="shortcuts-group">
-                        <h3 class="shortcuts-group-title">Navigation</h3>
+                        <h3 class="shortcuts-group-title">Navigation fluide (Style Vim)</h3>
                         <div class="shortcut-row">
                             <span class="shortcut-desc">Faire défiler vers le bas</span>
-                            <span class="shortcut-keys">j</span>
+                            <span class="shortcut-keys"><kbd>j</kbd></span>
                         </div>
                         <div class="shortcut-row">
                             <span class="shortcut-desc">Faire défiler vers le haut</span>
-                            <span class="shortcut-keys">k</span>
+                            <span class="shortcut-keys"><kbd>k</kbd></span>
                         </div>
                         <div class="shortcut-row">
                             <span class="shortcut-desc">Aller tout en haut</span>
-                            <span class="shortcut-keys">g puis g</span>
+                            <span class="shortcut-keys"><kbd>g</kbd> puis <kbd>g</kbd></span>
                         </div>
                         <div class="shortcut-row">
                             <span class="shortcut-desc">Aller tout en bas</span>
-                            <span class="shortcut-keys">G (Maj+G)</span>
+                            <span class="shortcut-keys"><kbd>G</kbd> (Maj+G)</span>
                         </div>
                     </div>
                     
                     <div class="shortcuts-group">
-                        <h3 class="shortcuts-group-title">Sauts Directs (Jumps)</h3>
+                        <h3 class="shortcuts-group-title">Sauts Directs aux Sections</h3>
                         <div class="shortcut-row">
                             <span class="shortcut-desc">Aller à l’Accueil</span>
-                            <span class="shortcut-keys">g puis h</span>
+                            <span class="shortcut-keys"><kbd>g</kbd> puis <kbd>h</kbd></span>
                         </div>
                         <div class="shortcut-row">
-                            <span class="shortcut-desc">Aller aux Projets</span>
-                            <span class="shortcut-keys">g puis p</span>
+                            <span class="shortcut-desc">Aller à À propos</span>
+                            <span class="shortcut-keys"><kbd>g</kbd> puis <kbd>a</kbd></span>
                         </div>
                         <div class="shortcut-row">
                             <span class="shortcut-desc">Aller aux Compétences</span>
-                            <span class="shortcut-keys">g puis s</span>
+                            <span class="shortcut-keys"><kbd>g</kbd> puis <kbd>s</kbd></span>
+                        </div>
+                        <div class="shortcut-row">
+                            <span class="shortcut-desc">Aller aux Projets & Labs</span>
+                            <span class="shortcut-keys"><kbd>g</kbd> puis <kbd>p</kbd></span>
                         </div>
                         <div class="shortcut-row">
                             <span class="shortcut-desc">Aller à la section CV</span>
-                            <span class="shortcut-keys">g puis v</span>
+                            <span class="shortcut-keys"><kbd>g</kbd> puis <kbd>v</kbd></span>
                         </div>
                         <div class="shortcut-row">
-                            <span class="shortcut-desc">Aller au Contact</span>
-                            <span class="shortcut-keys">g puis c</span>
+                            <span class="shortcut-desc">Aller au formulaire Contact</span>
+                            <span class="shortcut-keys"><kbd>g</kbd> puis <kbd>c</kbd></span>
                         </div>
                     </div>
                     
                     <div class="shortcuts-group">
-                        <h3 class="shortcuts-group-title">Général</h3>
+                        <h3 class="shortcuts-group-title">Interface & Fenêtres</h3>
                         <div class="shortcut-row">
-                            <span class="shortcut-desc">Afficher / masquer l’aide</span>
-                            <span class="shortcut-keys">?</span>
+                            <span class="shortcut-desc">Afficher / masquer cette aide</span>
+                            <span class="shortcut-keys"><kbd>?</kbd></span>
                         </div>
                         <div class="shortcut-row">
                             <span class="shortcut-desc">Ouvrir les options du site</span>
-                            <span class="shortcut-keys">g puis ,</span>
+                            <span class="shortcut-keys"><kbd>g</kbd> puis <kbd>,</kbd></span>
                         </div>
                         <div class="shortcut-row">
-                            <span class="shortcut-desc">Fermer les fenêtres</span>
-                            <span class="shortcut-keys">Échap</span>
+                            <span class="shortcut-desc">Fermer toute modale active</span>
+                            <span class="shortcut-keys"><kbd>Échap</kbd></span>
                         </div>
                     </div>
                 </div>
             </div>
             <footer class="modal-footer">
-                <span class="modal-footer-tech-text" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary);">Appuyez sur ? à tout moment pour basculer ce panneau</span>
-                <button type="button" class="btn btn--secondary btn--close-modal" style="padding: 8px 16px;">Fermer</button>
+                <span class="modal-footer-tech-text">Appuyez sur <kbd>?</kbd> à tout moment pour basculer ce panneau</span>
+                <button type="button" class="btn btn--secondary btn--close-modal">Fermer</button>
             </footer>
         </div>
     </div>
@@ -1012,10 +1214,10 @@
                     </label>
                 </div>
                 
-                <div class="settings-option" style="margin-top: var(--space-3);">
+                <div class="settings-option">
                     <div>
-                        <span class="settings-option__label">Curseur personnalisé</span>
-                        <p class="settings-option__desc">Affiche un curseur anguleux et un anneau amorti</p>
+                        <span class="settings-option__label">Curseur personnalisé amorti</span>
+                        <p class="settings-option__desc">Affiche un curseur fluide et un anneau réactif (desktop)</p>
                     </div>
                     <label class="toggle-switch">
                         <input type="checkbox" id="setting-custom-cursor" checked aria-label="Curseur personnalisé">
@@ -1023,26 +1225,26 @@
                     </label>
                 </div>
                 
-                <div class="settings-option" style="margin-top: var(--space-3); border-bottom: none; flex-direction: column; align-items: flex-start; gap: var(--space-2);">
+                <div class="settings-option settings-option--stacked">
                     <div>
                         <span class="settings-option__label">Thème d’affichage</span>
-                        <p class="settings-option__desc">Sélectionnez la palette visuelle de la console</p>
+                        <p class="settings-option__desc">Sélectionnez la palette visuelle</p>
                     </div>
                     <div class="theme-select-group">
                         <button type="button" class="theme-btn is-active" data-theme-val="light">Clair (Crème)</button>
                         <button type="button" class="theme-btn" data-theme-val="dark">Sombre (Console)</button>
-                        <button type="button" class="theme-btn" data-theme-val="system">Système</button>
+                        <button type="button" class="theme-btn" data-theme-val="system">Système (Auto)</button>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn--secondary btn--close-modal" style="padding: 8px 16px;">Annuler</button>
-                <button type="button" class="btn btn--primary" id="save-settings-btn" style="padding: 8px 16px;">Appliquer</button>
+                <button type="button" class="btn btn--secondary btn--close-modal">Annuler</button>
+                <button type="button" class="btn btn--primary" id="save-settings-btn">Appliquer & Sauvegarder</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL PROJECT 1 -->
+    <!-- MODAL PROJECT 1: ACTIVE DIRECTORY -->
     <div class="modal-overlay project-modal" id="project-modal-1" role="dialog" aria-modal="true" aria-labelledby="project-modal-1-title">
         <div class="modal-content modal-content--large" role="document">
             <header class="modal-header">
@@ -1052,33 +1254,6 @@
             <div class="modal-body">
                 <div class="project-diagram" aria-hidden="true">
                     <svg class="project-diagram__svg" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <filter id="glow-ad" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="6" result="blur" />
-                                <feMerge>
-                                    <feMergeNode in="blur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </femerge>
-                            </filter>
-                        </defs>
-                        <style>
-                            .route-line { stroke: var(--border-color); stroke-width: 1.5; stroke-dasharray: 6, 6; }
-                            .route-line--dashed { stroke-dasharray: 3, 5; }
-                            .packet-flow { stroke-width: 2; stroke-linecap: round; animation: packet-move 4s linear infinite; }
-                            .packet-flow--blue { stroke: var(--color-blue); stroke-dasharray: 10, 100; }
-                            .packet-flow--orange { stroke: var(--color-orange); stroke-dasharray: 10, 80; animation-duration: 3s; }
-                            .packet-flow--green { stroke: var(--color-green); stroke-dasharray: 8, 90; animation-duration: 5s; }
-                            @keyframes packet-move { to { stroke-dashoffset: -120; } }
-                            .node-bg { fill: var(--bg-secondary); stroke: var(--border-color); stroke-width: 1.5; transition: all 0.3s; }
-                            .node-group:hover .node-bg { stroke: var(--color-blue); fill: var(--color-blue-subtle); filter: url(#glow-ad); }
-                            .node-group--alert:hover .node-bg { stroke: var(--color-orange); fill: var(--color-orange-subtle); }
-                            .node-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--text-secondary); text-anchor: middle; }
-                            .node-group:hover .node-text { fill: var(--text-primary); font-weight: bold; }
-                            .node-text--dim { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--text-tertiary); text-anchor: middle; }
-                            .icon-path { stroke: var(--text-primary); stroke-width: 1.5; fill: none; }
-                            .node-group:hover .icon-path { stroke: var(--color-blue); }
-                        </style>
-
                         <path class="route-line" d="M110,94 L240,130" />
                         <path class="packet-flow packet-flow--blue" d="M110,94 L240,130" />
                         <path class="route-line" d="M370,94 L240,130" />
@@ -1095,7 +1270,7 @@
                             <circle cx="103" cy="62" r="1" fill="var(--color-blue)" />
                             <circle cx="103" cy="72" r="1" fill="var(--color-blue)" />
                             <text class="node-text" x="110" y="110">DC: AD + DNS + DHCP</text>
-                            <text class="node-text--dim" x="110" y="121">[VLAN 10]</text>
+                            <text class="node-text--dim" x="110" y="121">[VLAN 10 · SRV2022]</text>
                         </g>
 
                         <g class="node-group">
@@ -1103,11 +1278,11 @@
                             <rect class="icon-path" x="358" y="58" width="24" height="16" rx="2" />
                             <path class="icon-path" d="M358,60 L370,68 L382,60" />
                             <text class="node-text" x="370" y="110">MAIL SERVER (hMail)</text>
-                            <text class="node-text--dim" x="370" y="121">[VLAN 10]</text>
+                            <text class="node-text--dim" x="370" y="121">[VLAN 10 · SMTP/IMAP]</text>
                         </g>
 
                         <g class="node-group">
-                            <rect class="node-bg" x="200" y="130" width="80" height="24" rx="3" />
+                            <rect class="node-bg" x="200" y="130" width="80" height="24" rx="4" />
                             <path class="icon-path" d="M210,142 L220,142 M217,139 L220,142 L217,145 M270,142 L260,142 M263,139 L260,142 L263,145" />
                             <circle cx="230" cy="142" r="1.5" fill="var(--color-green)" />
                             <circle cx="240" cy="142" r="1.5" fill="var(--color-green)" />
@@ -1120,58 +1295,69 @@
                             <rect class="icon-path" x="98" y="229" width="24" height="16" rx="2" />
                             <path class="icon-path" d="M106,245 L106,249 L114,249 L114,245" />
                             <text class="node-text" x="110" y="278">CLIENT WIN 10</text>
-                            <text class="node-text--dim" x="110" y="289">[VLAN 10]</text>
+                            <text class="node-text--dim" x="110" y="289">[Joint au Domaine]</text>
                         </g>
 
                         <g class="node-group">
                             <circle class="node-bg" cx="370" cy="240" r="24" />
                             <rect class="icon-path" x="358" y="229" width="24" height="16" rx="2" />
                             <path class="icon-path" d="M366,245 L366,249 L374,249 L374,245" />
-                            <text class="node-text" x="370" y="278">CLIENT DEBIAN</text>
-                            <text class="node-text--dim" x="370" y="289">[VLAN 10]</text>
+                            <text class="node-text" x="370" y="278">CLIENT DEBIAN 12</text>
+                            <text class="node-text--dim" x="370" y="289">[Client Web / Messagerie]</text>
                         </g>
                     </svg>
                     <div class="project-diagram__caption">
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--blue"></span>Flux DNS / DHCP</span>
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--green"></span>Messagerie interne</span>
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--orange"></span>Authentification AD</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--blue"></span>Flux DNS & DHCP (UDP 53/67)</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--green"></span>Messagerie interne (SMTP 25, IMAP 143)</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--orange"></span>Authentification Kerberos & GPO (TCP 88/389/445)</span>
                     </div>
                 </div>
+                
                 <div class="project-modal-grid">
                     <div class="project-modal-details">
-                        <h3 class="project-modal-subtitle">Maquette Active Directory & Services Windows Server</h3>
+                        <h3 class="project-modal-subtitle">Maquette Active Directory DS & Services Windows Server</h3>
                         <p class="project-modal-text">
-                            <strong>Objectif du Laboratoire :</strong> déployer une maquette d’infrastructure réseau d’entreprise complète et sécurisée, virtualisée de bout en bout sous <strong>VirtualBox</strong>.
+                            <strong>Contexte & Objectif :</strong> Déployer une infrastructure réseau d’entreprise virtualisée sous <strong>VirtualBox</strong>, assurant la centralisation de l'authentification, la distribution dynamique des adresses IP, la résolution de noms de domaine interne et la messagerie d'entreprise.
                         </p>
-                        <ul class="project-modal-bullets" style="margin-top: var(--space-3); padding-left: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);">
-                            <li><strong>Contrôleur de Domaine (AD DS)</strong> : gestion centralisée des utilisateurs, ordinateurs et politiques de groupe (GPO).</li>
-                            <li><strong>Services d’infrastructure</strong> : rôle DHCP pour l’adressage IP dynamique et DNS pour la résolution de noms de domaine internes (recherches directes et inverses).</li>
-                            <li><strong>Serveur de Messagerie Interne</strong> : implémentation d’un serveur de messagerie sécurisé (hMailServer/Postfix) pour simuler la communication d’entreprise.</li>
-                            <li><strong>Méthodologie de Test</strong> : utilisation de postes clients virtualisés (Windows 10 et Linux) pour tester l’application des configurations, droits et partages de fichiers.</li>
-                        </ul>
+                        
+                        <div class="modal-section-block">
+                            <h4 class="modal-subheading">// Démarche & Réalisations clés</h4>
+                            <ul class="project-modal-bullets">
+                                <li><strong>Contrôleur de Domaine (AD DS)</strong> : Installation du rôle, promotion du DC, création de la forêt/domaine, structuration en Unités d’Organisation (Direction, Informatique, RH, Compta).</li>
+                                <li><strong>Stratégies de Groupe (GPO)</strong> : Déploiement de restrictions de sécurité (verrouillage de session, mappage automatique de lecteurs réseau par service, blocage du panneau de configuration pour les utilisateurs standard).</li>
+                                <li><strong>Services Réseau Intégrés</strong> : Configuration du rôle DHCP avec plage d’exclusion et baux statiques ; serveur DNS avec zones directes et inverses (enregistrements A, PTR, MX).</li>
+                                <li><strong>Messagerie Interne</strong> : Intégration d'un serveur de messagerie local (hMailServer) avec création des boîtes aux lettres liées aux utilisateurs du domaine.</li>
+                                <li><strong>Tests & Recette</strong> : Jonction au domaine des postes clients (Windows 10 et Debian), vérification de la propagation des GPO (`gpupdate /force`, `gpresult /r`) et validation des flux mails.</li>
+                            </ul>
+                        </div>
                     </div>
+                    
                     <div class="project-modal-sidebar">
                         <div class="project-sidebar-card">
-                            <span class="project-sidebar-title">Technologies clés</span>
-                            <div class="work-card__tags" style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-                                <span class="work-card__tag">Windows Server</span>
-                                <span class="work-card__tag">Active Directory</span>
-                                <span class="work-card__tag">DNS & DHCP</span>
-                                <span class="work-card__tag">Serveur Mail</span>
-                                <span class="work-card__tag">VirtualBox</span>
-                            </div>
+                            <span class="project-sidebar-title">Fiche Technique</span>
+                            <div class="sidebar-spec-row"><span class="k">Hyperviseur</span><span class="v">VirtualBox</span></div>
+                            <div class="sidebar-spec-row"><span class="k">OS Serveur</span><span class="v">Windows Server 2022</span></div>
+                            <div class="sidebar-spec-row"><span class="k">Clients</span><span class="v">Win 10 Pro, Debian 12</span></div>
+                            <div class="sidebar-spec-row"><span class="k">Services</span><span class="v">AD DS, DNS, DHCP, GPO</span></div>
+                        </div>
+
+                        <div class="project-sidebar-card">
+                            <span class="project-sidebar-title">Compétences BTS SISR</span>
+                            <div class="competence-badge">B1.1 Gérer le patrimoine informatique</div>
+                            <div class="competence-badge">B1.2 Répondre aux incidents / demandes</div>
+                            <div class="competence-badge">B2.1 Concevoir une solution d'infrastructure</div>
                         </div>
                     </div>
                 </div>
             </div>
             <footer class="modal-footer">
-                <span class="modal-footer-tech-text" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary);">Lab réalisé sous VirtualBox en environnement de sandbox sécurisé</span>
-                <button type="button" class="btn btn--secondary btn--close-modal" style="padding: 8px 16px;">Fermer</button>
+                <span class="modal-footer-tech-text">Environnement sandbox isolé · VirtualBox Network</span>
+                <button type="button" class="btn btn--secondary btn--close-modal">Fermer</button>
             </footer>
         </div>
     </div>
 
-    <!-- MODAL PROJECT 2 -->
+    <!-- MODAL PROJECT 2: IPFIRE -->
     <div class="modal-overlay project-modal" id="project-modal-2" role="dialog" aria-modal="true" aria-labelledby="project-modal-2-title">
         <div class="modal-content modal-content--large" role="document">
             <header class="modal-header">
@@ -1181,34 +1367,6 @@
             <div class="modal-body">
                 <div class="project-diagram" aria-hidden="true">
                     <svg class="project-diagram__svg" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <filter id="glow-ipfire" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="6" result="blur" />
-                                <feMerge>
-                                    <feMergeNode in="blur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </femerge>
-                            </filter>
-                        </defs>
-                        <style>
-                            .route-line { stroke: var(--border-color); stroke-width: 1.5; stroke-dasharray: 6, 6; }
-                            .route-line--dashed { stroke-dasharray: 3, 5; }
-                            .packet-flow { stroke-width: 2; stroke-linecap: round; animation: packet-move 4s linear infinite; }
-                            .packet-flow--blue { stroke: var(--color-blue); stroke-dasharray: 10, 100; }
-                            .packet-flow--orange { stroke: var(--color-orange); stroke-dasharray: 10, 80; animation-duration: 3s; }
-                            .packet-flow--green { stroke: var(--color-green); stroke-dasharray: 8, 90; animation-duration: 5s; }
-                            @keyframes packet-move { to { stroke-dashoffset: -120; } }
-                            .node-bg { fill: var(--bg-secondary); stroke: var(--border-color); stroke-width: 1.5; transition: all 0.3s; }
-                            .node-group:hover .node-bg { stroke: var(--color-blue); fill: var(--color-blue-subtle); filter: url(#glow-ipfire); }
-                            .node-group--alert:hover .node-bg { stroke: var(--color-orange); fill: var(--color-orange-subtle); }
-                            .node-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--text-secondary); text-anchor: middle; }
-                            .node-group:hover .node-text { fill: var(--text-primary); font-weight: bold; }
-                            .node-text--dim { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--text-tertiary); text-anchor: middle; }
-                            .icon-path { stroke: var(--text-primary); stroke-width: 1.5; fill: none; }
-                            .node-group:hover .icon-path { stroke: var(--color-blue); }
-                            .node-group--alert:hover .icon-path { stroke: var(--color-orange); }
-                        </style>
-
                         <path class="route-line" d="M240,79 L240,124" />
                         <path class="packet-flow packet-flow--orange" d="M240,79 L240,124" />
                         <path class="route-line" d="M240,172 L110,221" />
@@ -1230,7 +1388,7 @@
                             <circle class="node-bg" cx="240" cy="148" r="24" />
                             <path class="icon-path" d="M240,136 L230,140 L230,150 C230,156 236,160 240,162 C244,160 250,156 250,150 L250,140 L240,136 Z" />
                             <path class="icon-path" d="M235,146 L245,146 M240,141 L240,157" stroke-dasharray="2, 2" />
-                            <text class="node-text" x="240" y="185" style="fill: var(--color-orange);">FW: IPFIRE (DROP)</text>
+                            <text class="node-text node-text--orange" x="240" y="185">FW: IPFIRE (DROP)</text>
                             <text class="node-text--dim" x="240" y="196">[NAT / PAT + PORT FORWARD]</text>
                         </g>
 
@@ -1240,16 +1398,16 @@
                             <rect class="icon-path" x="98" y="243" width="24" height="8" rx="1" />
                             <circle cx="103" cy="237" r="1" fill="var(--color-blue)" />
                             <circle cx="103" cy="247" r="1" fill="var(--color-blue)" />
-                            <text class="node-text" x="110" y="283">WWW SERVER</text>
-                            <text class="node-text--dim" x="110" y="294">[GREEN] port 443 publié</text>
+                            <text class="node-text" x="110" y="283">SERVEUR WEB</text>
+                            <text class="node-text--dim" x="110" y="294">[GREEN] Port 443 exposé</text>
                         </g>
 
                         <g class="node-group">
                             <circle class="node-bg" cx="240" cy="245" r="24" />
                             <rect class="icon-path" x="228" y="233" width="24" height="16" rx="2" />
                             <path class="icon-path" d="M228,235 L240,243 L252,235" />
-                            <text class="node-text" x="240" y="283">MAIL SERVER</text>
-                            <text class="node-text--dim" x="240" y="294">[GREEN]</text>
+                            <text class="node-text" x="240" y="283">LAN INTERNE</text>
+                            <text class="node-text--dim" x="240" y="294">[GREEN] Postes clients</text>
                         </g>
 
                         <g class="node-group">
@@ -1257,51 +1415,62 @@
                             <path class="icon-path" d="M358,240 A12,12 0 0 1 382,240" />
                             <path class="icon-path" d="M362,245 A8,8 0 0 1 378,245" />
                             <path class="icon-path" d="M367,250 A3,3 0 0 1 373,250" />
-                            <text class="node-text" x="370" y="283">GUEST WIFI</text>
-                            <text class="node-text--dim" x="370" y="294">[BLUE] isolation totale</text>
+                            <text class="node-text" x="370" y="283">ZONE INVITÉS</text>
+                            <text class="node-text--dim" x="370" y="294">[BLUE] Isolation stricte</text>
                         </g>
                     </svg>
                     <div class="project-diagram__caption">
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--orange"></span>WAN / internet</span>
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--blue"></span>Zones autorisées (GREEN)</span>
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--green"></span>Mail interne</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--orange"></span>Trafic externe WAN (Zone RED non fiable)</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--blue"></span>Réseau interne protégé (Zone GREEN)</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--green"></span>Publication HTTPS / Port Forwarding</span>
                     </div>
                 </div>
+                
                 <div class="project-modal-grid">
                     <div class="project-modal-details">
                         <h3 class="project-modal-subtitle">Filtrage Périmétrique Strict & NAT avec IPFire</h3>
                         <p class="project-modal-text">
-                            <strong>Objectif du Laboratoire :</strong> sécuriser un réseau d’entreprise local en isolant les différents segments et en instaurant des politiques de filtrage strictes à l’aide de la distribution pare-feu <strong>IPFire</strong>.
+                            <strong>Contexte & Objectif :</strong> Sécuriser un réseau d’entreprise en déployant une passerelle pare-feu matérielle/logicielle <strong>IPFire</strong> capable d'isoler les zones sensibles, de filtrer les flux au niveau transport et d'exposer publiquement des services sans compromettre le réseau local.
                         </p>
-                        <ul class="project-modal-bullets" style="margin-top: var(--space-3); padding-left: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);">
-                            <li><strong>Politique de filtrage par défaut (DROP)</strong> : tous les flux réseau entrants et sortants sont bloqués par défaut, sauf autorisation explicite.</li>
-                            <li><strong>Zones de Sécurité (RED/GREEN/BLUE)</strong> : cloisonnement physique et logique strict entre le WAN (RED), le réseau interne LAN (GREEN), et le réseau invité sans fil (BLUE).</li>
-                            <li><strong>Traduction d’adresses (NAT / PAT)</strong> : masquage de l’adressage interne pour toutes les requêtes vers l’extérieur.</li>
-                            <li><strong>Redirection sélective de ports (Port Forwarding)</strong> : publication ciblée de services hébergés sur des serveurs internes (ex : web, mail) sans exposer le reste du réseau local.</li>
-                        </ul>
+                        
+                        <div class="modal-section-block">
+                            <h4 class="modal-subheading">// Démarche & Réalisations clés</h4>
+                            <ul class="project-modal-bullets">
+                                <li><strong>Politique de filtrage stricte (Default DROP)</strong> : Rejet par défaut de l'ensemble des flux entrants et sortants. Seuls les flux explicitement déclarés sont autorisés.</li>
+                                <li><strong>Zonage couleur IPFire</strong> : Configuration des cartes réseau émulées : RED (accès Internet), GREEN (réseau d'entreprise sécurisé), BLUE (réseau invité isolé sans accès au LAN GREEN).</li>
+                                <li><strong>Masquage d'adresses (NAT / Masquerading)</strong> : Traduction des adresses privées internes lors des sorties vers le WAN pour masquer la topologie interne.</li>
+                                <li><strong>Redirection sélective (Port Forwarding / DNAT)</strong> : Publication ciblée des ports TCP 80/443 vers le serveur Web de la DMZ avec blocage de toute communication non sollicitée.</li>
+                                <li><strong>Analyse des Journaux de Filtrage</strong> : Examen en temps réel des logs iptables intégrés à IPFire pour vérifier le blocage des tentatives d'intrusion et la conformité des flux.</li>
+                            </ul>
+                        </div>
                     </div>
+                    
                     <div class="project-modal-sidebar">
                         <div class="project-sidebar-card">
-                            <span class="project-sidebar-title">Technologies clés</span>
-                            <div class="work-card__tags" style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-                                <span class="work-card__tag">IPFire</span>
-                                <span class="work-card__tag">Filtrage Strict</span>
-                                <span class="work-card__tag">NAT / PAT</span>
-                                <span class="work-card__tag">Port Forwarding</span>
-                                <span class="work-card__tag">Cybersécurité</span>
-                            </div>
+                            <span class="project-sidebar-title">Fiche Technique</span>
+                            <div class="sidebar-spec-row"><span class="k">Distribution</span><span class="v">IPFire 2.x Linux</span></div>
+                            <div class="sidebar-spec-row"><span class="k">Interfaces</span><span class="v">RED / GREEN / BLUE</span></div>
+                            <div class="sidebar-spec-row"><span class="k">Moteur</span><span class="v">Iptables / Netfilter</span></div>
+                            <div class="sidebar-spec-row"><span class="k">Sécurité</span><span class="v">Politique DROP, NAT/PAT</span></div>
+                        </div>
+
+                        <div class="project-sidebar-card">
+                            <span class="project-sidebar-title">Compétences BTS SISR</span>
+                            <div class="competence-badge">B1.3 Maintenir la sécurité réseau</div>
+                            <div class="competence-badge">B2.2 Déployer un service sécurisé</div>
+                            <div class="competence-badge">B2.3 Sécuriser les accès et flux</div>
                         </div>
                     </div>
                 </div>
             </div>
             <footer class="modal-footer">
-                <span class="modal-footer-tech-text" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary);">Lab de sécurité périmétrique émulé sous VirtualBox</span>
-                <button type="button" class="btn btn--secondary btn--close-modal" style="padding: 8px 16px;">Fermer</button>
+                <span class="modal-footer-tech-text">Sécurité périmétrique sandbox sous VirtualBox</span>
+                <button type="button" class="btn btn--secondary btn--close-modal">Fermer</button>
             </footer>
         </div>
     </div>
 
-    <!-- MODAL PROJECT 3 -->
+    <!-- MODAL PROJECT 3: ZEROSHELL -->
     <div class="modal-overlay project-modal" id="project-modal-3" role="dialog" aria-modal="true" aria-labelledby="project-modal-3-title">
         <div class="modal-content modal-content--large" role="document">
             <header class="modal-header">
@@ -1311,34 +1480,6 @@
             <div class="modal-body">
                 <div class="project-diagram" aria-hidden="true">
                     <svg class="project-diagram__svg" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <filter id="glow-zs" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="6" result="blur" />
-                                <feMerge>
-                                    <feMergeNode in="blur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </femerge>
-                            </filter>
-                        </defs>
-                        <style>
-                            .route-line { stroke: var(--border-color); stroke-width: 1.5; stroke-dasharray: 6, 6; }
-                            .route-line--dashed { stroke: var(--border-color); stroke-width: 1.5; stroke-dasharray: 3, 5; }
-                            .packet-flow { stroke-width: 2; stroke-linecap: round; animation: packet-move 4s linear infinite; }
-                            .packet-flow--blue { stroke: var(--color-blue); stroke-dasharray: 10, 100; }
-                            .packet-flow--orange { stroke: var(--color-orange); stroke-dasharray: 10, 80; animation-duration: 3s; }
-                            .packet-flow--green { stroke: var(--color-green); stroke-dasharray: 8, 90; animation-duration: 5s; }
-                            @keyframes packet-move { to { stroke-dashoffset: -120; } }
-                            .node-bg { fill: var(--bg-secondary); stroke: var(--border-color); stroke-width: 1.5; transition: all 0.3s; }
-                            .node-group:hover .node-bg { stroke: var(--color-blue); fill: var(--color-blue-subtle); filter: url(#glow-zs); }
-                            .node-group--alert:hover .node-bg { stroke: var(--color-orange); fill: var(--color-orange-subtle); }
-                            .node-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--text-secondary); text-anchor: middle; }
-                            .node-group:hover .node-text { fill: var(--text-primary); font-weight: bold; }
-                            .node-text--dim { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--text-tertiary); text-anchor: middle; }
-                            .icon-path { stroke: var(--text-primary); stroke-width: 1.5; fill: none; }
-                            .node-group:hover .icon-path { stroke: var(--color-blue); }
-                            .node-group--alert:hover .icon-path { stroke: var(--color-orange); }
-                        </style>
-
                         <path class="route-line" d="M240,144 L85,221" />
                         <path class="packet-flow packet-flow--blue" d="M240,144 L85,221" />
                         <path class="route-line" d="M240,144 L240,221" />
@@ -1346,22 +1487,22 @@
                         <path class="route-line" d="M240,144 L395,221" />
                         <path class="packet-flow packet-flow--orange" d="M240,144 L395,221" />
                         <path class="route-line route-line--dashed" d="M240,144 C215,195 205,215 215,221" />
-                        <text class="node-text--dim" x="180" y="195">link failover</text>
+                        <text class="node-text--dim" x="180" y="195">Lien de secours</text>
 
                         <g class="node-group node-group--alert">
                             <circle class="node-bg" cx="240" cy="120" r="24" />
                             <circle class="icon-path" cx="240" cy="120" r="12" />
                             <path class="icon-path" d="M235,120 L245,120 M240,115 L240,125" />
                             <path class="icon-path" d="M233,117 L230,120 L233,123 M247,117 L250,120 L247,123" />
-                            <text class="node-text" x="240" y="157" style="fill: var(--color-orange);">RT: ZEROSHELL</text>
-                            <text class="node-text--dim" x="240" y="168">[ROUTAGE + FILTRAGE]</text>
+                            <text class="node-text node-text--orange" x="240" y="157">RT: ZEROSHELL</text>
+                            <text class="node-text--dim" x="240" y="168">[ROUTAGE STATIQUE + FAILOVER]</text>
                         </g>
 
                         <g class="node-group">
                             <circle class="node-bg" cx="85" cy="245" r="24" />
                             <rect class="icon-path" x="73" y="234" width="24" height="16" rx="2" />
                             <path class="icon-path" d="M81,250 L81,254 L89,254 L89,250" />
-                            <text class="node-text" x="85" y="283">LAN 1</text>
+                            <text class="node-text" x="85" y="283">LAN 1 (DIRECTION)</text>
                             <text class="node-text--dim" x="85" y="294">[10.0.1.0/24]</text>
                         </g>
 
@@ -1369,7 +1510,7 @@
                             <circle class="node-bg" cx="240" cy="245" r="24" />
                             <rect class="icon-path" x="228" y="234" width="24" height="16" rx="2" />
                             <path class="icon-path" d="M236,250 L236,254 L244,254 L244,250" />
-                            <text class="node-text" x="240" y="283">LAN 2</text>
+                            <text class="node-text" x="240" y="283">LAN 2 (PRODUCTION)</text>
                             <text class="node-text--dim" x="240" y="294">[10.0.2.0/24]</text>
                         </g>
 
@@ -1377,51 +1518,61 @@
                             <circle class="node-bg" cx="395" cy="245" r="24" />
                             <rect class="icon-path" x="383" y="234" width="24" height="16" rx="2" />
                             <path class="icon-path" d="M391,250 L391,254 L399,254 L399,250" />
-                            <text class="node-text" x="395" y="283">LAN 3</text>
+                            <text class="node-text" x="395" y="283">LAN 3 (SERVEURS)</text>
                             <text class="node-text--dim" x="395" y="294">[10.0.3.0/24]</text>
                         </g>
                     </svg>
                     <div class="project-diagram__caption">
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--blue"></span>Routage statique</span>
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--green"></span>Segment principal</span>
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--orange"></span>Segment isolé</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--blue"></span>Routage statique inter-segments</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--green"></span>Flux prioritaire de production</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--orange"></span>Zone serveurs & DMZ interne</span>
                     </div>
                 </div>
+                
                 <div class="project-modal-grid">
                     <div class="project-modal-details">
-                        <h3 class="project-modal-subtitle">Routage de Paquets Virtuel sous ZeroShell</h3>
+                        <h3 class="project-modal-subtitle">Interconnexion de Réseaux Virtuels avec ZeroShell</h3>
                         <p class="project-modal-text">
-                            <strong>Objectif du Laboratoire :</strong> interconnecter différents segments LAN d’entreprise complexes émulés sous VirtualBox en utilisant le routeur virtuel <strong>ZeroShell</strong>.
+                            <strong>Contexte & Objectif :</strong> Interconnecter plusieurs sous-réseaux locaux distincts sous VirtualBox en utilisant la distribution routeur <strong>ZeroShell</strong>, avec établissement de tables de routage, supervision des flux et tolérance aux pannes.
                         </p>
-                        <ul class="project-modal-bullets" style="margin-top: var(--space-3); padding-left: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);">
-                            <li><strong>Routage Interne Statique</strong> : configuration de tables de routage statiques précises pour interconnecter et faire communiquer les réseaux internes de l’entreprise.</li>
-                            <li><strong>Surveillance du Trafic</strong> : suivi des paquets, analyse des bandes passantes et supervision des tables ARP.</li>
-                            <li><strong>Sécurité des Flux</strong> : isolement sélectif de certains segments à l’aide de règles de filtrage internes au routeur.</li>
-                            <li><strong>Mise en place de Redondance (Failover)</strong> : configuration pour assurer la continuité de service réseau en cas de coupure de lien principal.</li>
-                        </ul>
+                        
+                        <div class="modal-section-block">
+                            <h4 class="modal-subheading">// Démarche & Réalisations clés</h4>
+                            <ul class="project-modal-bullets">
+                                <li><strong>Découpage IP & Segmentation</strong> : Mise en place de 3 réseaux virtuels sous VirtualBox (`10.0.1.0/24`, `10.0.2.0/24`, `10.0.3.0/24`) représentant les départements de l'entreprise.</li>
+                                <li><strong>Tables de Routage Statiques</strong> : Configuration des passerelles par défaut et des tables de routage sur ZeroShell pour assurer la communication contrôlée entre les segments.</li>
+                                <li><strong>Supervision du Trafic</strong> : Utilisation des outils d’analyse ZeroShell pour monitorer le débit des interfaces réseau, les tables de correspondance ARP et les requêtes ICMP.</li>
+                                <li><strong>Mécanisme de Redondance (Failover)</strong> : Paramétrage de routes secondaires et bascule automatique en cas de rupture de lien simulée pour garantir la continuité de service.</li>
+                            </ul>
+                        </div>
                     </div>
+                    
                     <div class="project-modal-sidebar">
                         <div class="project-sidebar-card">
-                            <span class="project-sidebar-title">Technologies clés</span>
-                            <div class="work-card__tags" style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-                                <span class="work-card__tag">ZeroShell</span>
-                                <span class="work-card__tag">Routage Statique</span>
-                                <span class="work-card__tag">Failover Réseau</span>
-                                <span class="work-card__tag">VirtualBox LANs</span>
-                                <span class="work-card__tag">Optimisation</span>
-                            </div>
+                            <span class="project-sidebar-title">Fiche Technique</span>
+                            <div class="sidebar-spec-row"><span class="k">Routeur</span><span class="v">ZeroShell Linux</span></div>
+                            <div class="sidebar-spec-row"><span class="k">Segments</span><span class="v">3 LANs distincts</span></div>
+                            <div class="sidebar-spec-row"><span class="k">Routage</span><span class="v">Statique + Passerelles</span></div>
+                            <div class="sidebar-spec-row"><span class="k">Résilience</span><span class="v">Failover réseau</span></div>
+                        </div>
+
+                        <div class="project-sidebar-card">
+                            <span class="project-sidebar-title">Compétences BTS SISR</span>
+                            <div class="competence-badge">B2.1 Concevoir une architecture</div>
+                            <div class="competence-badge">B2.2 Déployer un service réseau</div>
+                            <div class="competence-badge">B1.2 Résoudre un incident réseau</div>
                         </div>
                     </div>
                 </div>
             </div>
             <footer class="modal-footer">
-                <span class="modal-footer-tech-text" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary);">Architecture réseau multi-LAN virtualisée</span>
-                <button type="button" class="btn btn--secondary btn--close-modal" style="padding: 8px 16px;">Fermer</button>
+                <span class="modal-footer-tech-text">Architecture multi-LAN virtualisée</span>
+                <button type="button" class="btn btn--secondary btn--close-modal">Fermer</button>
             </footer>
         </div>
     </div>
 
-    <!-- MODAL PROJECT 4 -->
+    <!-- MODAL PROJECT 4: CISCO -->
     <div class="modal-overlay project-modal" id="project-modal-4" role="dialog" aria-modal="true" aria-labelledby="project-modal-4-title">
         <div class="modal-content modal-content--large" role="document">
             <header class="modal-header">
@@ -1431,40 +1582,12 @@
             <div class="modal-body">
                 <div class="project-diagram" aria-hidden="true">
                     <svg class="project-diagram__svg" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <filter id="glow-pt" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="6" result="blur" />
-                                <feMerge>
-                                    <feMergeNode in="blur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </femerge>
-                            </filter>
-                        </defs>
-                        <style>
-                            .route-line { stroke: var(--border-color); stroke-width: 1.5; stroke-dasharray: 6, 6; }
-                            .route-line--dashed { stroke: var(--border-color); stroke-width: 1.5; stroke-dasharray: 3, 5; }
-                            .packet-flow { stroke-width: 2; stroke-linecap: round; animation: packet-move 4s linear infinite; }
-                            .packet-flow--blue { stroke: var(--color-blue); stroke-dasharray: 10, 100; }
-                            .packet-flow--orange { stroke: var(--color-orange); stroke-dasharray: 10, 80; animation-duration: 3s; }
-                            .packet-flow--green { stroke: var(--color-green); stroke-dasharray: 8, 90; animation-duration: 5s; }
-                            @keyframes packet-move { to { stroke-dashoffset: -120; } }
-                            .node-bg { fill: var(--bg-secondary); stroke: var(--border-color); stroke-width: 1.5; transition: all 0.3s; }
-                            .node-group:hover .node-bg { stroke: var(--color-blue); fill: var(--color-blue-subtle); filter: url(#glow-pt); }
-                            .node-group--alert:hover .node-bg { stroke: var(--color-orange); fill: var(--color-orange-subtle); }
-                            .node-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--text-secondary); text-anchor: middle; }
-                            .node-group:hover .node-text { fill: var(--text-primary); font-weight: bold; }
-                            .node-text--dim { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--text-tertiary); text-anchor: middle; }
-                            .icon-path { stroke: var(--text-primary); stroke-width: 1.5; fill: none; }
-                            .node-group:hover .icon-path { stroke: var(--color-blue); }
-                            .node-group--alert:hover .icon-path { stroke: var(--color-orange); }
-                        </style>
-
                         <path class="route-line" d="M240,79 L150,140" />
                         <path class="packet-flow packet-flow--green" d="M240,79 L150,140" />
                         <path class="route-line" d="M240,79 L330,140" />
                         <path class="packet-flow packet-flow--blue" d="M240,79 L330,140" />
-                        <text class="node-text--dim" x="196" y="112">trunk dot1q</text>
-                        <text class="node-text--dim" x="284" y="112">trunk dot1q</text>
+                        <text class="node-text--dim" x="196" y="112">Trunk 802.1Q</text>
+                        <text class="node-text--dim" x="284" y="112">Trunk 802.1Q</text>
                         <path class="route-line" d="M110,164 L110,221" />
                         <path class="packet-flow packet-flow--blue" d="M110,164 L110,221" />
                         <path class="route-line" d="M370,164 L370,221" />
@@ -1477,12 +1600,12 @@
                             <circle class="icon-path" cx="240" cy="55" r="12" />
                             <path class="icon-path" d="M235,55 L245,55 M240,50 L240,60" />
                             <path class="icon-path" d="M233,52 L230,55 L233,58 M247,52 L250,55 L247,58" />
-                            <text class="node-text" x="240" y="92" style="fill: var(--color-orange);">R1: CISCO 2911</text>
+                            <text class="node-text node-text--orange" x="240" y="92">R1: CISCO 2911</text>
                             <text class="node-text--dim" x="240" y="103">[ROUTAGE INTER-VLAN]</text>
                         </g>
 
                         <g class="node-group">
-                            <rect class="node-bg" x="70" y="140" width="80" height="24" rx="3" />
+                            <rect class="node-bg" x="70" y="140" width="80" height="24" rx="4" />
                             <path class="icon-path" d="M80,152 L90,152 M87,149 L90,152 L87,155 M140,152 L130,152 M133,149 L130,152 L133,155" />
                             <circle cx="100" cy="152" r="1.5" fill="var(--color-green)" />
                             <circle cx="110" cy="152" r="1.5" fill="var(--color-green)" />
@@ -1491,7 +1614,7 @@
                         </g>
 
                         <g class="node-group">
-                            <rect class="node-bg" x="330" y="140" width="80" height="24" rx="3" />
+                            <rect class="node-bg" x="330" y="140" width="80" height="24" rx="4" />
                             <path class="icon-path" d="M340,152 L350,152 M347,149 L350,152 L347,155 M400,152 L390,152 M393,149 L390,152 L393,155" />
                             <circle cx="360" cy="152" r="1.5" fill="var(--color-green)" />
                             <circle cx="370" cy="152" r="1.5" fill="var(--color-green)" />
@@ -1504,7 +1627,7 @@
                             <rect class="icon-path" x="98" y="234" width="24" height="16" rx="2" />
                             <path class="icon-path" d="M106,250 L106,254 L114,254 L114,250" />
                             <text class="node-text" x="110" y="283">PC_ADMIN</text>
-                            <text class="node-text--dim" x="110" y="294">[VLAN 10 · port access]</text>
+                            <text class="node-text--dim" x="110" y="294">[VLAN 10 · Port Access]</text>
                         </g>
 
                         <g class="node-group">
@@ -1512,7 +1635,7 @@
                             <rect class="icon-path" x="358" y="234" width="24" height="16" rx="2" />
                             <path class="icon-path" d="M366,250 L366,254 L374,254 L374,250" />
                             <text class="node-text" x="370" y="283">PC_USERS</text>
-                            <text class="node-text--dim" x="370" y="294">[VLAN 20 · port access]</text>
+                            <text class="node-text--dim" x="370" y="294">[VLAN 20 · Port Access]</text>
                         </g>
 
                         <g class="node-group">
@@ -1521,51 +1644,61 @@
                             <rect class="icon-path" x="228" y="243" width="24" height="8" rx="1" />
                             <circle cx="233" cy="237" r="1" fill="var(--color-blue)" />
                             <circle cx="233" cy="247" r="1" fill="var(--color-blue)" />
-                            <text class="node-text" x="240" y="283">DHCP SRV</text>
-                            <text class="node-text--dim" x="240" y="294">[VLAN 10 · ip helper]</text>
+                            <text class="node-text" x="240" y="283">SERVEUR DHCP</text>
+                            <text class="node-text--dim" x="240" y="294">[VLAN 10 · IP Helper]</text>
                         </g>
                     </svg>
                     <div class="project-diagram__caption">
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--blue"></span>Résolution DHCP</span>
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--green"></span>Trunk / inter-VLAN</span>
-                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--orange"></span>VLAN utilisateurs</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--blue"></span>Trunk 802.1Q (Encapsulation dot1q)</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--green"></span>Routage Inter-VLAN (Sous-interfaces routeur)</span>
+                        <span class="project-diagram__legend"><span class="project-diagram__legend-dot project-diagram__legend-dot--orange"></span>Relais DHCP (ip helper-address)</span>
                     </div>
                 </div>
+                
                 <div class="project-modal-grid">
                     <div class="project-modal-details">
                         <h3 class="project-modal-subtitle">Topologies d’Entreprise Cisco (Cisco Packet Tracer)</h3>
                         <p class="project-modal-text">
-                            <strong>Objectif du Laboratoire :</strong> modéliser et configurer de bout en bout des topologies d’infrastructures réseaux d’entreprise complexes en utilisant <strong>Cisco Packet Tracer</strong>.
+                            <strong>Contexte & Objectif :</strong> Modéliser et configurer de bout en bout des architectures de réseau d’entreprise complètes en ligne de commande (<strong>CLI Cisco IOS</strong>), en intégrant segmentation VLAN, routage, adressage dynamique et sécurité des ports d'accès.
                         </p>
-                        <ul class="project-modal-bullets" style="margin-top: var(--space-3); padding-left: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);">
-                            <li><strong>Configuration en ligne de commande (CLI Cisco IOS)</strong> : maîtrise de la configuration des commutateurs (switches) et routeurs Cisco.</li>
-                            <li><strong>Segmentation Réseau (VLANs)</strong> : création de réseaux virtuels pour cloisonner les flux (VLAN Trunking dot1q, ports Access).</li>
-                            <li><strong>Adressage & Relais DHCP</strong> : plan d’adressage IP optimisé (VLSM) et configuration d’agents de relais DHCP (Helper IP) pour propager l’adressage à travers les VLANs.</li>
-                            <li><strong>Sécurité d’accès physique (Port Security)</strong> : verrouillage matériel des ports actifs des commutateurs pour empêcher le branchement d’équipements non autorisés (filtre sur adresses MAC).</li>
-                        </ul>
+                        
+                        <div class="modal-section-block">
+                            <h4 class="modal-subheading">// Démarche & Commandes clés</h4>
+                            <ul class="project-modal-bullets">
+                                <li><strong>Segmentation VLANs & Trunk 802.1Q</strong> : Création des VLANs métiers (Admin, Employés, Invités, Management). Configuration des ports d'accès (`switchport mode access`) et des liens d'agrégation (`switchport mode trunk`, `switchport trunk allowed vlan`).</li>
+                                <li><strong>Routage Inter-VLAN (Router-on-a-Stick)</strong> : Découpage d'une interface physique de routeur en sous-interfaces virtuelles (`interface g0/0.10`, `encapsulation dot1Q 10`, `ip address ...`).</li>
+                                <li><strong>Relais DHCP (IP Helper)</strong> : Centralisation du serveur DHCP sur un seul sous-réseau et diffusion inter-VLAN via la commande `ip helper-address`.</li>
+                                <li><strong>Sécurisation L2 (Port Security)</strong> : Verrouillage des ports de switch contre le branchement d'équipements pirates (`switchport port-security`, `switchport port-security maximum 1`, `switchport port-security violation shutdown`).</li>
+                            </ul>
+                        </div>
                     </div>
+                    
                     <div class="project-modal-sidebar">
                         <div class="project-sidebar-card">
-                            <span class="project-sidebar-title">Technologies clés</span>
-                            <div class="work-card__tags" style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-                                <span class="work-card__tag">CLI Cisco IOS</span>
-                                <span class="work-card__tag">VLAN Trunking</span>
-                                <span class="work-card__tag">DHCP IP Helper</span>
-                                <span class="work-card__tag">Port Security</span>
-                                <span class="work-card__tag">Routage Inter-VLAN</span>
-                            </div>
+                            <span class="project-sidebar-title">Fiche Technique</span>
+                            <div class="sidebar-spec-row"><span class="k">Simulateur</span><span class="v">Cisco Packet Tracer</span></div>
+                            <div class="sidebar-spec-row"><span class="k">Matériel</span><span class="v">Cisco 2911, Catalyst 2960</span></div>
+                            <div class="sidebar-spec-row"><span class="k">CLI</span><span class="v">Cisco IOS natif</span></div>
+                            <div class="sidebar-spec-row"><span class="k">Sécurité</span><span class="v">Port Security MAC</span></div>
+                        </div>
+
+                        <div class="project-sidebar-card">
+                            <span class="project-sidebar-title">Compétences BTS SISR</span>
+                            <div class="competence-badge">B2.1 Concevoir une architecture Cisco</div>
+                            <div class="competence-badge">B2.2 Configurer des commutateurs/routeurs</div>
+                            <div class="competence-badge">B2.3 Sécuriser les accès physiques L2</div>
                         </div>
                     </div>
                 </div>
             </div>
             <footer class="modal-footer">
-                <span class="modal-footer-tech-text" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary);">Modélisation Cisco CLI sous Packet Tracer</span>
-                <button type="button" class="btn btn--secondary btn--close-modal" style="padding: 8px 16px;">Fermer</button>
+                <span class="modal-footer-tech-text">Modélisation Cisco CLI sous Packet Tracer</span>
+                <button type="button" class="btn btn--secondary btn--close-modal">Fermer</button>
             </footer>
         </div>
     </div>
 
     <!-- JavaScript logic -->
-    <script src="js/script.js?v=a0acc797"></script>
+    <script src="js/script.js?v=66f5c489"></script>
 </body>
 </html>

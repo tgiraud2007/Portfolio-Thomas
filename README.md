@@ -1,63 +1,89 @@
-# Portfolio — Thomas Giraud
+# Portfolio — Thomas Giraud (Administration Systèmes & Réseaux)
 
-Portfolio one-page de Thomas Giraud, étudiant BTS SIO (SISR) — administration
-systèmes & réseaux. Site statique pur (HTML/CSS/JS), sans framework ni build
-obligatoire : ouvrez `index.html` dans un navigateur et c'est tout.
+Portfolio professionnel one-page de Thomas Giraud, étudiant en 2e année de **BTS SIO option SISR** (Lycée Marc Bloch, Sérignan) à la recherche d'un stage ou d'une opportunité en administration systèmes et réseaux.
 
-## Structure
+Site statique haute performance (HTML5 sémantique, CSS3 Vanilla moderne, JavaScript ES6+ modulaire), sans aucun framework lourd. Prêt pour le déploiement sur GitHub Pages, Netlify ou Vercel.
+
+---
+
+## 📁 Architecture du projet
 
 ```
-PortfolioThomas/
-├── index.html              # Le site (single page)
-├── css/style.css           # Styles (thèmes clair/sombre, responsive, print)
-├── js/script.js            # Interactions (modales, curseur, canvas, réglages)
+portfolio2/
+├── index.html              # Page principale unique (accessible, sémantique, SEO enrichi)
+├── css/style.css           # Design tokens, typographie, responsive, animations, @media print
+├── js/script.js            # Moteur d'interactions (thèmes, curseur, raccourcis, modales, canvas)
 ├── assets/
-│   ├── favicon.svg         # Icône du site
-│   ├── apple-touch-icon.png / icon-192.png / icon-512.png   # PWA
-│   ├── og-image.png        # Aperçu de partage (Open Graph / Twitter)
-│   ├── projects/           # Captures de vos laboratoires (voir README.md)
-│   ├── build-og-image.js   # Générateur de l'og-image (node)
-│   └── build-favicon-png.js# Générateur des icônes PWA (node)
-├── CV/cv.pdf               # Votre CV (téléchargable)
-├── manifest.webmanifest    # PWA (installation)
-├── robots.txt / sitemap.xml# SEO
-├── 404.html                # Page d'erreur (GitHub Pages)
-└── build.js                # Cache-busting automatique (node)
+│   ├── favicon.svg         # Favicon vectoriel moderne
+│   ├── apple-touch-icon.png / icon-192.png / icon-512.png   # Icônes PWA
+│   ├── og-image.png        # Aperçu OpenGraph / Twitter Cards
+│   └── projects/           # Captures et schémas des laboratoires
+├── CV/cv.pdf               # Curriculum Vitæ officiel au format PDF
+├── manifest.webmanifest    # Manifest PWA (installation mobile / desktop)
+├── robots.txt / sitemap.xml# Indexation et SEO
+├── 404.html                # Page d'erreur 404 console interactive
+└── build.js                # Script Node.js de cache-busting automatique
 ```
 
-## Mises à jour courantes
+---
 
-| Je veux...                                    | Je fais...                                                       |
-|-----------------------------------------------|------------------------------------------------------------------|
-| Changer mon CV                                | Remplacer `CV/cv.pdf` (le nom doit rester `cv.pdf`)              |
-| Ajouter une capture d'un laboratoire          | Suivre `assets/projects/README.md` (figure HTML + dépôt du fichier) |
-| Modifier les textes / projets                 | Éditer `index.html` (les sections sont commentées : hero, about, services, work, cv, contact) |
-| Changer les couleurs                          | Modifier les variables `:root` / `[data-theme="dark"]` dans `css/style.css` |
-| Régénérer les icônes PWA / apple-touch-icon   | `node assets/build-favicon-png.js`                               |
-| Régénérer l'image de partage                  | `node assets/build-og-image.js`                                  |
-| Actualiser la date du sitemap                 | Éditer `<lastmod>` dans `sitemap.xml`                            |
-| Forcer le rechargement des assets après déploiement | `node build.js` (ajoute `?v=<hash>` à css/js)              |
+## 🚀 Sections & Fonctionnalités clés
 
-## Déploiement (GitHub Pages)
+1. **Header & Navigation rapide** :
+   - Accès rapide aux sections avec underline dynamique.
+   - Bouton de bascule rapide de thème Clair (Éditorial Crème) / Sombre (Deep Console).
+   - Menu tiroir mobile accessible avec gestion de focus (`inert`).
+   - Modal d'aide aux raccourcis clavier (`?`).
 
-1. Poussez le dossier sur un dépôt GitHub (ex. `tgiraud2007/thomasgiraud.me`).
-2. Dans le dépôt : **Settings → Pages → Deploy from a branch** → branche `main`, dossier `/ (root)`.
-3. Activez un domaine personnalisé (`thomasgiraud.me`) dans les mêmes réglages si besoin.
+2. **Section 00 : Hero** :
+   - Badge de disponibilité en temps réel (« À la recherche d'un stage SISR »).
+   - Accroche technique mature avec rôle et compétences clés.
+   - Boutons d'action : Télécharger CV, Me contacter, Copier mon e-mail avec toast instantané.
+   - Topologie réseau interactive en SVG avec flux de paquets animés et interaction de survol.
 
-Le site étant entièrement statique, il fonctionne aussi sur Netlify, Vercel ou
-n'importe quel hébergeur de fichiers.
+3. **Section 01 : À propos** :
+   - Parcours détaillé (Bac Pro SN mention TB -> BTS SIO SISR).
+   - Compteurs dynamiques animés (Nombre de VMs, VLANs configurés, Heures labo, Expériences de stage).
+   - Carte technique « Spécifications Environnement Labo » (Hyperviseur, OS, adressage IP).
 
-## Notes techniques
+4. **Section 02 : Compétences (Matrice catégorisée)** :
+   - 4 pôles d'expertise concrets : **Systèmes & Services**, **Réseaux & Commutation**, **Sécurité & Filtrage**, **Méthodologie & Support**.
+   - Badges et pastilles techniques (pas de jauges de pourcentage subjectives).
 
-- **Aucune dépendance externe** : les icônes sont des SVG inline (plus de CDN),
-  les polices viennent de Google Fonts (preconnect + weights réduits), le
-  formulaire utilise Formspree (`index.html`, section contact).
-- **Accessibilité** : skip-link, focus trap des modales, `inert` sur le fond,
-  `prefers-reduced-motion` respecté en CSS et JS, `aria-current` sur la nav.
-- **SEO** : JSON-LD `Person`, Open Graph / Twitter cards, canonical,
-  `sitemap.xml` + `robots.txt`.
-- **PWA** : `manifest.webmanifest` + icônes 192/512 — installable sur mobile.
-- **Impression** : la section CV s'imprime seule (`@media print`), barres de
-  compétences remplies automatiquement (`beforeprint`).
-- **Tests** : aucune suite automatisée ; validez les changements en ouvrant
-  `index.html` (Ctrl+F5) et en testant modales, thèmes et formulaire.
+5. **Section 03 : Projets & Laboratoires SISR** :
+   - 4 projets phares : Active Directory DS & GPO, IPFire Multi-Zones, ZeroShell Captive Portal, Cisco Packet Tracer (VLANs/Routage).
+   - Fiches synthétiques avec métriques, badges d'état et ouverture de modales complètes (topologies SVG, étapes de configuration, compétences BTS associées).
+
+6. **Section 04 : CV Interactif & Imprimable** :
+   - Timeline de formation & 4 stages professionnels détaillés avec réalisations concrètes.
+   - Matrice de maîtrise (Laboratoire avancé / Milieu professionnel / Notions).
+   - Feuille de style `@media print` optimisée pour impression ou export PDF parfait sans coupure inutile.
+
+7. **Section 05 : Contact Direct & Formulaire** :
+   - Carte de contact direct (e-mail, téléphone, localisation Servian 34, permis B, LinkedIn, GitHub).
+   - Formulaire Formspree asynchrone avec champ piège antispam (`honeypot`) et message de confirmation poli.
+
+8. **Barre d'état & Utilitaires** :
+   - Fil d'Ariane dynamique de la section active.
+   - Indicateur de progression de lecture (top bar & status bar).
+   - Raccourcis clavier (Vim navigation `j`/`k`/`G`, sauts de section `gh`/`ga`/`gs`/`gp`/`gv`/`gc`).
+
+---
+
+## 🛠️ Commandes utiles
+
+| Action | Commande / Procédure |
+|---|---|
+| **Vérifier la syntaxe JS** | `node --check js/script.js` |
+| **Mettre à jour le cache-busting** | `node build.js` |
+| **Régénérer les icônes PWA** | `node assets/build-favicon-png.js` |
+| **Régénérer l'OG image** | `node assets/build-og-image.js` |
+
+---
+
+## 🌐 Déploiement
+
+Le site est entièrement statique :
+1. Déposez les fichiers sur GitHub dans la branche `main`.
+2. Activez **GitHub Pages** (Settings > Pages > Source : Deploy from a branch, `/root`).
+3. Le site est immédiatement accessible en ligne avec support HTTPS.
