@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Domaine Active Directory · Thomas Giraud</title>
+<meta name="description" content="TP de BTS SIO SISR : mise en place d'un domaine Active Directory sous Windows Server 2022 avec GPO, DNS, DHCP, partages NTFS et messagerie hMailServer.">
+<link rel="canonical" href="https://thomasgiraud.me/realisations/active-directory.html">
+<meta property="og:title" content="Domaine Active Directory · Thomas Giraud">
+<meta property="og:image" content="https://thomasgiraud.me/assets/og-image.png">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="expect" href="#contenu" blocking="render">
+<link rel="preload" href="../assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/style.css?v=833dd0d8">
+<script>(function(){try{var t=localStorage.getItem("tg-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR · 2026-2027</span></a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="../index.html">Accueil</a></li>
+        <li><a href="../index.html#realisations" aria-current="page">Réalisations</a></li>
+        <li><a href="../parcours.html">Parcours</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Changer de thème">
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+  <header class="wrap page-head">
+    <p class="crumbs"><a href="../index.html">Accueil</a> / <a href="../index.html#realisations">Réalisations</a> / 02</p>
+    <p class="kicker">Réalisation 02 · Formation</p>
+    <h1>Un domaine <em>Active Directory</em> de A à Z</h1>
+    <p class="chapo">Mise en place d'un domaine Active Directory sous Windows Server 2022, dans un réseau virtuel VirtualBox.</p>
+    <ul class="tags"><li>Windows Server 2022</li><li>AD DS</li><li>GPO</li><li>DNS</li><li>DHCP</li><li>NTFS</li><li>hMailServer</li></ul>
+  </header>
+
+  <div class="wrap article">
+    <div class="prose">
+      <figure class="fig">
+        <div class="fig__head"><span>Fig. 1 · Schéma de la maquette</span><span>VirtualBox</span></div>
+        <svg viewBox="0 -6 820 306" role="img" aria-labelledby="f-ad">
+          <title id="f-ad">Schéma : un contrôleur de domaine (AD DS, DNS, DHCP) et un serveur de messagerie reliés par un réseau interne à un client Windows 10 et un client Debian.</title>
+          <g stroke-width="1.4">
+            <path class="s-dim" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round" d="M110 150 H710"/>
+            <path class="s-ink" d="M200 150 V110"/><rect class="s-ink" x="150" y="30" width="100" height="80" rx="2"/>
+            <path class="s-ink" stroke-width="1" d="M150 56 H250 M150 82 H250"/>
+            <path class="s-ink" d="M400 150 V110"/><rect class="s-ink" x="350" y="30" width="100" height="80" rx="2"/>
+            <path class="s-ink" stroke-width="1" d="M350 30 L400 68 L450 30"/>
+            <path class="s-ink" d="M520 150 V190"/><rect class="s-ink" x="470" y="190" width="100" height="62" rx="2"/><path class="s-ink" d="M505 252 v12 h30 v-12"/>
+            <path class="s-ink" d="M660 150 V190"/><rect class="s-ink" x="610" y="190" width="100" height="62" rx="2"/><path class="s-ink" d="M645 252 v12 h30 v-12"/>
+            <path class="s-red" stroke-width="1.2" stroke-dasharray="4 5" d="M250 70 C 380 130, 430 200, 468 215"/>
+            <path class="s-red" stroke-width="1.2" d="M460 209 L469 215 L460 221"/>
+          </g>
+          <text class="t-ink" x="150" y="8">Contrôleur de domaine</text>
+          <text class="t-dim" x="150" y="23">AD DS · DNS · DHCP</text>
+          <text class="t-ink" x="350" y="8">Messagerie</text>
+          <text class="t-dim" x="350" y="23">hMailServer</text>
+          <text class="t-ink" x="470" y="282">Windows 10</text>
+          <text class="t-ink" x="610" y="282">Debian</text>
+          <text class="t-dim" x="40" y="146">Réseau</text>
+          <text class="t-dim" x="40" y="160">interne</text>
+          <text class="t-red" x="290" y="186" style="font-size:11px">GPO, jonction au domaine</text>
+        </svg>
+        <figcaption><b>La maquette.</b> Un contrôleur de domaine sous Windows Server 2022, un serveur de messagerie et deux postes clients.</figcaption>
+      </figure>
+
+      <h2>Contexte</h2>
+      <p>TP de 1<sup>re</sup> année de BTS SIO, réalisé seul, dans un réseau virtuel VirtualBox.</p>
+
+      <h2>Ce que j'ai fait</h2>
+      <ul class="list">
+        <li>Installation du rôle AD DS et promotion du serveur en contrôleur de domaine.</li>
+        <li>Création d'utilisateurs et de groupes.</li>
+        <li><b>GPO</b> : verrouillage de session, connexion automatique des lecteurs réseau selon le service, blocage du panneau de configuration pour les utilisateurs standard.</li>
+        <li><b>DHCP</b> avec plage d'exclusion et réservations ; <b>DNS</b> avec zones de recherche directe et inverse.</li>
+        <li>Partages de dossiers avec droits NTFS.</li>
+        <li>Messagerie interne avec hMailServer.</li>
+      </ul>
+
+      <h2>Vérifications</h2>
+      <p>Jonction au domaine d'un poste Windows 10 et d'un poste Debian. Application des GPO contrôlée sur les postes avec <code>gpupdate /force</code> puis <code>gpresult /r</code>.</p>
+    </div>
+
+    <aside class="fiche" aria-labelledby="fiche-titre">
+      <h2 id="fiche-titre">Fiche technique</h2>
+      <dl>
+        <div><dt>Cadre</dt><dd>TP de 1<sup>re</sup> année de BTS SIO</dd></div>
+        <div><dt>Réalisé</dt><dd>Seul</dd></div>
+        <div><dt>Année</dt><dd>2025-2026</dd></div>
+        <div><dt>Virtualisation</dt><dd>VirtualBox</dd></div>
+        <div><dt>Serveur</dt><dd>Windows Server 2022</dd></div>
+        <div><dt>Clients</dt><dd>Windows 10, Debian</dd></div>
+        <div><dt>Services</dt><dd>AD DS, DNS, DHCP, hMailServer</dd></div>
+      </dl>
+      <div class="ref">
+        <h2>Compétences du BTS</h2>
+        <ul>
+          <li>Installer, tester et déployer une solution d'infrastructure réseau</li>
+          <li>Mettre à disposition des utilisateurs un service informatique</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <nav class="pager" aria-label="Autres réalisations">
+    <div class="wrap">
+      <a href="cisco.html"><span class="label">← Précédente</span><strong>Réseaux d'entreprise sous Packet Tracer</strong></a>
+      <a href="nagios.html"><span class="label">Suivante →</span><strong>Superviser ses serveurs avec Nagios</strong></a>
+    </div>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="who">Thomas Giraud <span>· BTS SIO SISR · Servian (34)</span></p>
+    <ul>
+      <li><a href="../index.html#realisations">Réalisations</a></li>
+      <li><a href="../parcours.html">Parcours</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="https://www.linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://github.com/tgiraud2007" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="../CV/cv.pdf">CV (PDF)</a></li>
+    </ul>
+    <p>© 2026 Thomas Giraud</p>
+  </div>
+</footer>
+<script src="../js/main.js?v=452a22bd" defer></script>
+</body>
+</html>

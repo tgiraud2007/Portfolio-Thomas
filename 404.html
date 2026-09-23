@@ -1,115 +1,66 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex">
-    <title>404 — Thomas Giraud | Page introuvable</title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <style>
-        :root {
-            --bg: #0a0b0d;
-            --fg: #f4f4f4;
-            --dim: rgba(244, 244, 244, 0.55);
-            --blue: #4a7ff7;
-            --orange: #e8734b;
-            --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; }
-        body {
-            background: var(--bg);
-            color: var(--fg);
-            font-family: var(--mono);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-        .terminal {
-            max-width: 560px;
-            width: 100%;
-            border: 1px solid rgba(244, 244, 244, 0.15);
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-        }
-        .terminal__bar {
-            background: #111215;
-            padding: 10px 14px;
-            border-bottom: 1px solid rgba(244, 244, 244, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--dim);
-        }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot--red { background: #ff5f57; }
-        .dot--yellow { background: #ffbd2e; }
-        .dot--green { background: #2ecc71; }
-        .terminal__body { padding: 28px; }
-        .err {
-            color: var(--orange);
-            font-weight: 700;
-            font-size: 15px;
-            margin-bottom: 16px;
-        }
-        .err::before { content: "> "; }
-        .hint {
-            color: var(--dim);
-            font-size: 13px;
-            line-height: 1.8;
-            margin-bottom: 24px;
-        }
-        .actions { display: flex; gap: 12px; flex-wrap: wrap; }
-        .btn {
-            font-family: var(--mono);
-            font-size: 13px;
-            padding: 8px 16px;
-            border-radius: 4px;
-            text-decoration: none;
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
-        .btn--primary {
-            background: var(--blue);
-            color: #fff;
-        }
-        .btn--secondary {
-            border-color: rgba(244, 244, 244, 0.25);
-            color: var(--fg);
-        }
-        .btn--secondary:hover { border-color: var(--blue); color: var(--blue); }
-        .status {
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px dashed rgba(244, 244, 244, 0.15);
-            font-size: 11px;
-            color: var(--dim);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page introuvable · Thomas Giraud</title>
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Page introuvable · Thomas Giraud">
+<meta property="og:image" content="https://thomasgiraud.me/assets/og-image.png">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="expect" href="#contenu" blocking="render">
+<link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/style.css?v=833dd0d8">
+<script>(function(){try{var t=localStorage.getItem("tg-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 </head>
 <body>
-    <main class="terminal" role="alert">
-        <header class="terminal__bar">
-            <span class="dot dot--red"></span>
-            <span class="dot dot--yellow"></span>
-            <span class="dot dot--green"></span>
-            <span>// thomasgiraud.me — route introuvable</span>
-        </header>
-        <div class="terminal__body">
-            <p class="err">ERR_404 : ressource non trouvée</p>
-            <p class="hint">
-                La page demandée n'existe pas ou a été déplacée.<br>
-                Vérifiez l'adresse, ou revenez à l'accueil du portfolio.
-            </p>
-            <div class="actions">
-                <a class="btn btn--primary" href="./">Retour à l'accueil</a>
-                <a class="btn btn--secondary" href="CV/cv.pdf">Télécharger mon CV</a>
-            </div>
-            <p class="status">exit_status: 404 // system.continues</p>
-        </div>
-    </main>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/index.html"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR · 2026-2027</span></a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="/index.html">Accueil</a></li>
+        <li><a href="/index.html#realisations">Réalisations</a></li>
+        <li><a href="/parcours.html">Parcours</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Changer de thème">
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+  <div class="wrap notfound">
+    <p class="code" aria-hidden="true">404</p>
+    <p class="kicker" style="margin-top:24px">Erreur 404</p>
+    <h1 style="font-family:var(--serif);font-weight:600;font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-.02em;margin:12px 0 16px">Page introuvable.</h1>
+    <p class="chapo">Cette adresse ne mène nulle part : la page a peut-être été déplacée.</p>
+    <div class="actions"><a class="btn btn--solid" href="/index.html">Retour à l'accueil</a><a class="btn" href="/index.html#realisations">Voir les réalisations</a></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="who">Thomas Giraud <span>· BTS SIO SISR · Servian (34)</span></p>
+    <ul>
+      <li><a href="/index.html#realisations">Réalisations</a></li>
+      <li><a href="/parcours.html">Parcours</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+      <li><a href="https://www.linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://github.com/tgiraud2007" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="/CV/cv.pdf">CV (PDF)</a></li>
+    </ul>
+    <p>© 2026 Thomas Giraud</p>
+  </div>
+</footer>
+<script src="/js/main.js?v=452a22bd" defer></script>
 </body>
 </html>

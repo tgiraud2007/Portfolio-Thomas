@@ -1,89 +1,62 @@
-# Portfolio — Thomas Giraud (Administration Systèmes & Réseaux)
+# Portfolio · Thomas Giraud (BTS SIO SISR)
 
-Portfolio professionnel one-page de Thomas Giraud, étudiant en 2e année de **BTS SIO option SISR** (Lycée Marc Bloch, Sérignan) à la recherche d'un stage ou d'une opportunité en administration systèmes et réseaux.
+Site statique (HTML, CSS, JavaScript, sans framework), publié sur GitHub Pages à l'adresse https://thomasgiraud.me.
 
-Site statique haute performance (HTML5 sémantique, CSS3 Vanilla moderne, JavaScript ES6+ modulaire), sans aucun framework lourd. Prêt pour le déploiement sur GitHub Pages, Netlify ou Vercel.
-
----
-
-## 📁 Architecture du projet
+## Organisation
 
 ```
-portfolio2/
-├── index.html              # Page principale unique (accessible, sémantique, SEO enrichi)
-├── css/style.css           # Design tokens, typographie, responsive, animations, @media print
-├── js/script.js            # Moteur d'interactions (thèmes, curseur, raccourcis, modales, canvas)
-├── assets/
-│   ├── favicon.svg         # Favicon vectoriel moderne
-│   ├── apple-touch-icon.png / icon-192.png / icon-512.png   # Icônes PWA
-│   ├── og-image.png        # Aperçu OpenGraph / Twitter Cards
-│   └── projects/           # Captures et schémas des laboratoires
-├── CV/cv.pdf               # Curriculum Vitæ officiel au format PDF
-├── manifest.webmanifest    # Manifest PWA (installation mobile / desktop)
-├── robots.txt / sitemap.xml# Indexation et SEO
-├── 404.html                # Page d'erreur 404 console interactive
-└── build.js                # Script Node.js de cache-busting automatique
+index.html                 Accueil : nom, présentation, fiche « Recherche de stage », chiffres, liste des réalisations
+parcours.html              À propos, formation, expériences, compétences
+contact.html               Coordonnées et formulaire (Formspree)
+404.html                   Page d'erreur
+realisations/              Une page par réalisation
+  cisco.html               01 · Réseaux sous Packet Tracer
+  active-directory.html    02 · Domaine Active Directory
+  nagios.html              03 · Supervision Nagios
+  ipfire.html              04 · Pare-feu IPFire
+  stage-aberia.html        05 · Stage Aberia
+  autres-tp.html           06 · GLPI, MediaWiki, ZeroShell
+css/style.css              Styles (thèmes clair et sombre)
+js/main.js                 Navigation fluide, thème, schéma interactif, copie de l'e-mail, formulaire
+assets/                    Favicon, icônes, image de partage (og-image.png)
+assets/fonts/              Polices hébergées localement (Fraunces, Instrument Sans, IBM Plex Mono, licence SIL OFL)
+CV/cv.pdf                  CV téléchargeable
+maquettes/                 Maquettes et documents de la refonte : à ne pas publier
 ```
 
----
+## Modifier le site
 
-## 🚀 Sections & Fonctionnalités clés
+- **Un texte** : ouvrir la page concernée et modifier le texte entre les balises. L'en-tête et le pied de page sont répétés dans chaque page : si tu changes un lien du menu, change-le partout.
+- **Ajouter une réalisation** : copier une page de `realisations/`, adapter le contenu, puis ajouter une entrée dans la liste `<ul class="entries">` de `index.html`, les liens « Précédente / Suivante » et `sitemap.xml`.
+- **Ajouter une capture d'écran** dans une page projet, juste après la figure :
 
-1. **Header & Navigation rapide** :
-   - Accès rapide aux sections avec underline dynamique.
-   - Bouton de bascule rapide de thème Clair (Éditorial Crème) / Sombre (Deep Console).
-   - Menu tiroir mobile accessible avec gestion de focus (`inert`).
-   - Modal d'aide aux raccourcis clavier (`?`).
+```html
+<figure class="fig">
+  <img src="../assets/projects/ad-gpo.png" alt="Résultat de gpresult /r sur le poste Windows 10" width="1200" height="700" loading="lazy">
+  <figcaption><b>Capture.</b> Les GPO appliquées au poste client.</figcaption>
+</figure>
+```
 
-2. **Section 00 : Hero** :
-   - Badge de disponibilité en temps réel (« À la recherche d'un stage SISR »).
-   - Accroche technique mature avec rôle et compétences clés.
-   - Boutons d'action : Télécharger CV, Me contacter, Copier mon e-mail avec toast instantané.
-   - Topologie réseau interactive en SVG avec flux de paquets animés et interaction de survol.
+  Déposer l'image dans `assets/projects/` (PNG ou JPEG, environ 1200 px de large). Masquer les mots de passe et les informations sensibles avant de publier.
 
-3. **Section 01 : À propos** :
-   - Parcours détaillé (Bac Pro SN mention TB -> BTS SIO SISR).
-   - Compteurs dynamiques animés (Nombre de VMs, VLANs configurés, Heures labo, Expériences de stage).
-   - Carte technique « Spécifications Environnement Labo » (Hyperviseur, OS, adressage IP).
+## Navigation fluide
 
-4. **Section 02 : Compétences (Matrice catégorisée)** :
-   - 4 pôles d'expertise concrets : **Systèmes & Services**, **Réseaux & Commutation**, **Sécurité & Filtrage**, **Méthodologie & Support**.
-   - Badges et pastilles techniques (pas de jauges de pourcentage subjectives).
+Chaque page est un fichier HTML complet (liens directs et référencement fonctionnent normalement). Quand on clique sur un lien interne, `js/main.js` télécharge la page suivante et remplace le contenu sans recharger : pas de flash, l'en-tête reste en place. Les pages sont préchargées au survol des liens. En cas d'erreur, ou en ouvrant les fichiers directement sans serveur, la navigation redevient classique.
 
-5. **Section 03 : Projets & Laboratoires SISR** :
-   - 4 projets phares : Active Directory DS & GPO, IPFire Multi-Zones, ZeroShell Captive Portal, Cisco Packet Tracer (VLANs/Routage).
-   - Fiches synthétiques avec métriques, badges d'état et ouverture de modales complètes (topologies SVG, étapes de configuration, compétences BTS associées).
+Si tu ajoutes une fonction JavaScript propre à une page, appelle-la depuis `initPage()` pour qu'elle soit relancée après chaque changement de page.
 
-6. **Section 04 : CV Interactif & Imprimable** :
-   - Timeline de formation & 4 stages professionnels détaillés avec réalisations concrètes.
-   - Matrice de maîtrise (Laboratoire avancé / Milieu professionnel / Notions).
-   - Feuille de style `@media print` optimisée pour impression ou export PDF parfait sans coupure inutile.
+## Avant chaque mise en ligne
 
-7. **Section 05 : Contact Direct & Formulaire** :
-   - Carte de contact direct (e-mail, téléphone, localisation Servian 34, permis B, LinkedIn, GitHub).
-   - Formulaire Formspree asynchrone avec champ piège antispam (`honeypot`) et message de confirmation poli.
+```bash
+node build.js
+```
 
-8. **Barre d'état & Utilitaires** :
-   - Fil d'Ariane dynamique de la section active.
-   - Indicateur de progression de lecture (top bar & status bar).
-   - Raccourcis clavier (Vim navigation `j`/`k`/`G`, sauts de section `gh`/`ga`/`gs`/`gp`/`gv`/`gc`).
+Le script ajoute une empreinte (`?v=…`) aux liens vers `style.css` et `main.js`, pour que les visiteurs récupèrent la nouvelle version.
 
----
+## Tester en local
 
-## 🛠️ Commandes utiles
+```bash
+python -m http.server 8000
+```
 
-| Action | Commande / Procédure |
-|---|---|
-| **Vérifier la syntaxe JS** | `node --check js/script.js` |
-| **Mettre à jour le cache-busting** | `node build.js` |
-| **Régénérer les icônes PWA** | `node assets/build-favicon-png.js` |
-| **Régénérer l'OG image** | `node assets/build-og-image.js` |
-
----
-
-## 🌐 Déploiement
-
-Le site est entièrement statique :
-1. Déposez les fichiers sur GitHub dans la branche `main`.
-2. Activez **GitHub Pages** (Settings > Pages > Source : Deploy from a branch, `/root`).
-3. Le site est immédiatement accessible en ligne avec support HTTPS.
+Puis ouvrir http://localhost:8000.
