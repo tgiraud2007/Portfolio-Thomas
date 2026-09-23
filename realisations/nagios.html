@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supervision Nagios · Thomas Giraud</title>
+<meta name="description" content="TP de BTS SIO SISR : installation de Nagios sur Debian pour superviser un contrôleur de domaine, un serveur web et un routeur ZeroShell.">
+<link rel="canonical" href="https://thomasgiraud.me/realisations/nagios.html">
+<meta property="og:title" content="Supervision Nagios · Thomas Giraud">
+<meta property="og:image" content="https://thomasgiraud.me/assets/og-image.png">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="expect" href="#contenu" blocking="render">
+<link rel="preload" href="../assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/style.css?v=833dd0d8">
+<script>(function(){try{var t=localStorage.getItem("tg-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR · 2026-2027</span></a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="../index.html">Accueil</a></li>
+        <li><a href="../index.html#realisations" aria-current="page">Réalisations</a></li>
+        <li><a href="../parcours.html">Parcours</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Changer de thème">
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+  <header class="wrap page-head">
+    <p class="crumbs"><a href="../index.html">Accueil</a> / <a href="../index.html#realisations">Réalisations</a> / 03</p>
+    <p class="kicker">Réalisation 03 · Formation</p>
+    <h1>Superviser ses serveurs avec <em>Nagios</em></h1>
+    <p class="chapo">Installation de Nagios pour surveiller l'état de trois serveurs de ma maquette.</p>
+    <ul class="tags"><li>Nagios</li><li>Debian</li><li>Supervision</li></ul>
+  </header>
+
+  <div class="wrap article">
+    <div class="prose">
+      <figure class="fig">
+        <div class="fig__head"><span>Fig. 1 · Schéma de la supervision</span><span>3 hôtes</span></div>
+        <svg viewBox="0 0 640 300" role="img" aria-labelledby="f-nagios">
+          <title id="f-nagios">Schéma : un serveur Nagios sous Debian vérifie trois hôtes, le contrôleur de domaine, le serveur web et le routeur ZeroShell.</title>
+          <g stroke-width="1.5">
+            <rect class="s-ink" x="40" y="110" width="150" height="80" rx="2"/>
+            <path class="s-ink" stroke-width="1" d="M40 136 H190"/>
+            <path class="s-red" d="M60 170 H80 L88 152 L98 178 L106 160 H170"/>
+            <path class="s-green" stroke-width="1.3" stroke-dasharray="5 5" d="M190 130 C 300 130, 330 60, 420 60 M190 150 H420 M190 170 C 300 170, 330 240, 420 240"/>
+            <rect class="s-ink" x="420" y="36" width="196" height="48" rx="2"/>
+            <rect class="s-ink" x="420" y="126" width="196" height="48" rx="2"/>
+            <rect class="s-ink" x="420" y="216" width="196" height="48" rx="2"/>
+          </g>
+          <circle class="f-green" cx="602" cy="60" r="5"/>
+          <circle class="f-green" cx="602" cy="150" r="5"/>
+          <circle class="f-green" cx="602" cy="240" r="5"/>
+          <text class="t-ink" x="56" y="128">Nagios · Debian</text>
+          <text class="t-ink" x="434" y="64">Contrôleur de domaine</text>
+          <text class="t-ink" x="434" y="154">Serveur web</text>
+          <text class="t-ink" x="434" y="244">Routeur ZeroShell</text>
+          <text class="t-dim" x="40" y="214">Vérifie : disponibilité</text>
+          <text class="t-dim" x="40" y="230">Et services (web, DNS)</text>
+        </svg>
+        <figcaption><b>La supervision.</b> Nagios vérifie que chaque hôte répond, ainsi que l'état de services comme le web et le DNS.</figcaption>
+      </figure>
+
+      <h2>Contexte</h2>
+      <p>TP de 1<sup>re</sup> année de BTS SIO, réalisé seul.</p>
+
+      <h2>Ce que j'ai fait</h2>
+      <ul class="list">
+        <li>Installation de Nagios sur un serveur Debian.</li>
+        <li>Ajout de trois hôtes à superviser : le contrôleur de domaine Active Directory, un serveur web et le routeur ZeroShell.</li>
+        <li>Contrôles : disponibilité de chaque hôte, et état de services comme le web et le DNS.</li>
+      </ul>
+    </div>
+
+    <aside class="fiche" aria-labelledby="fiche-titre">
+      <h2 id="fiche-titre">Fiche technique</h2>
+      <dl>
+        <div><dt>Cadre</dt><dd>TP de 1<sup>re</sup> année de BTS SIO</dd></div>
+        <div><dt>Réalisé</dt><dd>Seul</dd></div>
+        <div><dt>Année</dt><dd>2025-2026</dd></div>
+        <div><dt>Outil</dt><dd>Nagios</dd></div>
+        <div><dt>Système</dt><dd>Debian</dd></div>
+        <div><dt>Hôtes supervisés</dt><dd>Contrôleur de domaine, serveur web, routeur ZeroShell</dd></div>
+      </dl>
+      <div class="ref">
+        <h2>Compétences du BTS</h2>
+        <ul>
+          <li>Exploiter, dépanner et superviser une solution d'infrastructure réseau</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <nav class="pager" aria-label="Autres réalisations">
+    <div class="wrap">
+      <a href="active-directory.html"><span class="label">← Précédente</span><strong>Un domaine Active Directory de A à Z</strong></a>
+      <a href="ipfire.html"><span class="label">Suivante →</span><strong>Publier un serveur web derrière IPFire</strong></a>
+    </div>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="who">Thomas Giraud <span>· BTS SIO SISR · Servian (34)</span></p>
+    <ul>
+      <li><a href="../index.html#realisations">Réalisations</a></li>
+      <li><a href="../parcours.html">Parcours</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="https://www.linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://github.com/tgiraud2007" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="../CV/cv.pdf">CV (PDF)</a></li>
+    </ul>
+    <p>© 2026 Thomas Giraud</p>
+  </div>
+</footer>
+<script src="../js/main.js?v=452a22bd" defer></script>
+</body>
+</html>

@@ -1,41 +1,31 @@
-/* Build léger : cache-busting des assets statiques.
-   Ajoute ?v=<hash> sur css/style.css et js/script.js dans index.html.
+/* Cache-busting : ajoute ?v=<empreinte> aux liens vers css/style.css et js/main.js
+   dans toutes les pages HTML, pour que les visiteurs récupèrent la dernière version.
 
-   Usage :  node build.js
+   Usage : node build.js   (à lancer avant chaque mise en ligne)
 */
 const fs = require("fs");
-const crypto = require("crypto");
 const path = require("path");
+const crypto = require("crypto");
 
 const root = __dirname;
-const htmlPath = path.join(root, "index.html");
-let html = fs.readFileSync(htmlPath, "utf8");
+const assets = ["css/style.css", "js/main.js"];
+const hashes = Object.fromEntries(assets.map((a) => [
+  a, crypto.createHash("sha1").update(fs.readFileSync(path.join(root, a))).digest("hex").slice(0, 8),
+]));
 
-const assets = [
-  { ref: 'href="css/style.css', file: "css/style.css" },
-  { ref: 'src="js/script.js', file: "js/script.js" },
+const pages = [
+  ...fs.readdirSync(root).filter((f) => f.endsWith(".html")),
+  ...fs.readdirSync(path.join(root, "realisations")).filter((f) => f.endsWith(".html")).map((f) => "realisations/" + f),
 ];
 
-let changed = false;
-for (const { ref, file } of assets) {
-  const full = path.join(root, file);
-  if (!fs.existsSync(full)) {
-    console.warn("Introuvable, ignoré :", file);
-    continue;
+for (const page of pages) {
+  const file = path.join(root, page);
+  let html = fs.readFileSync(file, "utf8");
+  for (const a of assets) {
+    const escaped = a.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
+    const re = new RegExp("(" + escaped + ")(\\?v=[0-9a-f]+)?", "g");
+    html = html.replace(re, "$1?v=" + hashes[a]);
   }
-  const hash = crypto.createHash("sha1")
-    .update(fs.readFileSync(full))
-    .digest("hex")
-    .slice(0, 8);
-  const pattern = new RegExp(ref.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + '([^"\']*)');
-  html = html.replace(pattern, ref + "?v=" + hash);
-  changed = true;
-  console.log("cache-busting :", file, "-> v=" + hash);
-}
-
-if (changed) {
-  fs.writeFileSync(htmlPath, html, "utf8");
-  console.log("index.html mis à jour.");
-} else {
-  console.log("Aucun changement.");
+  fs.writeFileSync(file, html, "utf8");
+  console.log("à jour :", page);
 }
