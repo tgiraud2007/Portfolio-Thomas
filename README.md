@@ -17,11 +17,19 @@ realisations/              Une page par réalisation
   stage-aberia.html        05 · Stage Aberia
   autres-tp.html           06 · GLPI, MediaWiki, ZeroShell
 css/style.css              Styles (thèmes clair et sombre)
+css/motion.css             Animations : apparitions, frise du Parcours, numéro qui glisse, trait au stylo
 js/main.js                 Navigation fluide, thème, schéma interactif, copie de l'e-mail, formulaire
+js/app.js                  Charge les modules ci-dessous (après l'affichage de la page)
+js/modules/                Un fichier par fonction, chacun avec init() / destroy() :
+  header.js                En-tête collant (caché en descendant sur téléphone)
+  skill-filter.js          Puces « Compétences » ↔ fiches (accueil)
+  fiche-transition.js      Numéro de fiche qui glisse (accueil → fiche)
+  smooth-anchors.js        Défilement animé vers une section de la page
+  nav-current.js           Menu : « Accueil » ou « Réalisations » souligné selon la position
+  reveal.js                Apparitions au défilement
 assets/                    Favicon, icônes, image de partage (og-image.png)
 assets/fonts/              Polices hébergées localement (Fraunces, Instrument Sans, IBM Plex Mono, licence SIL OFL)
 CV/cv.pdf                  CV téléchargeable
-maquettes/                 Maquettes et documents de la refonte : à ne pas publier
 ```
 
 ## Modifier le site
@@ -45,13 +53,17 @@ Chaque page est un fichier HTML complet (liens directs et référencement foncti
 
 Si tu ajoutes une fonction JavaScript propre à une page, appelle-la depuis `initPage()` pour qu'elle soit relancée après chaque changement de page.
 
+Pour une animation ou un comportement plus complet, crée plutôt un module dans `js/modules/` (fonctions `init()` et `destroy()`) et ajoute-le à la liste `MODULES` de `js/app.js` : il sera branché et débranché à chaque changement de page. Pour en désactiver un, retire sa ligne de cette liste.
+
+Toutes les animations respectent le réglage « réduire les animations » du système : dans ce cas, le site s'affiche sans mouvement.
+
 ## Avant chaque mise en ligne
 
 ```bash
 node build.js
 ```
 
-Le script ajoute une empreinte (`?v=…`) aux liens vers `style.css` et `main.js`, pour que les visiteurs récupèrent la nouvelle version.
+Le script ajoute une empreinte (`?v=…`) aux liens vers les CSS et les JS (`style.css`, `motion.css`, `main.js`, `app.js` et les modules), pour que les visiteurs récupèrent la nouvelle version.
 
 ## Tester en local
 

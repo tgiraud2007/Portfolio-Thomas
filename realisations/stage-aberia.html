@@ -11,16 +11,17 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="expect" href="#contenu" blocking="render">
 <link rel="preload" href="../assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/style.css?v=833dd0d8">
+<link rel="stylesheet" href="../css/style.css?v=a95d7088">
+<link rel="stylesheet" href="../css/motion.css?v=28621d12">
 <script>(function(){try{var t=localStorage.getItem("tg-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<script>/* Attente des polices (1 s max) : le contenu s'affiche directement dans la bonne police, au lieu d'apparaître en Georgia puis de changer d'un coup. Voir .fonts-wait dans css/style.css?v=a95d7088. */(function(){var d=document.documentElement,f=document.fonts;if(!f||!f.load)return;d.classList.add("fonts-wait");var done=function(){d.classList.remove("fonts-wait");};Promise.all(["600 1em Fraunces","400 1em Fraunces","italic 400 1em Fraunces","400 1em \"Instrument Sans\"","600 1em \"Instrument Sans\"","400 1em \"IBM Plex Mono\""].map(function(x){return f.load(x);})).then(done,done);setTimeout(done,1000);})();</script>
 </head>
 <body>
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<header class="masthead">
+<header class="masthead" data-progress>
   <div class="wrap">
     <a class="brand" href="../index.html"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR · 2026-2027</span></a>
     <nav aria-label="Navigation principale">
@@ -29,6 +30,7 @@
         <li><a href="../index.html#realisations" aria-current="page">Réalisations</a></li>
         <li><a href="../parcours.html">Parcours</a></li>
         <li><a href="../contact.html">Contact</a></li>
+        <li><a class="nav-cv" href="../CV/cv.pdf">CV<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6.5M3.2 5.4 6 8.2l2.8-2.8M2 10.5h8"/></svg><span class="visually-hidden"> (PDF)</span></a></li>
       </ul>
       <button class="theme-toggle" type="button" aria-label="Changer de thème">
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
@@ -41,6 +43,7 @@
 <main id="contenu">
   <header class="wrap page-head">
     <p class="crumbs"><a href="../index.html">Accueil</a> / <a href="../index.html#realisations">Réalisations</a> / 05</p>
+    <p class="page-num" aria-hidden="true">05</p>
     <p class="kicker">Réalisation 05 · Entreprise</p>
     <h1>Stage chez <em>Aberia Télécommunications</em></h1>
     <p class="chapo">Stage de 1<sup>re</sup> année de BTS, du 11 mai au 26 juin 2026, chez un intégrateur en téléphonie, informatique et réseau.</p>
@@ -49,6 +52,41 @@
 
   <div class="wrap article">
     <div class="prose">
+      <figure class="fig">
+        <div class="fig__head"><span>Fig. 1 · Mes interventions</span><span>7 semaines</span></div>
+        <svg viewBox="0 0 640 300" role="img" aria-labelledby="f-aberia">
+          <title id="f-aberia">Schéma : environ deux tiers des interventions en téléphonie d'entreprise, un tiers en réseau et informatique. Deux exemples : installation de téléphones IP et remplacement d'un switch, toujours aux côtés d'un technicien.</title>
+          <!-- Répartition : 2/3 téléphonie, 1/3 réseau et informatique -->
+          <text class="t-ink" x="40" y="34">≈ 2/3 · Téléphonie d'entreprise</text>
+          <text class="t-ink" x="421" y="34">≈ 1/3 · Réseau, informatique</text>
+          <rect class="s-red f-soft-red" stroke-width="1.5" x="40" y="46" width="373" height="30"/>
+          <rect class="s-ink" stroke-width="1.5" x="413" y="46" width="187" height="30"/>
+          <path class="s-red" stroke-width="1" d="M52 76 l18 -30 M72 76 l18 -30 M92 76 l18 -30 M112 76 l18 -30 M132 76 l18 -30 M152 76 l18 -30 M172 76 l18 -30 M192 76 l18 -30 M212 76 l18 -30 M232 76 l18 -30 M252 76 l18 -30 M272 76 l18 -30 M292 76 l18 -30 M312 76 l18 -30 M332 76 l18 -30 M352 76 l18 -30 M372 76 l18 -30 M392 76 l18 -30"/>
+          <path class="s-dim" stroke-width="1" stroke-dasharray="3 4" d="M140 76 V122 M506 76 V150"/>
+          <!-- Exemple 1 : téléphone IP -->
+          <g class="s-ink" stroke-width="1.5">
+            <rect x="62" y="126" width="18" height="92" rx="8"/>
+            <rect x="80" y="130" width="130" height="84" rx="6"/>
+            <rect x="94" y="142" width="62" height="26" rx="2"/>
+            <path stroke-width="1" d="M94 182 h62 M94 194 h40"/>
+            <path stroke-width="2" stroke-linecap="round" d="M170 144 h6 M184 144 h6 M198 144 h2 M170 158 h6 M184 158 h6 M198 158 h2 M170 172 h6 M184 172 h6 M198 172 h2 M170 186 h6 M184 186 h6 M198 186 h2"/>
+          </g>
+          <text class="t-ink" x="40" y="246">Installation de téléphones IP</text>
+          <text class="t-dim" x="40" y="263">chez un client</text>
+          <!-- Exemple 2 : switch -->
+          <g class="s-ink" stroke-width="1.5">
+            <rect x="396" y="152" width="220" height="48" rx="3"/>
+            <path stroke-width="1" d="M410 164 h12 v10 h-12 z M428 164 h12 v10 h-12 z M446 164 h12 v10 h-12 z M464 164 h12 v10 h-12 z M482 164 h12 v10 h-12 z M500 164 h12 v10 h-12 z M518 164 h12 v10 h-12 z M536 164 h12 v10 h-12 z M410 180 h12 v10 h-12 z M428 180 h12 v10 h-12 z M446 180 h12 v10 h-12 z M464 180 h12 v10 h-12 z M482 180 h12 v10 h-12 z M500 180 h12 v10 h-12 z M518 180 h12 v10 h-12 z M536 180 h12 v10 h-12 z"/>
+          </g>
+          <circle class="f-green" cx="580" cy="170" r="3"/>
+          <circle class="f-green" cx="596" cy="170" r="3"/>
+          <text class="t-ink" x="396" y="246">Remplacement d'un switch</text>
+          <path class="s-dim" stroke-width="1" stroke-dasharray="3 4" d="M40 282 H600"/>
+          <text class="t-dim" x="40" y="298" style="font-size:11px">Toujours aux côtés d'un technicien</text>
+        </svg>
+        <figcaption><b>Répartition approximative.</b> Environ deux tiers de mes interventions en téléphonie d'entreprise, le reste en réseau et en informatique. Deux exemples d'interventions.</figcaption>
+      </figure>
+
       <h2>L'entreprise</h2>
       <p>Aberia Télécommunications est une PME basée à Béziers, avec des agences à Montpellier, Toulouse et Castres. Elle installe et maintient des solutions de téléphonie, d'informatique, de réseau et de sécurité pour des entreprises et des collectivités.</p>
 
@@ -107,6 +145,7 @@
     <p>© 2026 Thomas Giraud</p>
   </div>
 </footer>
-<script src="../js/main.js?v=452a22bd" defer></script>
+<script src="../js/main.js?v=20e8a941" defer></script>
+<script type="module" fetchpriority="low" src="../js/app.js?v=e6ff1a2c"></script>
 </body>
 </html>

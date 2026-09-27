@@ -4,13 +4,32 @@
    ========================================================================== */
 
 /* ---------- Polices (hébergées dans assets/fonts, sous-ensemble latin) ----------
-   font-display: block : le texte attend sa police (déjà en cache après la
-   première page) au lieu de s'afficher en police de secours puis de changer. */
-@font-face { font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: block; src: url("../assets/fonts/fraunces.woff2") format("woff2"); }
-@font-face { font-family: "Fraunces"; font-style: italic; font-weight: 400 600; font-display: block; src: url("../assets/fonts/fraunces-italic.woff2") format("woff2"); }
-@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 400 600; font-display: block; src: url("../assets/fonts/instrument-sans.woff2") format("woff2"); }
-@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: block; src: url("../assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); }
-@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: block; src: url("../assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); }
+   font-display: swap : le texte s'affiche tout de suite avec une police
+   système, puis la vraie police la remplace dès qu'elle est arrivée (en
+   général avant même le premier affichage ; ensuite elle est en cache).
+   Avant (block), le texte restait invisible jusqu'à 2 s sur mobile en 4G.
+   Pour revenir à l'ancien comportement : remplacer swap par block. */
+@font-face { font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: swap; src: url("../assets/fonts/fraunces.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-style: italic; font-weight: 400 600; font-display: swap; src: url("../assets/fonts/fraunces-italic.woff2") format("woff2"); }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 400 600; font-display: swap; src: url("../assets/fonts/instrument-sans.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("../assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("../assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); }
+
+/* Polices de secours « ajustées » : Georgia, Arial et Consolas, étirées pour
+   occuper la même largeur que nos polices. Ainsi, quand la vraie police
+   arrive, le texte ne change pas de ligne et la page ne saute pas (CLS = 0).
+   Les pourcentages ont été mesurés dans le navigateur sur un paragraphe du
+   site. Fraunces change de largeur selon sa taille optique (opsz) : il y a
+   donc une version « texte » (opsz 24) et une version « titres » (opsz 144). */
+@font-face { font-family: "Fraunces Fallback"; font-style: normal; font-weight: 400; src: local("Georgia"); size-adjust: 103.8%; ascent-override: 94.2%; descent-override: 24.6%; line-gap-override: 0%; }
+@font-face { font-family: "Fraunces Fallback"; font-style: normal; font-weight: 600; src: local("Georgia Bold"), local("Georgia-Bold"); size-adjust: 92%; ascent-override: 106.3%; descent-override: 27.7%; line-gap-override: 0%; }
+@font-face { font-family: "Fraunces Fallback"; font-style: italic; font-weight: 400; src: local("Georgia Italic"), local("Georgia-Italic"); size-adjust: 96.8%; ascent-override: 101%; descent-override: 26.3%; line-gap-override: 0%; }
+@font-face { font-family: "Fraunces Display Fallback"; font-style: normal; font-weight: 400; src: local("Georgia"); size-adjust: 84.3%; ascent-override: 116%; descent-override: 30.2%; line-gap-override: 0%; }
+@font-face { font-family: "Fraunces Display Fallback"; font-style: normal; font-weight: 600; src: local("Georgia Bold"), local("Georgia-Bold"); size-adjust: 75.7%; ascent-override: 129.2%; descent-override: 33.7%; line-gap-override: 0%; }
+@font-face { font-family: "Fraunces Display Fallback"; font-style: italic; font-weight: 400; src: local("Georgia Italic"), local("Georgia-Italic"); size-adjust: 79.8%; ascent-override: 122.6%; descent-override: 32%; line-gap-override: 0%; }
+@font-face { font-family: "Instrument Sans Fallback"; font-style: normal; font-weight: 400; src: local("Arial"); size-adjust: 100.4%; ascent-override: 96.7%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: "Instrument Sans Fallback"; font-style: normal; font-weight: 600; src: local("Arial Bold"), local("Arial-BoldMT"); size-adjust: 96.7%; ascent-override: 100.4%; descent-override: 25.9%; line-gap-override: 0%; }
+@font-face { font-family: "IBM Plex Mono Fallback"; src: local("Consolas"); size-adjust: 109.1%; ascent-override: 93.9%; descent-override: 25.2%; line-gap-override: 0%; }
 
 /* ---------- Tokens ---------- */
 :root {
@@ -27,40 +46,44 @@
   --band-ink-2: #b8ae9c;
   --band-accent: #ff8d6e;
   --shadow: 0 30px 60px -30px rgba(60, 40, 20, .35);
-  --grain: .35;
   --field: #fffdf8;
+  /* Grain du papier : petite tuile de bruit répétée en fond de page.
+     (Avant : un calque fixe en mix-blend-mode par-dessus tout le site,
+     recalculé à chaque image du défilement → saccades sur mobile.) */
+  --grain-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45  0 0 0 0 .4  0 0 0 0 .32  0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
-  --serif: "Fraunces", Georgia, "Times New Roman", serif;
-  --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --serif: "Fraunces", "Fraunces Fallback", Georgia, "Times New Roman", serif;
+  --serif-display: "Fraunces", "Fraunces Display Fallback", Georgia, "Times New Roman", serif; /* grands titres et chiffres */
+  --sans: "Instrument Sans", "Instrument Sans Fallback", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", "IBM Plex Mono Fallback", ui-monospace, Consolas, monospace;
   --ease: cubic-bezier(.2, .7, .1, 1);
   --gutter: 32px;
+  --header-h: 68px; /* hauteur de l'en-tête collant, mise à jour par js/modules/header.js */
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #16140f; --bg-2: #211e17; --surface: #1c1a14; --ink: #eee7d8; --ink-2: #aaa190; --rule: #3a352b;
     --red: #ff8a6b; --green: #7fcb92; --band-bg: #211e17; --band-ink: #eee7d8; --band-ink-2: #aaa190; --band-accent: #ff8a6b;
-    --shadow: 0 30px 60px -30px rgba(0, 0, 0, .6); --grain: .12; --field: #1a1812;
+    --shadow: 0 30px 60px -30px rgba(0, 0, 0, .6); --field: #1a1812;
+    --grain-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .9  0 0 0 0 .85  0 0 0 0 .75  0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #16140f; --bg-2: #211e17; --surface: #1c1a14; --ink: #eee7d8; --ink-2: #aaa190; --rule: #3a352b;
   --red: #ff8a6b; --green: #7fcb92; --band-bg: #211e17; --band-ink: #eee7d8; --band-ink-2: #aaa190; --band-accent: #ff8a6b;
-  --shadow: 0 30px 60px -30px rgba(0, 0, 0, .6); --grain: .12; --field: #1a1812;
+  --shadow: 0 30px 60px -30px rgba(0, 0, 0, .6); --field: #1a1812;
+  --grain-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .9  0 0 0 0 .85  0 0 0 0 .75  0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   color-scheme: dark;
 }
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { background: var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); overflow-x: hidden; }
-body::before {
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: var(--grain); mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45  0 0 0 0 .4  0 0 0 0 .32  0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+/* scroll-padding-top : les ancres (#realisations…) s'arrêtent sous l'en-tête collant */
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 12px); }
+body { background: var(--grain-img) var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); overflow-x: clip; }
 img, svg { max-width: 100%; }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
@@ -78,8 +101,12 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .kicker { font: 12px var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--red); display: flex; align-items: center; gap: 10px; }
 .kicker::before { content: ""; width: 28px; height: 1.5px; background: var(--red); flex: none; }
 
-/* ---------- En-tête ---------- */
-.masthead { border-bottom: 2px solid var(--ink); }
+/* ---------- En-tête ----------
+   Collant : il reste en haut de l'écran pendant le défilement. Sur téléphone,
+   js/modules/header.js ajoute .is-hidden quand on descend (il glisse hors de
+   l'écran) et l'enlève quand on remonte. */
+.masthead { position: sticky; top: 0; z-index: 40; background: var(--grain-img) var(--bg); border-bottom: 2px solid var(--ink); transition: transform .3s var(--ease); }
+.masthead.is-hidden { transform: translateY(-100%); }
 .masthead .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px 24px; padding-top: 16px; padding-bottom: 14px; flex-wrap: wrap; }
 .brand { text-decoration: none; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .brand__name { font-family: var(--serif); font-weight: 600; font-size: 22px; letter-spacing: -.01em; }
@@ -87,7 +114,11 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .masthead nav { display: flex; align-items: center; gap: 20px; }
 .masthead nav ul { display: flex; flex-wrap: wrap; gap: 8px 22px; list-style: none; font-size: 15px; font-weight: 500; }
 .masthead nav a { text-decoration: none; background: linear-gradient(var(--red), var(--red)) 0 100% / 0 2px no-repeat; padding-bottom: 2px; transition: background-size .35s var(--ease); }
-.masthead nav a:hover, .masthead nav a[aria-current="page"] { background-size: 100% 2px; }
+.masthead nav a:hover, .masthead nav a[aria-current] { background-size: 100% 2px; } /* page actuelle, ou section actuelle de l'accueil (js/modules/nav-current.js) */
+/* Lien CV : en pastille, pour qu'on le repère tout de suite sur chaque page */
+.masthead nav .nav-cv { display: inline-flex; align-items: center; gap: 5px; padding: 3px 11px 3px 10px; margin: -3px 0; border: 1px solid var(--ink); border-radius: 99px; background: none; transition: background .2s, color .2s; }
+.masthead nav .nav-cv:hover { background: var(--ink); color: var(--bg); }
+.nav-cv svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .theme-toggle { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--rule); border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; }
 .theme-toggle:hover { border-color: var(--ink); }
 .theme-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
@@ -101,14 +132,18 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 
 /* ---------- Accueil : hero ---------- */
 .hero { padding-top: 56px; padding-bottom: 8px; }
-.hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(52px, 8vw, 108px); line-height: .95; letter-spacing: -.04em; margin: 16px 0 24px; font-variation-settings: "opsz" 144; }
+.hero h1 { font-family: var(--serif-display); font-weight: 600; font-size: clamp(52px, 8vw, 108px); line-height: .95; letter-spacing: -.04em; margin: 16px 0 24px; font-variation-settings: "opsz" 144; }
 /* Masque de l'animation d'entrée : marge autour des lettres (l'italique déborde à droite), compensée pour ne pas décaler le texte */
 .hero h1 .line { display: inline-block; overflow: hidden; vertical-align: bottom; padding: .04em .18em .1em .06em; margin: -.04em -.18em -.1em -.06em; }
 .hero h1 .line > span { display: inline-block; }
 .hero h1 .line:nth-child(2) > span { color: var(--red); }
 .deck { font-family: var(--serif); font-size: clamp(19px, 1.9vw, 24px); line-height: 1.45; max-width: 36em; font-variation-settings: "opsz" 24; }
 .avail { display: flex; align-items: baseline; gap: 10px; margin-top: 18px; font-size: 16px; color: var(--ink-2); }
-.avail strong { color: var(--ink); font-weight: 600; }
+.avail strong { position: relative; color: var(--ink); font-weight: 600; white-space: nowrap; }
+/* Trait au stylo sous « Recherche un stage » : un vrai tracé SVG, dessiné à
+   l'arrivée sur l'accueil (animation dans css/motion.css, section 1) */
+.scribble { position: absolute; left: -1%; width: 102%; bottom: -.5em; height: .5em; overflow: visible; pointer-events: none; }
+.scribble path { fill: none; stroke: var(--red); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .status { display: inline-flex; align-items: center; gap: 8px; }
 .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2.4s infinite; transform: translateY(-1px); }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--green) 50%, transparent); } 70%, 100% { box-shadow: 0 0 0 9px transparent; } }
@@ -119,7 +154,7 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .btn--solid:hover { background: var(--red); border-color: var(--red); color: var(--bg); }
 
 /* ---------- Schéma (figure) ---------- */
-.fig { position: relative; background: var(--surface); border: 1px solid var(--rule); padding: 20px 20px 16px; box-shadow: var(--shadow); }
+.fig { position: relative; background: var(--grain-img) var(--surface); border: 1px solid var(--rule); padding: 20px 20px 16px; box-shadow: var(--shadow); }
 .fig__head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); padding-bottom: 10px; border-bottom: 1px dashed var(--rule); }
 .fig svg { width: 100%; height: auto; display: block; margin-top: 8px; overflow: visible; }
 .fig__note { margin-top: 12px; min-height: 4.5em; font-size: 14px; line-height: 1.5; color: var(--ink-2); border-left: 2px solid var(--red); padding-left: 12px; }
@@ -140,6 +175,8 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .t-green { fill: var(--green); }
 .f-red { fill: var(--red); }
 .f-green { fill: var(--green); }
+.f-soft-red { fill: color-mix(in srgb, var(--red) 12%, transparent); }
+.mini .fig { margin-top: 16px; padding: 14px 14px 10px; }
 .fig text { font-family: var(--mono); font-size: 12px; }
 .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.4s var(--ease) forwards; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
@@ -153,9 +190,9 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .figures .wrap { display: grid; grid-template-columns: repeat(3, 1fr); }
 .stat { padding: 28px 28px 28px 0; }
 .stat + .stat { border-left: 1px solid var(--rule); padding-left: 28px; }
-.stat b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(54px, 6vw, 80px); line-height: 1; letter-spacing: -.03em; font-variation-settings: "opsz" 144; font-variant-numeric: lining-nums; }
+.stat b { display: block; font-family: var(--serif-display); font-weight: 400; font-size: clamp(54px, 6vw, 80px); line-height: 1; letter-spacing: -.03em; font-variation-settings: "opsz" 144; font-variant-numeric: lining-nums; }
 .stat b em { color: var(--red); }
-.stat span { display: block; margin-top: 10px; font-size: 15px; color: var(--ink-2); max-width: 20em; }
+.stat > span { display: block; margin-top: 10px; font-size: 15px; color: var(--ink-2); max-width: 20em; }
 
 /* ---------- Sommaire des réalisations ---------- */
 .sommaire { padding-top: 48px; padding-bottom: 72px; scroll-margin-top: 16px; }
@@ -166,22 +203,40 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .entry { position: relative; isolation: isolate; display: grid; grid-template-columns: 88px 1fr 72px; gap: 18px; align-items: start; padding: 28px 0; border-top: 1px solid var(--ink); text-decoration: none; height: 100%; }
 .entry::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: var(--bg-2); z-index: -1; transition: height .4s var(--ease); }
 .entry:hover::after, .entry:focus-visible::after { height: 100%; }
-.num { font-family: var(--serif); font-size: 64px; line-height: .9; font-variation-settings: "opsz" 144; color: transparent; -webkit-text-stroke: 1.2px var(--red); transition: color .35s; }
+.num { font-family: var(--serif-display); font-size: 64px; line-height: .9; font-variation-settings: "opsz" 144; color: transparent; -webkit-text-stroke: 1.2px var(--red); transition: color .35s; }
 .entry:hover .num, .entry:focus-visible .num { color: var(--red); }
 .entry h3 { font-family: var(--serif); font-weight: 600; font-size: 25px; line-height: 1.18; font-variation-settings: "opsz" 36; letter-spacing: -.01em; }
 .entry p { font-size: 15px; color: var(--ink-2); margin-top: 8px; }
 .tags { font: 12px var(--mono); color: var(--ink-2); margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; list-style: none; }
 .tags li, .tags span { border: 1px solid var(--rule); padding: 1px 9px; border-radius: 99px; }
 .tags .tag--pro { border-color: var(--green); color: var(--green); }
+
+/* Compétences ↔ fiches (js/modules/skill-filter.js) */
+.skill-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 7px; margin: -8px 0 24px; }
+.skill-filter .label { margin-right: 4px; }
+.chip { font: 12px/1.5 var(--mono); color: var(--ink-2); background: transparent; border: 1px solid var(--rule); border-radius: 99px; padding: 3px 10px; transition: color .2s, border-color .2s, background .2s; }
+.skill-filter.is-ready .chip { cursor: pointer; }
+.chip:hover { color: var(--ink); border-color: var(--ink); }
+.chip.is-lit { color: var(--red); border-color: var(--red); } /* compétence de la fiche survolée */
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.skill-filter__more { font: 12px var(--mono); color: var(--ink-2); margin-left: 4px; }
+.skill-filter__more:hover { color: var(--red); }
+.entries > li { transition: opacity .35s var(--ease); }
+.entries[data-active] > li:not(.is-match) { opacity: .3; }
+.entries[data-active] > li.is-match .num { color: var(--red); }
+
+
+/* Grand numéro en tête des pages de réalisation (même style que sur l'accueil) */
+.page-num { width: fit-content; margin-bottom: 18px; font-family: var(--serif-display); font-size: 64px; line-height: .9; font-variation-settings: "opsz" 144; color: transparent; -webkit-text-stroke: 1.2px var(--red); }
 .glyph { width: 72px; height: 72px; }
 .glyph * { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
 .entry:hover .glyph *, .entry:focus-visible .glyph * { animation: redraw .9s var(--ease); stroke: var(--red); }
 @keyframes redraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 
 /* ---------- Bandeau d'appel ---------- */
-.cta { background: var(--band-bg); color: var(--band-ink); }
+.cta { background: var(--grain-img) var(--band-bg); color: var(--band-ink); }
 .cta .wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: end; padding-top: 72px; padding-bottom: 72px; }
-.cta h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 5vw, 60px); line-height: 1.04; letter-spacing: -.03em; font-variation-settings: "opsz" 144; }
+.cta h2 { font-family: var(--serif-display); font-weight: 400; font-size: clamp(34px, 5vw, 60px); line-height: 1.04; letter-spacing: -.03em; font-variation-settings: "opsz" 144; }
 .cta h2 em { color: var(--band-accent); }
 .cta__links { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
 .cta .mail { font-family: var(--serif); font-size: clamp(20px, 2.2vw, 28px); text-decoration: none; background: linear-gradient(var(--band-accent), var(--band-accent)) 0 100% / 100% 1px no-repeat; padding-bottom: 4px; transition: background-size .35s var(--ease), color .35s; word-break: break-all; }
@@ -195,7 +250,7 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .crumbs { font: 12px var(--mono); color: var(--ink-2); margin-bottom: 20px; }
 .crumbs a { color: var(--ink-2); }
 .crumbs a:hover { color: var(--red); }
-.page-head h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(40px, 6.5vw, 84px); line-height: .98; letter-spacing: -.035em; margin: 14px 0 20px; max-width: 16em; font-variation-settings: "opsz" 144; }
+.page-head h1 { font-family: var(--serif-display); font-weight: 600; font-size: clamp(40px, 6.5vw, 84px); line-height: .98; letter-spacing: -.035em; margin: 14px 0 20px; max-width: 16em; font-variation-settings: "opsz" 144; }
 .page-head h1 em { font-weight: 400; color: var(--red); }
 .chapo { font-family: var(--serif); font-size: clamp(19px, 2vw, 24px); line-height: 1.45; max-width: 34em; font-variation-settings: "opsz" 24; }
 .page-head .tags { margin-top: 20px; }
@@ -206,6 +261,7 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .prose > h2:first-child, .prose > .fig:first-child + h2 { margin-top: 0; }
 .prose > .fig { margin-bottom: 48px; }
 .prose p + p { margin-top: 14px; }
+.prose ul.list + p { margin-top: 16px; } /* phrase qui suit une liste (ex. fiche Aberia) */
 .prose ul.list { list-style: none; display: grid; gap: 12px; }
 .prose ul.list li { position: relative; padding-left: 26px; }
 .prose ul.list li::before { content: ""; position: absolute; left: 2px; top: .72em; width: 12px; height: 1.5px; background: var(--red); }
@@ -216,7 +272,7 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .limite { margin-top: 20px; padding: 18px 20px; background: var(--bg-2); border-left: 3px solid var(--green); }
 .limite .label { color: var(--green); display: block; margin-bottom: 6px; }
 
-.fiche { position: sticky; top: 24px; border-top: 2px solid var(--ink); padding-top: 16px; }
+.fiche { position: sticky; top: calc(var(--header-h) + 24px); border-top: 2px solid var(--ink); padding-top: 16px; }
 .fiche h2 { font: 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 12px; }
 .fiche dl { display: grid; gap: 0; }
 .fiche dl > div { padding: 10px 0; border-bottom: 1px solid var(--rule); }
@@ -257,6 +313,16 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .timeline h3 span { font-family: var(--sans); font-weight: 400; font-size: 15px; color: var(--ink-2); }
 .timeline p { margin-top: 6px; }
 .timeline .more { display: inline-block; margin-top: 8px; font-size: 15px; font-weight: 600; color: var(--red); }
+/* Frise : un trait vertical relie les étapes, avec un point par étape.
+   Le trait passe au milieu de l'espace entre la colonne des dates (170 px)
+   et le texte (écart de 24 px) → à 182 px du bord gauche.
+   ::before = trait gris de fond, ::after = trait rouge (tracé au défilement
+   dans css/motion.css ; sans animation, il est entièrement tracé). */
+.timeline { position: relative; }
+.timeline::before, .timeline::after { content: ""; position: absolute; top: 20px; bottom: 24px; left: 181.25px; width: 1.5px; background: var(--rule); }
+.timeline::after { background: var(--red); transform-origin: 50% 0; }
+.timeline .when { position: relative; }
+.timeline .when::after { content: ""; position: absolute; top: .35em; right: -16.5px; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--red); background: var(--red); box-shadow: 0 0 0 4px var(--bg); }
 .skills { display: grid; }
 .skills > div { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
 .skills > div:first-child { padding-top: 0; }
@@ -276,7 +342,7 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .email-row a { font-family: var(--serif); font-size: 22px; word-break: break-all; }
 .copy { font: 500 13px var(--sans); background: transparent; color: var(--ink); border: 1px solid var(--rule); border-radius: 99px; padding: 4px 12px; cursor: pointer; }
 .copy:hover { border-color: var(--ink); }
-.form { display: grid; gap: 18px; background: var(--surface); border: 1px solid var(--rule); padding: 28px; box-shadow: var(--shadow); }
+.form { display: grid; gap: 18px; background: var(--grain-img) var(--surface); border: 1px solid var(--rule); padding: 28px; box-shadow: var(--shadow); }
 .form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .field { display: grid; gap: 6px; }
 .field label { font-weight: 600; font-size: 15px; }
@@ -300,7 +366,15 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 
 /* ---------- 404 ---------- */
 .notfound { padding-top: 96px; padding-bottom: 120px; }
-.notfound .code { font-family: var(--serif); font-size: clamp(96px, 20vw, 220px); line-height: .85; color: transparent; -webkit-text-stroke: 1.5px var(--red); font-variation-settings: "opsz" 144; }
+.notfound .code { font-family: var(--serif-display); font-size: clamp(96px, 20vw, 220px); line-height: .85; color: transparent; -webkit-text-stroke: 1.5px var(--red); font-variation-settings: "opsz" 144; }
+
+/* ---------- Attente des polices ----------
+   Le script en tête de chaque page ajoute .fonts-wait sur <html> le temps
+   que les polices arrivent (1 s au maximum, souvent quelques millisecondes
+   quand elles sont en cache). Pendant ce temps : fond de page seul, et les
+   animations d'entrée sont en pause pour démarrer quand le texte apparaît. */
+.fonts-wait body > * { visibility: hidden; }
+.fonts-wait *, .fonts-wait *::before, .fonts-wait *::after { animation-play-state: paused !important; }
 
 /* ---------- Chorégraphie d'entrée ---------- */
 .in { animation: rise .9s var(--ease) both; }
@@ -324,18 +398,45 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
   .contact { grid-template-columns: 1fr; gap: 40px; }
   .mini { grid-template-columns: 1fr; }
 }
+/* Compétences, sur tablette et téléphone : une seule ligne qui défile
+   horizontalement, avec un fondu à droite qui montre qu'il y a une suite */
+@media (max-width: 1000px) {
+  .skill-filter {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter));
+    padding: 2px var(--gutter) 6px;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+  }
+  .skill-filter::-webkit-scrollbar { display: none; }
+  .chip, .skill-filter .label, .skill-filter__more { flex: none; white-space: nowrap; }
+}
 @media (max-width: 640px) {
   :root { --gutter: 16px; }
   body { font-size: 16px; }
   .masthead nav ul { gap: 14px; font-size: 14px; }
   .masthead nav { gap: 12px; }
+  /* En-tête collant plus compact : nom + mention sur une seule ligne */
+  .masthead .wrap { padding-top: 10px; padding-bottom: 10px; gap: 8px 16px; }
+  .brand { gap: 10px; }
+  .brand__name { font-size: 20px; }
+  .brand__tag { font-size: 10.5px; letter-spacing: .02em; }
+  /* L'en-tête se cache en descendant : pas besoin de réserver sa hauteur au-dessus des ancres */
+  html { scroll-padding-top: 16px; }
   .figures .wrap { grid-template-columns: 1fr; }
   .stat, .stat + .stat { border-left: 0; padding: 20px 0; }
   .stat + .stat { border-top: 1px solid var(--rule); }
   .entry { grid-template-columns: 52px 1fr; }
   .num { font-size: 42px; }
-  .glyph { display: none; }
+  /* Les pictos restent visibles sur téléphone, sous le numéro */
+  .entry > div { grid-row: span 2; }
+  .glyph { grid-column: 1; width: 44px; height: 44px; margin-top: 2px; }
+  .page-num { font-size: 48px; margin-bottom: 14px; }
   .timeline > li { grid-template-columns: 1fr; gap: 6px; }
+  /* Frise sur téléphone : le trait passe à gauche, le texte est décalé */
+  .timeline { padding-left: 26px; }
+  .timeline::before, .timeline::after { left: 4px; }
+  .timeline .when::after { right: auto; left: -26px; }
   .skills > div { grid-template-columns: 1fr; gap: 4px; }
   .form { padding: 20px; }
   .form .row { grid-template-columns: 1fr; }
@@ -349,32 +450,51 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 .masthead { view-transition-name: masthead; }
 ::view-transition-group(masthead) { animation: none; }
 ::view-transition-old(masthead), ::view-transition-new(masthead) { animation: none; }
-::view-transition-old(root) { animation: .3s ease-in both vt-out; }
-::view-transition-new(root) { animation: none; }
-@keyframes vt-out { to { opacity: 0; transform: translateY(-28px); } }
+/* L'ancienne page s'efface très vite, la nouvelle apparaît juste après :
+   pas de textes superposés (effet « double exposition »), et un passage
+   par le fond de page de quelques images seulement. */
+::view-transition-old(root) { animation: .14s ease-in both vt-fade-out; }
+::view-transition-new(root) { animation: .2s ease-out .14s both vt-fade-in; }
+@keyframes vt-fade-out { to { opacity: 0; } }
+@keyframes vt-fade-in { from { opacity: 0; } }
 
-/* Entrée de la nouvelle page : les blocs arrivent l'un après l'autre (vrai texte, toujours net) */
+/* Entrée de la nouvelle page : les blocs montent légèrement, presque
+   ensemble (0,6 s en tout), pour ne pas donner l'impression d'un chargement. */
 .page-enter .page-head > *,
 .page-enter .hero > *,
 .page-enter #contenu > :not(.page-head):not(.hero) {
-  animation: page-in .7s var(--ease) both;
+  animation: page-in .42s var(--ease) both;
 }
-.page-enter .page-head > :nth-child(1), .page-enter .hero > :nth-child(1) { animation-delay: .05s; }
-.page-enter .page-head > :nth-child(2), .page-enter .hero > :nth-child(2) { animation-delay: .1s; }
-.page-enter .page-head > :nth-child(3), .page-enter .hero > :nth-child(3) { animation-delay: .17s; }
-.page-enter .page-head > :nth-child(4), .page-enter .hero > :nth-child(4) { animation-delay: .24s; }
-.page-enter .page-head > :nth-child(5) { animation-delay: .3s; }
-.page-enter .hero > :nth-child(5) { animation-delay: .3s; }
-.page-enter #contenu > :nth-child(2):not(.hero) { animation-delay: .32s; }
-.page-enter #contenu > :nth-child(3) { animation-delay: .4s; }
-.page-enter #contenu > :nth-child(n+4) { animation-delay: .46s; }
-@keyframes page-in { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
+.page-enter .page-head > :nth-child(2), .page-enter .hero > :nth-child(2) { animation-delay: .03s; }
+.page-enter .page-head > :nth-child(3), .page-enter .hero > :nth-child(3) { animation-delay: .06s; }
+.page-enter .page-head > :nth-child(4), .page-enter .hero > :nth-child(4) { animation-delay: .09s; }
+.page-enter .page-head > :nth-child(n+5), .page-enter .hero > :nth-child(n+5) { animation-delay: .12s; }
+.page-enter #contenu > :nth-child(2):not(.hero) { animation-delay: .14s; }
+.page-enter #contenu > :nth-child(n+3) { animation-delay: .18s; }
+@keyframes page-in { from { transform: translateY(12px); } to { transform: none; } } /* pas de fondu ici : le texte reste lisible, il monte juste un peu */
+/* Arrivée sur une fiche avec le numéro qui glisse (css/motion.css) : la page
+   apparaît déjà en fondu, pas besoin de l'entrée par blocs en plus */
+.has-morph.page-enter .page-head > *,
+.has-morph.page-enter #contenu > * { animation: none; }
+
+/* Changement de thème : le nouveau thème s'étend en cercle depuis le bouton
+   (js/main.js, initTheme). Pendant ce court instant (.theme-vt sur <html>) :
+   - pas le fondu des changements de page, le cercle fait tout le travail ;
+   - l'en-tête n'est pas animé à part ;
+   - pas de transitions de couleur, sinon les boutons changeraient en retard. */
+.theme-vt::view-transition-old(root), .theme-vt::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+.theme-vt .masthead { view-transition-name: none !important; }
+.theme-vt *, .theme-vt *::before, .theme-vt *::after { transition: none !important; }
 
 /* Barre de chargement (visible seulement si la page met du temps à arriver) */
 #nav-progress { position: fixed; top: 0; left: 0; z-index: 200; height: 3px; width: 0; background: var(--red); opacity: 0; pointer-events: none; }
 #nav-progress.is-loading { opacity: 1; width: 75%; transition: width 2.5s cubic-bezier(.1, .6, .2, 1); }
 #nav-progress.is-done { opacity: 0; width: 100%; transition: width .2s ease, opacity .3s ease .2s; }
 
+@media (max-width: 480px) {
+  /* Place pour le lien CV : « Accueil » disparaît, le nom en haut à gauche mène déjà à l'accueil */
+  .masthead nav li:first-child { display: none; }
+}
 @media (max-width: 400px) {
   .masthead nav { width: 100%; justify-content: space-between; gap: 8px; }
   .masthead nav ul { gap: 6px 10px; font-size: 13.5px; }
@@ -388,7 +508,8 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 
 /* ---------- Impression ---------- */
 @media print {
-  body::before, .masthead nav, .cta, .pager, .theme-toggle, .skip-link { display: none !important; }
+  .masthead nav, .cta, .pager, .theme-toggle, .skip-link { display: none !important; }
   body { background: #fff; color: #000; }
+  .masthead { position: static; }
   .article { grid-template-columns: 1fr; }
 }

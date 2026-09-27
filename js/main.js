@@ -1,6 +1,8 @@
 /* Portfolio Thomas Giraud
    - navigation fluide entre les pages (le contenu est remplacé sans recharger la page)
-   - thème clair / sombre, schéma interactif, copie de l'e-mail, formulaire de contact */
+   - thème clair / sombre, schéma interactif, copie de l'e-mail, formulaire de contact
+   Les animations, l'en-tête collant et le filtre par compétence sont dans
+   js/app.js et js/modules/ (branchés via les événements tg:before-swap / tg:after-swap). */
 (function () {
   "use strict";
 
@@ -28,9 +30,30 @@
       label();
       btn.addEventListener("click", function () {
         var next = currentTheme() === "dark" ? "light" : "dark";
-        root.setAttribute("data-theme", next);
-        try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* stockage indisponible */ }
-        label();
+        var apply = function () {
+          root.setAttribute("data-theme", next);
+          try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* stockage indisponible */ }
+          label();
+        };
+        if (!document.startViewTransition || reduceMotion) { apply(); return; }
+
+        /* Le nouveau thème s'étend en cercle depuis le bouton (View Transitions) :
+           le navigateur capture la page avant et après le changement, puis on
+           découpe la capture « après » avec un cercle qui grandit.
+           Rayon final = distance du bouton au coin de l'écran le plus éloigné. */
+        var r = btn.getBoundingClientRect();
+        var x = r.left + r.width / 2;
+        var y = r.top + r.height / 2;
+        var end = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+        root.classList.add("theme-vt"); // voir « Changement de thème » dans css/style.css
+        var transition = document.startViewTransition(apply);
+        transition.ready.then(function () {
+          root.animate(
+            { clipPath: ["circle(0px at " + x + "px " + y + "px)", "circle(" + end + "px at " + x + "px " + y + "px)"] },
+            { duration: 550, easing: "cubic-bezier(.2, .7, .1, 1)", pseudoElement: "::view-transition-new(root)" }
+          );
+        }).catch(function () {});
+        transition.finished.then(function () { root.classList.remove("theme-vt"); }, function () { root.classList.remove("theme-vt"); });
       });
     });
   }
@@ -118,7 +141,14 @@
     });
   }
 
+  // Moins d'animations demandé : on fige les animations intégrées aux schémas SVG (paquets qui circulent)
+  function pauseSvgAnimations() {
+    if (!reduceMotion) return;
+    document.querySelectorAll("svg").forEach(function (svg) { if (svg.pauseAnimations) svg.pauseAnimations(); });
+  }
+
   function initPage() {
+    pauseSvgAnimations();
     initTheme();
     initSchema();
     initCopy();
@@ -192,7 +222,16 @@
     root.style.scrollBehavior = "";
   }
 
-  function swap(html, hash, y) {
+  /* Événements pour les modules de js/app.js (animations, en-tête, filtres) :
+     - "tg:before-swap" juste avant que la page actuelle soit remplacée
+       (le moment de tout arrêter proprement) ;
+     - "tg:after-swap" juste après que la nouvelle page est en place.
+     detail.from / detail.to = adresses de l'ancienne et de la nouvelle page. */
+  function emit(name, detail) {
+    document.dispatchEvent(new CustomEvent(name, { detail: detail }));
+  }
+
+  function swap(html, hash, y, detail) {
     var doc = new DOMParser().parseFromString(html, "text/html");
     document.title = doc.title;
     var desc = doc.querySelector('meta[name="description"]');
@@ -203,8 +242,9 @@
     root.classList.add("no-intro"); // l'animation d'entrée de l'accueil ne se joue qu'au premier chargement
     document.body.classList.add("page-enter");
     clearTimeout(enterTimer);
-    enterTimer = setTimeout(function () { document.body.classList.remove("page-enter"); }, 1400);
+    enterTimer = setTimeout(function () { document.body.classList.remove("page-enter"); }, 900);
     initPage();
+    emit("tg:after-swap", detail); // avant le défilement : les modules peuvent encore ajuster la page
     scrollToTarget(hash, y);
     var main = document.getElementById("contenu");
     if (main) { main.setAttribute("tabindex", "-1"); main.focus({ preventScroll: true }); }
@@ -221,10 +261,15 @@
         history.replaceState({ y: window.scrollY }, "", location.href);
         history.pushState({ y: 0 }, "", href);
       }
+      var detail = { from: currentPage, to: url };
       currentPage = url;
-      var run = function () { swap(html, hash, opts.y); };
-      if (document.startViewTransition && !reduceMotion) document.startViewTransition(run);
-      else run();
+      emit("tg:before-swap", detail);
+      var run = function () { swap(html, hash, opts.y, detail); };
+      if (document.startViewTransition && !reduceMotion) {
+        // La transition peut être annulée (onglet en arrière-plan…) : la page change quand même,
+        // on évite juste une erreur inutile dans la console.
+        document.startViewTransition(run).ready.catch(function () {});
+      } else run();
     }).catch(function () {
       progressEnd();
       location.href = href; // navigation classique
@@ -232,7 +277,17 @@
   }
 
   if (canRoute) {
-    history.replaceState({ y: window.scrollY }, "", location.href);
+    // L'en-tête <head> n'est pas remplacé d'une page à l'autre : ses liens relatifs
+    // (icône d'onglet, manifeste) seraient cherchés au mauvais endroit depuis
+    // realisations/… → on les transforme une fois pour toutes en adresses complètes.
+    document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"], link[rel="manifest"]').forEach(function (l) {
+      l.setAttribute("href", l.href);
+    });
+
+    // y: 0 et non window.scrollY : lire scrollY ici forcerait le navigateur à
+    // calculer toute la mise en page pendant le chargement (≈ 200 ms bloquées
+    // sur mobile). La vraie position est enregistrée au moment de quitter la page.
+    history.replaceState({ y: 0 }, "", location.href);
 
     document.addEventListener("click", function (e) {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
