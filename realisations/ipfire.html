@@ -11,16 +11,17 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="expect" href="#contenu" blocking="render">
 <link rel="preload" href="../assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/style.css?v=833dd0d8">
+<link rel="stylesheet" href="../css/style.css?v=a95d7088">
+<link rel="stylesheet" href="../css/motion.css?v=28621d12">
 <script>(function(){try{var t=localStorage.getItem("tg-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<script>/* Attente des polices (1 s max) : le contenu s'affiche directement dans la bonne police, au lieu d'apparaître en Georgia puis de changer d'un coup. Voir .fonts-wait dans css/style.css?v=a95d7088. */(function(){var d=document.documentElement,f=document.fonts;if(!f||!f.load)return;d.classList.add("fonts-wait");var done=function(){d.classList.remove("fonts-wait");};Promise.all(["600 1em Fraunces","400 1em Fraunces","italic 400 1em Fraunces","400 1em \"Instrument Sans\"","600 1em \"Instrument Sans\"","400 1em \"IBM Plex Mono\""].map(function(x){return f.load(x);})).then(done,done);setTimeout(done,1000);})();</script>
 </head>
 <body>
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<header class="masthead">
+<header class="masthead" data-progress>
   <div class="wrap">
     <a class="brand" href="../index.html"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR · 2026-2027</span></a>
     <nav aria-label="Navigation principale">
@@ -29,6 +30,7 @@
         <li><a href="../index.html#realisations" aria-current="page">Réalisations</a></li>
         <li><a href="../parcours.html">Parcours</a></li>
         <li><a href="../contact.html">Contact</a></li>
+        <li><a class="nav-cv" href="../CV/cv.pdf">CV<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6.5M3.2 5.4 6 8.2l2.8-2.8M2 10.5h8"/></svg><span class="visually-hidden"> (PDF)</span></a></li>
       </ul>
       <button class="theme-toggle" type="button" aria-label="Changer de thème">
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
@@ -41,6 +43,7 @@
 <main id="contenu">
   <header class="wrap page-head">
     <p class="crumbs"><a href="../index.html">Accueil</a> / <a href="../index.html#realisations">Réalisations</a> / 04</p>
+    <p class="page-num" aria-hidden="true">04</p>
     <p class="kicker">Réalisation 04 · Formation</p>
     <h1>Publier un serveur web derrière <em>IPFire</em></h1>
     <p class="chapo">Un pare-feu IPFire entre Internet et un réseau local, avec un serveur web accessible depuis l'extérieur.</p>
@@ -156,6 +159,7 @@
     <p>© 2026 Thomas Giraud</p>
   </div>
 </footer>
-<script src="../js/main.js?v=452a22bd" defer></script>
+<script src="../js/main.js?v=20e8a941" defer></script>
+<script type="module" fetchpriority="low" src="../js/app.js?v=e6ff1a2c"></script>
 </body>
 </html>

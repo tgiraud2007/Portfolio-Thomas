@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Animations · « Carnet de labo, édition animée »
+   --------------------------------------------------------------------------
+   Deux familles d'animations :
+
+   A. Les APPARITIONS (fiches, chiffres, pictos, filets, blocs du Parcours)
+      Déclenchées par js/modules/reveal.js : quand un élément arrive vraiment
+      à l'écran, il reçoit la classe .is-in et joue une animation complète
+      de ~0,7 s. Avantages : elle se voit quelle que soit la vitesse de
+      défilement, et elle ne peut pas rester bloquée à mi-chemin.
+      Seuls les éléments situés SOUS l'écran au chargement sont concernés :
+      ce qui est déjà visible s'affiche tout de suite, jamais pâle.
+
+   B. Les PROGRESSIONS (frise du Parcours, barre de lecture) : elles
+      suivent le défilement en continu, en CSS pur.
+        view-timeline: --nom;       → l'élément devient une « frise »
+        animation-timeline: --nom;  → l'animation avance avec cette frise
+        animation-range: …          → sur quel morceau du défilement
+      Outil pratique : https://scroll-driven-animations.style/tools/view-timeline/ranges/
+
+   Règles de sécurité :
+   - sans JavaScript, ou si le navigateur ne connaît pas ces animations,
+     la page s'affiche finie, rien n'est caché ;
+   - prefers-reduced-motion : reveal.js ne cache rien, et la règle de fin de
+     css/style.css coupe toutes les animations CSS ;
+   - impression : tout est remis à l'état final (en bas du fichier).
+   ========================================================================== */
+
+
+/* ---------- 1. Accueil : trait au stylo sous « Recherche un stage » ----------
+   Retracé à chaque affichage de l'accueil (actualisation ou retour sur la
+   page). Ne bloque rien : le texte est lisible dès le début.
+   Le tracé est un vrai chemin SVG (index.html) : pathLength="1" permet de
+   le « dessiner » en faisant glisser un tiret de longueur 1 (dashoffset 1 → 0).
+   La courbe imite un geste de stylo : départ hésitant, accélération, fin freinée.
+   Au premier chargement, il attend que le titre soit apparu (1,1 s) ; ensuite
+   (.no-intro : le titre ne s'anime plus), il part presque tout de suite. */
+.scribble path {
+  stroke-dasharray: 1 2; /* tiret de longueur 1, puis un grand vide : aucun point parasite au départ */
+  stroke-dashoffset: 0;
+  animation: scribble-draw .75s cubic-bezier(.55, .08, .3, 1) 1.1s both;
+}
+.no-intro .scribble path { animation-delay: .3s; }
+@keyframes scribble-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+
+
+/* ---------- 2. Numéro qui glisse (accueil → fiche) ----------
+   Le nom « fiche-num » et la classe .vt-num (sur <html>) sont posés par
+   js/modules/fiche-transition.js, seulement à l'aller.
+   - le numéro glisse en 0,6 s, départ progressif et arrivée freinée ;
+   - il garde son apparence pendant le vol et en se posant, puis se vide
+     en douceur pour prendre le style de la fiche ;
+   - il passe SOUS l'en-tête collant ;
+   - pendant ce temps, l'ancienne page s'efface et la fiche apparaît. */
+::view-transition-group(fiche-num) { animation-duration: .6s; animation-timing-function: cubic-bezier(.5, 0, .15, 1); z-index: 1; }
+::view-transition-group(masthead) { z-index: 2; }
+::view-transition-old(fiche-num),
+::view-transition-new(fiche-num) { height: 100%; animation-duration: .6s; }
+/* À l'arrivée, le numéro est dans le même état qu'au départ (rempli s'il
+   l'était : classe .is-arriving) → les deux captures sont identiques, aucun
+   changement visible à l'atterrissage. Il se vide ensuite en douceur. */
+.page-num { transition: color .7s var(--ease); }
+.page-num.is-arriving { color: var(--red); }
+/* Pages un peu plus lentes à se relayer, le temps que le numéro glisse */
+.vt-num::view-transition-old(root) { animation-duration: .2s; }
+.vt-num::view-transition-new(root) { animation-duration: .28s; animation-delay: .2s; }
+
+
+/* ---------- 3. Apparitions (classe .reveal posée par js/modules/reveal.js) ----------
+   --reveal-delay : petit décalage quand plusieurs éléments arrivent ensemble. */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity .7s var(--ease), transform .8s var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* Fiches du sommaire : en plus, le picto se dessine trait par trait */
+.entry.reveal .glyph * { stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s var(--ease); transition-delay: calc(var(--reveal-delay, 0s) + .3s); }
+.entry.reveal.is-in .glyph * { stroke-dashoffset: 0; }
+
+/* Chiffres : pas de fondu du bloc, la valeur sort de sous sa ligne */
+.stat b { clip-path: inset(-.3em -.5em 0 -.5em); } /* coupe seulement le bas : effet de « masque » */
+.stat b > * { display: inline-block; }
+.stat.reveal { opacity: 1; transform: none; }
+.stat.reveal b > * { transform: translateY(105%); transition: transform .9s var(--ease); transition-delay: var(--reveal-delay, 0s); }
+.stat.reveal > span { opacity: 0; transform: translateY(12px); transition: opacity .6s var(--ease), transform .6s var(--ease); transition-delay: calc(var(--reveal-delay, 0s) + .25s); }
+.stat.reveal.is-in b > *, .stat.reveal.is-in > span { opacity: 1; transform: none; }
+
+/* Intertitres des fiches : le filet au-dessus se trace de gauche à droite */
+.prose h2.reveal { position: relative; border-top-color: transparent; }
+.prose h2.reveal::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px;
+  background: var(--ink); transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform 1s var(--ease); transition-delay: calc(var(--reveal-delay, 0s) + .1s);
+}
+.prose h2.reveal.is-in::before { transform: scaleX(1); }
+
+
+
+
+@supports (animation-timeline: view()) {
+
+  /* ---------- 4. Frise du Parcours : elle suit la ligne de lecture ----------
+     Astuce : view-timeline-inset réduit la « fenêtre » de la frise à une
+     fine bande située à ~63 % de la hauteur de l'écran (on retire 62 % en
+     haut et 36 % en bas). La pointe du trait rouge suit donc cette ligne :
+     elle descend exactement au rythme de la lecture, là où l'œil regarde.
+     Chaque point s'allume quand son étape franchit la même ligne. */
+  .timeline { view-timeline: --frise block; view-timeline-inset: 62% 36%; }
+  .timeline::after {
+    animation: frise-draw linear both;
+    animation-timeline: --frise;
+    animation-range: cover 0% cover 100%;
+  }
+  @keyframes frise-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+  .timeline > li { view-timeline: --etape block; view-timeline-inset: 62% 36%; }
+  .timeline .when::after {
+    animation: dot-on linear both;
+    animation-timeline: --etape;
+    animation-range: cover 4% cover 14%;
+  }
+  @keyframes dot-on { from { background: var(--bg); transform: scale(.7); } }
+
+
+  /* ---------- 5. Barre de lecture sous l'en-tête (pages de réalisation) ----------
+     Elle suit le défilement de toute la page : scroll(root).
+     Activée par l'attribut data-progress sur <header class="masthead">. */
+  .masthead[data-progress]::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+    background: var(--red); transform: scaleX(0); transform-origin: 0 50%;
+    animation: bar-grow linear both;
+    animation-timeline: scroll(root block);
+  }
+  @keyframes bar-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+
+
+/* ---------- Impression : tout à l'état final ---------- */
+@media print {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal, .reveal b > *, .reveal > span { opacity: 1 !important; transform: none !important; }
+  .prose h2.reveal::before { transform: none !important; }
+  .entry.reveal .glyph * { stroke-dashoffset: 0 !important; }
+}
