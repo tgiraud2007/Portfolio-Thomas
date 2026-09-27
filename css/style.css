@@ -86,6 +86,8 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-t
 body { background: var(--grain-img) var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); overflow-x: clip; }
 img, svg { max-width: 100%; }
 a { color: inherit; }
+/* Sur téléphone, le « flash » au toucher d'un lien : orange léger au lieu du bleu d'Android */
+a, button { -webkit-tap-highlight-color: color-mix(in srgb, var(--red) 14%, transparent); }
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 ::selection { background: var(--red); color: var(--bg); }
 h1, h2, h3 { text-wrap: balance; }
@@ -491,13 +493,24 @@ code { font-family: var(--mono); font-size: .88em; background: var(--bg-2); padd
 #nav-progress.is-loading { opacity: 1; width: 75%; transition: width 2.5s cubic-bezier(.1, .6, .2, 1); }
 #nav-progress.is-done { opacity: 0; width: 100%; transition: width .2s ease, opacity .3s ease .2s; }
 
+/* Téléphone : le bouton de thème monte sur la ligne du nom (en haut à droite),
+   pour laisser toute la largeur aux 5 liens du menu (Accueil … CV) */
 @media (max-width: 480px) {
-  /* Place pour le lien CV : « Accueil » disparaît, le nom en haut à gauche mène déjà à l'accueil */
-  .masthead nav li:first-child { display: none; }
+  .masthead .wrap { position: relative; }
+  .brand { padding-right: 46px; }
+  .theme-toggle { position: absolute; top: 6px; right: var(--gutter); }
+  .masthead nav { width: 100%; }
+  .masthead nav ul { width: 100%; flex-wrap: nowrap; justify-content: space-between; gap: 8px; font-size: 13.5px; }
 }
+/* Écrans étroits : la mention sous le nom devient « BTS SIO SISR » (sans l'année) */
 @media (max-width: 400px) {
-  .masthead nav { width: 100%; justify-content: space-between; gap: 8px; }
-  .masthead nav ul { gap: 6px 10px; font-size: 13.5px; }
+  .brand__year { display: none; }
+}
+/* Très petits écrans (320 px) : menu un peu plus serré */
+@media (max-width: 350px) {
+  .masthead nav ul { font-size: 12.5px; gap: 4px; }
+  .masthead nav .nav-cv { padding: 3px 9px; }
+  .nav-cv svg { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

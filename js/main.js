@@ -214,12 +214,13 @@
     return cache[url];
   }
 
+  // Saut instantané (behavior: "instant") : sans ça, la règle CSS
+  // scroll-behavior: smooth fait défiler la nouvelle page pendant la
+  // transition, et on la voit « remonter ».
   function scrollToTarget(hash, y) {
     var target = hash && document.getElementById(decodeURIComponent(hash.slice(1)));
-    root.style.scrollBehavior = "auto";
-    if (target) target.scrollIntoView();
-    else window.scrollTo(0, y || 0);
-    root.style.scrollBehavior = "";
+    if (target) target.scrollIntoView({ behavior: "instant" });
+    else window.scrollTo({ top: y || 0, behavior: "instant" });
   }
 
   /* Événements pour les modules de js/app.js (animations, en-tête, filtres) :
