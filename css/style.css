@@ -146,7 +146,9 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
 .nav-ink { position: absolute; left: 0; top: 0; height: 2px; background: var(--red); pointer-events: none; view-transition-name: nav-ink; }
 .nav-ink.is-ready { transition: transform .45s var(--ease), width .45s var(--ease), opacity .2s; }
 .swup-native.is-changing .nav-ink { transition: none; } /* changement de page : le navigateur anime */
-.has-ink .masthead nav a.is-target, .has-ink .masthead nav a.is-target[aria-current] { background-size: 100% 2px; transition: none; } /* lien cliqué (js/nav.js) */
+/* Changement de page : plus de soulignement de survol, un seul trait à l'écran,
+   celui qui part de l'ancienne rubrique et arrive sous la nouvelle */
+.has-ink.is-changing .masthead nav a { background-size: 0 2px; transition: none; }
 /* Lien CV : en pastille, pour qu'on le repère tout de suite sur chaque page */
 .masthead nav .nav-cv { display: inline-flex; align-items: center; gap: 5px; padding: 3px 11px 3px 10px; margin: -3px 0; border: 1px solid var(--ink); border-radius: 99px; background: none; transition: background var(--t-fast), color var(--t-fast); }
 .masthead nav .nav-cv:hover { background: var(--ink); color: var(--bg); }
@@ -595,7 +597,7 @@ html:not(.swup-native).is-animating .transition-page { opacity: 0; }
 ::view-transition-group(masthead) { animation: none; }
 ::view-transition-old(masthead), ::view-transition-new(masthead) { animation: none; }
 /* Trait du menu : il glisse et change de largeur au-dessus de l'en-tête */
-::view-transition-group(nav-ink) { z-index: 3; animation-duration: .5s; animation-timing-function: cubic-bezier(.5, 0, .15, 1); }
+::view-transition-group(nav-ink) { z-index: 3; animation-duration: .45s; animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
 ::view-transition-old(nav-ink) { animation: none; opacity: 0; }
 ::view-transition-new(nav-ink) { animation: none; height: 100%; }
 /* L'ancienne page s'efface très vite, la nouvelle apparaît juste après :

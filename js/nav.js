@@ -37,7 +37,6 @@
   var morphDone = null;
   var slide = "";
   var fromRank = null; // place de la page quittée, notée avant que le contenu change
-  var target = null;   // lien du menu cliqué (souris dessus), voir visit:start
 
   // Place d'une page dans l'ordre du menu : Accueil 0, fiches 1,01 à 1,06
   // (d'après leur grand numéro), Parcours 2, Contact 3 ; null = aucune (404)
@@ -91,10 +90,6 @@
     visit.animation.wait = true;
     positions[visit.from.url] = window.scrollY;
     fromRank = rank(visit.from.url, document);
-    // Lien du menu cliqué à la souris : son soulignement de survol reste affiché
-    // pendant que le trait du menu glisse jusqu'à lui (sinon il s'efface d'un coup)
-    var el = visit.trigger.el;
-    if (el && el.matches && el.matches(".masthead nav a:hover")) { target = el; el.classList.add("is-target"); }
     root.classList.add("no-intro"); // l'intro de l'accueil ne se rejoue pas
   });
 
@@ -140,6 +135,5 @@
   swup.hooks.on("visit:end", function () {
     if (morphDone) { morphDone(); morphDone = null; }
     if (slide) { root.classList.remove(slide); slide = ""; }
-    if (target) { target.classList.remove("is-target"); target = null; }
   });
 })();
