@@ -150,9 +150,12 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
   .has-ink .masthead nav a:hover,
   .at-realisations .masthead nav a[data-nav="accueil"]:hover { background-size: 100% 2px; }
 }
-.nav-ink { position: absolute; left: 0; top: 0; height: 2px; background: var(--red); pointer-events: none; view-transition-name: nav-ink; }
-.nav-ink.is-ready { transition: transform .45s var(--ease), width .45s var(--ease), opacity .2s; }
-.swup-native.is-changing .nav-ink { transition: none; } /* changement de page : le navigateur anime */
+.nav-ink { position: absolute; left: 0; top: 0; height: 2px; background: var(--red); pointer-events: none; }
+.nav-ink.is-gliding { transition: transform .45s var(--ease), width .45s var(--ease); }
+/* Nom de transition seulement quand les pages changent sans rechargement :
+   au chargement complet d'une page, le trait n'est pas encore là au moment
+   où le navigateur prépare la transition */
+.swup-enabled .nav-ink { view-transition-name: nav-ink; }
 /* Changement de page : plus de soulignement de survol, un seul trait à l'écran,
    celui qui part de l'ancienne rubrique et arrive sous la nouvelle */
 .has-ink.is-changing .masthead nav a { background-size: 0 2px; transition: none; }

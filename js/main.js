@@ -294,11 +294,21 @@
     ink.setAttribute("aria-hidden", "true");
     masthead.appendChild(ink);
     root.classList.add("has-ink");
+    var current = null; // lien sous lequel est le trait
     var place = function () {
       var a = root.classList.contains("at-realisations")
         ? nav.querySelector('a[data-nav="realisations"]')
         : nav.querySelector("a[aria-current]");
-      if (!a) { ink.style.opacity = "0"; return; } // page sans rubrique (404)
+      if (!a) { ink.style.opacity = "0"; current = null; return; } // page sans rubrique (404)
+      // Il glisse seulement quand la rubrique change sous nos yeux (accueil ↔
+      // réalisations en défilant). Au chargement, quand les polices arrivent ou
+      // que l'écran change de taille, il se pose directement, sans animation.
+      // Au changement de page, c'est le navigateur qui l'anime (View Transitions).
+      if (a !== current) {
+        var pageChange = root.classList.contains("is-changing") && root.classList.contains("swup-native");
+        ink.classList.toggle("is-gliding", !!current && !pageChange);
+        current = a;
+      }
       var n = masthead.getBoundingClientRect();
       var r = a.getBoundingClientRect();
       ink.style.opacity = "";
@@ -306,7 +316,7 @@
       ink.style.transform = "translate(" + (r.left - n.left) + "px, " + (r.bottom - n.top - 2) + "px)";
     };
     place();
-    requestAnimationFrame(function () { ink.classList.add("is-ready"); }); // pas d'animation à l'arrivée
+    ink.addEventListener("transitionend", function () { ink.classList.remove("is-gliding"); });
     new MutationObserver(place).observe(nav, { subtree: true, attributes: true, attributeFilter: ["aria-current"] });
     new MutationObserver(place).observe(root, { attributes: true, attributeFilter: ["class"] });
     if (window.ResizeObserver) new ResizeObserver(place).observe(nav);
