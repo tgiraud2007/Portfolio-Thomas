@@ -7,7 +7,7 @@
 <meta name="description" content="TP de BTS SIO SISR : installation de Nagios sur Debian pour superviser un contrôleur de domaine, un serveur web et un routeur ZeroShell.">
 <link rel="canonical" href="https://thomasgiraud.me/realisations/nagios.html">
 <!-- @head -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-7G4NffcoUbtmTyAm8msTk2cry5QawXSEulsyFpII/6c='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; base-uri 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; base-uri 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Thomas Giraud · Portfolio BTS SIO SISR">
@@ -28,13 +28,12 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="expect" href="#contenu" blocking="render">
-<link rel="stylesheet" href="/css/style.css?v=61e4b126">
-<link rel="stylesheet" href="/css/motion.css?v=64a091c8">
+<link rel="stylesheet" href="/css/style.css?v=c3dbcca8">
+<link rel="stylesheet" href="/css/motion.css?v=f5ac0933">
 <link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-<script src="/js/head.js?v=3394851c"></script>
-<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/CV/*"}}]},"eagerness":"moderate"}]}</script>
+<script src="/js/head.js?v=3ea7f2e1"></script>
 <!-- /@head -->
 </head>
 <body>
@@ -61,7 +60,7 @@
 </header>
 <!-- /@header -->
 
-<main id="contenu">
+<main id="contenu" class="transition-page">
   <header class="wrap page-head">
     <p class="crumbs"><a href="/">Accueil</a> / <a href="/#realisations">Réalisations</a> / 04</p>
     <p class="page-num" aria-hidden="true">04</p>
@@ -75,8 +74,8 @@
     <div class="prose">
       <figure class="fig">
         <div class="fig__head"><span>Fig. 1 · Schéma de la supervision</span><span>3 hôtes</span></div>
-        <div class="fig__scroll" style="--fig-min: 540px">
-        <svg viewBox="0 0 640 300" role="img" aria-labelledby="f-nagios">
+        <div class="fig__art">
+        <svg class="fig__wide" viewBox="0 0 640 300" role="img" aria-labelledby="f-nagios">
           <title id="f-nagios">Schéma : un serveur Nagios sous Debian vérifie trois hôtes, le contrôleur de domaine, le serveur web et le routeur ZeroShell.</title>
           <g stroke-width="1.5">
             <rect class="s-ink" x="40" y="110" width="150" height="80" rx="2"/>
@@ -96,6 +95,27 @@
           <text class="t-ink" x="434" y="244">Routeur ZeroShell</text>
           <text class="t-dim" x="40" y="214">Vérifie : disponibilité</text>
           <text class="t-dim" x="40" y="230">Et services (web, DNS)</text>
+        </svg>
+        <svg class="fig__tall" viewBox="0 0 340 300" role="img" aria-labelledby="f-nagios-m">
+          <title id="f-nagios-m">Schéma : un serveur Nagios sous Debian vérifie trois hôtes, le contrôleur de domaine, le serveur web et le routeur ZeroShell.</title>
+          <g stroke-width="1.5">
+            <rect class="s-ink" x="95" y="10" width="150" height="80" rx="2"/>
+            <path class="s-ink" stroke-width="1" d="M95 36 H245"/>
+            <path class="s-red" d="M115 70 H135 L143 52 L153 78 L161 60 H225"/>
+            <path class="s-green" stroke-width="1.3" stroke-dasharray="5 5" d="M95 50 H30 V276 H60 M30 166 H60 M30 221 H60"/>
+            <rect class="s-ink" x="60" y="146" width="260" height="40" rx="2"/>
+            <rect class="s-ink" x="60" y="201" width="260" height="40" rx="2"/>
+            <rect class="s-ink" x="60" y="256" width="260" height="40" rx="2"/>
+          </g>
+          <circle class="f-green" cx="302" cy="166" r="5"/>
+          <circle class="f-green" cx="302" cy="221" r="5"/>
+          <circle class="f-green" cx="302" cy="276" r="5"/>
+          <text class="t-ink" x="170" y="28" text-anchor="middle">Nagios · Debian</text>
+          <text class="t-dim" x="170" y="112" text-anchor="middle">Vérifie : disponibilité</text>
+          <text class="t-dim" x="170" y="128" text-anchor="middle">Et services (web, DNS)</text>
+          <text class="t-ink" x="74" y="170">Contrôleur de domaine</text>
+          <text class="t-ink" x="74" y="225">Serveur web</text>
+          <text class="t-ink" x="74" y="280">Routeur ZeroShell</text>
         </svg>
         </div>
         <figcaption><b>La supervision.</b> Nagios vérifie que chaque hôte répond, ainsi que l'état de services comme le web et le DNS.</figcaption>
@@ -154,8 +174,10 @@
     <p>© 2026 Thomas Giraud</p>
   </div>
 </footer>
-<script src="/js/main.js?v=e66a18d3" defer></script>
-<script type="module" fetchpriority="low" src="/js/app.js?v=d0f89297"></script>
+<script src="/js/main.js?v=773e8d04" defer></script>
+<script src="/js/vendor/swup.js?v=5581a31f" defer></script>
+<script src="/js/nav.js?v=4f80fd9b" defer></script>
+<script type="module" fetchpriority="low" src="/js/app.js?v=ae949d5e"></script>
 <!-- /@footer -->
 </body>
 </html>

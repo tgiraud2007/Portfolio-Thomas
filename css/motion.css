@@ -68,6 +68,9 @@
 /* Pages un peu plus lentes à se relayer, le temps que le numéro glisse */
 .vt-num::view-transition-old(root) { animation-duration: .2s; }
 .vt-num::view-transition-new(root) { animation-duration: .28s; animation-delay: .2s; }
+/* Même enchaînement sans View Transitions (téléphone, js/main.js prepareFlight) :
+   la copie de l'accueil s'efface en 0,2 s, puis la fiche apparaît en 0,28 s */
+html.is-flying:not(.swup-native).is-changing .transition-page { transition: opacity .28s ease-out .2s; }
 
 
 /* ---------- 3. Apparitions (classe .reveal posée par js/modules/reveal.js) ----------

@@ -1,8 +1,8 @@
 /* Portfolio Thomas Giraud
    - thème clair / sombre, schéma interactif, copie de l'e-mail, formulaire de contact ;
    - repère la carte cliquée sur l'accueil, pour que son numéro glisse jusqu'à la fiche.
-   Les transitions entre les pages sont faites par le navigateur (View Transitions
-   entre documents : @view-transition dans css/style.css, et js/head.js).
+   Les changements de page sont faits par js/nav.js (sans rechargement) ; les
+   fonctions qui dépendent du contenu sont relancées à chaque page (initPage).
    Les animations, l'en-tête collant et le filtre par compétence sont dans
    js/app.js et js/modules/. */
 (function () {
@@ -75,11 +75,12 @@
 
   /* ---------- Schéma interactif (fiche IPFire) ---------- */
   function initSchema() {
-    var svg = document.getElementById("topo");
+    // Deux versions du schéma (large et téléphone), une seule affichée
+    var svgs = document.querySelectorAll("svg.topo");
     var note = document.getElementById("fig-note");
-    if (!svg || !note) return;
+    if (!svgs.length || !note) return;
     var initial = note.innerHTML;
-    var nodes = svg.querySelectorAll(".node");
+    var nodes = document.querySelectorAll("svg.topo .node");
     var clear = function () { nodes.forEach(function (n) { n.classList.remove("is-active"); }); };
     nodes.forEach(function (node) {
       var show = function () {
@@ -94,7 +95,12 @@
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(); }
       });
     });
-    svg.addEventListener("mouseleave", function () { clear(); note.innerHTML = initial; });
+    svgs.forEach(function (svg) {
+      // La souris quitte le schéma : texte d'origine (pas au toucher, la note doit rester affichée)
+      svg.addEventListener("pointerleave", function (e) {
+        if (e.pointerType === "mouse") { clear(); note.innerHTML = initial; }
+      });
+    });
   }
 
   // Moins d'animations demandé : on fige les animations intégrées aux schémas SVG
@@ -104,7 +110,7 @@
     if (!reduceMotion.matches) return;
     document.querySelectorAll("svg").forEach(function (svg) {
       if (!svg.pauseAnimations) return;
-      if (svg.id === "topo" && svg.setCurrentTime) svg.setCurrentTime(4);
+      if (svg.classList.contains("topo") && svg.setCurrentTime) svg.setCurrentTime(4);
       svg.pauseAnimations();
     });
   }
@@ -240,35 +246,112 @@
      « fiche-num » : le navigateur le capture et le fait glisser jusqu'au grand
      numéro de la fiche (repris par js/head.js à l'arrivée). On note aussi s'il
      était rempli (souris dessus) pour qu'il arrive dans le même état.
-     Uniquement si le navigateur gère les transitions entre pages. */
+     Uniquement si le navigateur gère les transitions (entre pages, ou dans la
+     page quand js/nav.js change le contenu sans rechargement). */
   function alpha(color) { // "rgba(255, 138, 107, 0.4)" → 0.4 ; "rgb(…)" → 1
     var m = color.match(/rgba?\(([^)]+)\)/);
     var parts = m ? m[1].split(",") : [];
     return parts.length === 4 ? parseFloat(parts[3]) : 1;
   }
 
+  /* Même glissement, sans View Transitions (téléphone et tablette, voir js/nav.js),
+     avec le même enchaînement que sur ordinateur (css/motion.css, section 2) :
+     - au clic, une copie du numéro, en position fixe, se pose sur celui de la carte ;
+     - fiche reçue : js/nav.js garde une copie figée de l'accueil à l'écran
+       (freezeOld), la fiche se met en place dessous, invisible ;
+     - fiche en place (land) : le numéro glisse en 0,6 s jusqu'au grand numéro de
+       la fiche ; la copie de l'accueil s'efface en 0,2 s et la fiche apparaît en
+       fondu juste après (.is-flying, css/motion.css).
+     Copie du numéro sous l'en-tête collant (z-index 30 < 40), au-dessus de la
+     copie de l'accueil (20). */
+  function prepareFlight(num, from, to) {
+    if (window.tgFlight) window.tgFlight.cancel();
+    var style = getComputedStyle(num);
+    var color = style.color; // noté tout de suite : la carte va disparaître
+    var clone = num.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    clone.style.cssText = "position:fixed;margin:0;z-index:30;pointer-events:none;transform-origin:0 0;" +
+      "left:" + from.left + "px;top:" + from.top + "px;color:" + color + ";opacity:" + style.opacity;
+    document.body.appendChild(clone);
+    num.style.visibility = "hidden"; // un seul numéro à l'écran pendant que la page s'efface
+    var target = null;
+    var flight = window.tgFlight = {
+      to: to,
+      // Nouvelle fiche en place, encore invisible : son grand numéro attend la copie
+      hide: function () {
+        target = document.querySelector(".page-num");
+        if (target) target.style.visibility = "hidden";
+      },
+      land: function () {
+        if (window.tgFlight !== flight) return;
+        window.tgFlight = null;
+        if (!target || !target.isConnected || !clone.animate) { finish(); return; }
+        var t = target.getBoundingClientRect();
+        var scale = t.height / from.height;
+        clone.animate([
+          { transform: "none" },
+          { transform: "translate(" + (t.left - from.left) + "px," + (t.top - from.top) + "px) scale(" + scale + ")" },
+        ], { duration: 600, easing: "cubic-bezier(.5, 0, .15, 1)", fill: "forwards" }).finished.then(finish, finish);
+      },
+      cancel: function () {
+        if (window.tgFlight === flight) window.tgFlight = null;
+        num.style.visibility = "";
+        finish();
+      },
+    };
+    // Le numéro se pose dans l'état de la copie (rempli s'il l'était), puis se vide en douceur
+    function finish() {
+      clone.remove();
+      if (!target) return;
+      if (alpha(color) > 0.5) target.classList.add("is-arriving");
+      target.style.visibility = "";
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { target.classList.remove("is-arriving"); });
+      });
+    }
+    // Clic qui n'aboutit pas à la fiche (lien ignoré, erreur) : on range tout
+    setTimeout(function () { if (window.tgFlight === flight) flight.cancel(); }, 4000);
+  }
+
   function initFicheMorph() {
-    if (!("onpagereveal" in window)) return;
+    if (!("onpagereveal" in window) && !document.startViewTransition) return;
     document.addEventListener("click", function (e) {
       if (reduceMotion.matches || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       var card = e.target.closest && e.target.closest("a.entry");
       if (!card) return;
       var num = card.querySelector(".num");
       if (!num) return;
+      // Numéro caché (hors de l'écran, ou plus qu'à moitié sous l'en-tête collant) :
+      // pas de glissement, la page change normalement
       var r = num.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) return; // numéro hors de l'écran : fondu normal
+      var masthead = document.querySelector(".masthead");
+      var top = masthead ? Math.max(0, masthead.getBoundingClientRect().bottom) : 0;
+      var middle = (r.top + r.bottom) / 2;
+      if (middle < top || middle > window.innerHeight) return;
+      // Téléphone et tablette (js/nav.js sans View Transitions) : le numéro vole en JavaScript
+      if (root.classList.contains("swup-enabled") && !root.classList.contains("swup-native")) {
+        prepareFlight(num, r, new URL(card.href).pathname);
+        return;
+      }
       document.querySelectorAll(".num").forEach(function (n) { n.style.viewTransitionName = ""; }); // un seul nom à la fois
       num.style.viewTransitionName = "fiche-num";
       try {
         sessionStorage.setItem("tg-vt-num", JSON.stringify({ to: new URL(card.href).pathname, filled: alpha(getComputedStyle(num).color) > 0.5 }));
       } catch (err) { /* stockage indisponible : simple fondu */ }
-    });
+    }, true); // phase de capture : avant js/nav.js, qui prend le clic en charge ensuite
   }
 
-  pauseSvgAnimations();
+  // Une seule fois : le bouton de thème est dans l'en-tête, qui reste en place
   initTheme();
-  initSchema();
-  initCopy();
-  initForm();
   initFicheMorph();
+
+  // À chaque page, y compris quand le contenu change sans rechargement (js/nav.js)
+  function initPage() {
+    pauseSvgAnimations();
+    initSchema();
+    initCopy();
+    initForm();
+  }
+  initPage();
+  document.addEventListener("tg:page", initPage);
 })();

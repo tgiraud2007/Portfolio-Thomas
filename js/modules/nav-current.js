@@ -27,6 +27,7 @@ let dedansAvant = null;
 
 function update() {
   ticking = false;
+  if (!section || !section.isConnected) return; // on a quitté l'accueil
   const dedans = section.getBoundingClientRect().top < window.innerHeight * 0.45;
   if (dedans === dedansAvant) return; // rien n'a changé
   dedansAvant = dedans;
@@ -48,14 +49,22 @@ function onScroll() {
   }
 }
 
+let listening = false;
+
 export function init() {
-  section = document.getElementById("realisations");
+  section = null;
+  dedansAvant = null;
+  const found = document.getElementById("realisations");
   const nav = document.querySelector(".masthead nav");
-  if (!section || !nav) return;
-  accueil = nav.querySelector('a[aria-current="page"]');
+  if (!found || !nav) return;
+  accueil = nav.querySelector('a[data-nav="accueil"]');
   realisations = nav.querySelector('a[href$="#realisations"]');
   if (!accueil || !realisations) return;
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("pagehide", update); // au moment de recharger ou de quitter : rubrique notée à coup sûr
+  section = found;
+  if (!listening) { // une seule fois, même si on revient plusieurs fois sur l'accueil
+    listening = true;
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("pagehide", update); // au moment de recharger ou de quitter : rubrique notée à coup sûr
+  }
   update(); // position de départ
 }

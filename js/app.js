@@ -5,7 +5,9 @@
    schéma interactif).
 
    Chaque module (dossier js/modules/) exporte une fonction init() qui le
-   branche sur la page.
+   branche sur la page. init() est relancée à chaque changement de page sans
+   rechargement (événement « tg:page », envoyé par js/nav.js) : elle doit
+   pouvoir être appelée plusieurs fois.
 
    Performance : les modules ne sont téléchargés qu'une fois la page
    entièrement chargée (événement "load"). Rien de tout ça n'est nécessaire
@@ -15,10 +17,10 @@
    ========================================================================== */
 
 const MODULES = [
-  () => import("./modules/header.js?v=1ac42a23"),       // en-tête collant
-  () => import("./modules/skill-filter.js?v=4f0c2496"), // compétences ↔ fiches (accueil)
-  () => import("./modules/nav-current.js?v=7182f77b"),  // menu : Accueil / Réalisations souligné
-  () => import("./modules/reveal.js?v=b49ecc2c"),       // apparitions au défilement
+  () => import("./modules/header.js?v=797d153f"),       // en-tête collant
+  () => import("./modules/skill-filter.js?v=b0e6414a"), // compétences ↔ fiches (accueil)
+  () => import("./modules/nav-current.js?v=a308ac63"),  // menu : Accueil / Réalisations souligné
+  () => import("./modules/reveal.js?v=e7252de7"),       // apparitions au défilement
 ];
 
 function whenPageLoaded() {
@@ -33,4 +35,8 @@ whenPageLoaded()
     if (document.fonts) document.fonts.load('500 1em "IBM Plex Mono"').catch(() => {});
     return Promise.all(MODULES.map((load) => load()));
   })
-  .then((modules) => modules.forEach((m) => m.init()));
+  .then((modules) => {
+    const initAll = () => modules.forEach((m) => m.init());
+    initAll();
+    document.addEventListener("tg:page", initAll);
+  });
