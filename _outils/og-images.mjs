@@ -1,11 +1,14 @@
 /* ==========================================================================
-   Images d'aperçu des fiches (LinkedIn, Discord, WhatsApp…)
+   Images d'aperçu (LinkedIn, Discord, WhatsApp…)
    --------------------------------------------------------------------------
-   Pour chaque page de realisations/, fabrique assets/og/<nom>.png (1200 × 630) :
-   le numéro, le titre de la fiche et son schéma, aux couleurs du site.
+   Fabrique, en 1200 × 630, aux couleurs du site :
+   - pour chaque page de realisations/ : assets/og/<nom>.png (numéro, titre
+     de la fiche et son schéma) ;
+   - pour l'accueil et les autres pages : assets/og-image.png (ton nom, ta
+     présentation et la ligne « Recherche un stage » de l'accueil).
    build.js les utilise ensuite automatiquement dans les balises og:image.
 
-   À relancer quand tu changes le titre ou le schéma d'une fiche :
+   À relancer quand tu changes un titre, un schéma ou le texte de l'accueil :
      1. dans un terminal :  python -m http.server 8000
      2. dans un autre    :  node _outils/og-images.mjs
      3. puis              :  node build.js
@@ -106,5 +109,49 @@ for (const file of fiches) {
   fs.writeFileSync(out, Buffer.from(shot.result.data, "base64"));
   console.log("image :", path.relative(root, out));
 }
+
+/* ---------- Image de l'accueil (et des autres pages) : assets/og-image.png ----------
+   Ton nom, la présentation et la ligne « Recherche un stage » de l'accueil
+   (reprise telle quelle, avec la pastille verte et le trait au stylo). */
+const composeHome = `(() => {
+  document.documentElement.setAttribute("data-theme", "light");
+  document.documentElement.classList.add("no-intro");
+  const og = document.createElement("div");
+  og.className = "og og--home";
+  og.innerHTML = '<p class="kicker">Portfolio · BTS SIO SISR</p>'
+    + '<p class="og__name">Thomas <em>Giraud</em></p>'
+    + '<p class="og__deck">Étudiant en 2<sup>e</sup> année de BTS SIO, option SISR. Systèmes, réseaux, sécurité.</p>'
+    + '<p class="og__url">thomasgiraud.me</p>';
+  og.insertBefore(document.querySelector(".hero .avail"), og.querySelector(".og__url")); // ligne « Recherche un stage » de l'accueil
+  document.body.appendChild(og);
+  const style = document.createElement("style");
+  style.textContent = \`
+    html, body { height: 630px; overflow: hidden; }
+    body > :not(.og) { display: none !important; }
+    .og--home { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 0;
+                padding: 56px 80px 64px; background: var(--grain-img) var(--bg); border-top: 14px solid var(--ink); }
+    .og--home .kicker { font-size: 18px; }
+    .og__name { font-family: var(--serif-display); font-weight: 600; font-size: 150px; line-height: .95; letter-spacing: -.04em;
+                font-variation-settings: "opsz" 144; margin: 22px 0 26px; }
+    .og__name em { font-style: normal; color: var(--red); }
+    .og__deck { font-family: var(--serif); font-size: 31px; line-height: 1.35; max-width: 26em; font-variation-settings: "opsz" 24; }
+    .og--home .avail { margin-top: 26px; font-size: 24px; gap: 14px; }
+    .og--home .status i { width: 12px; height: 12px; }
+    .og__url { position: absolute; right: 80px; bottom: 44px; font: 20px var(--mono); color: var(--ink-2); }
+  \`;
+  document.head.appendChild(style);
+  return document.fonts.ready.then(() => true);
+})()`;
+await send("Page.navigate", { url: `${SITE}/` });
+await sleep(2000);
+const home = await send("Runtime.evaluate", { expression: composeHome, awaitPromise: true });
+if (home.result.exceptionDetails) console.error("accueil :", home.result.exceptionDetails.exception?.description);
+else {
+  await sleep(400);
+  const shot = await send("Page.captureScreenshot", { format: "png" });
+  fs.writeFileSync(path.join(root, "assets", "og-image.png"), Buffer.from(shot.result.data, "base64"));
+  console.log("image : assets/og-image.png (accueil)");
+}
+
 ws.close();
 chrome.kill();

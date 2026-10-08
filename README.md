@@ -33,9 +33,9 @@ js/modules/                Un fichier par fonction, chacun avec une fonction ini
 assets/                    Favicon, icônes, image de partage (og-image.png)
 assets/og/                 Image de partage de chaque fiche (fabriquées par _outils/og-images.mjs)
 assets/fonts/              Polices hébergées localement (Fraunces, Instrument Sans, IBM Plex Mono, licence SIL OFL)
-CV/                        CV téléchargeable (CV-Thomas-Giraud-BTS-SIO-SISR.pdf ; cv.pdf = même fichier, pour les anciens liens)
+CV/                        CV téléchargeable (CV-Thomas-Giraud-BTS-SIO-SISR.pdf)
 build.js                   Préparation avant mise en ligne (voir plus bas)
-_outils/og-images.mjs      Fabrique les images de partage des fiches
+_outils/og-images.mjs      Fabrique les images de partage (accueil et fiches)
 ```
 
 Les dossiers qui commencent par `_` ne sont pas publiés par GitHub Pages.
@@ -81,7 +81,7 @@ Le script :
 3. met à jour la Content-Security-Policy ;
 4. régénère `sitemap.xml`.
 
-Quand tu changes le titre ou le schéma d'une fiche, refais aussi son image de partage (serveur local lancé) :
+Quand tu changes le titre ou le schéma d'une fiche, ou le texte de l'accueil, refais aussi les images de partage (serveur local lancé) :
 
 ```bash
 node _outils/og-images.mjs
