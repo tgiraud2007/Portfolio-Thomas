@@ -1,8 +1,8 @@
 /* Portfolio Thomas Giraud
    - thème clair / sombre, schéma interactif, copie de l'e-mail, formulaire de contact ;
    - repère la carte cliquée sur l'accueil, pour que son numéro glisse jusqu'à la fiche.
-   Les transitions entre les pages sont faites par le navigateur (View Transitions
-   entre documents : @view-transition dans css/style.css, et js/head.js).
+   Les changements de page sont faits par js/nav.js (sans rechargement) ; les
+   fonctions qui dépendent du contenu sont relancées à chaque page (initPage).
    Les animations, l'en-tête collant et le filtre par compétence sont dans
    js/app.js et js/modules/. */
 (function () {
@@ -75,11 +75,12 @@
 
   /* ---------- Schéma interactif (fiche IPFire) ---------- */
   function initSchema() {
-    var svg = document.getElementById("topo");
+    // Deux versions du schéma (large et téléphone), une seule affichée
+    var svgs = document.querySelectorAll("svg.topo");
     var note = document.getElementById("fig-note");
-    if (!svg || !note) return;
+    if (!svgs.length || !note) return;
     var initial = note.innerHTML;
-    var nodes = svg.querySelectorAll(".node");
+    var nodes = document.querySelectorAll("svg.topo .node");
     var clear = function () { nodes.forEach(function (n) { n.classList.remove("is-active"); }); };
     nodes.forEach(function (node) {
       var show = function () {
@@ -94,7 +95,12 @@
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(); }
       });
     });
-    svg.addEventListener("mouseleave", function () { clear(); note.innerHTML = initial; });
+    svgs.forEach(function (svg) {
+      // La souris quitte le schéma : texte d'origine (pas au toucher, la note doit rester affichée)
+      svg.addEventListener("pointerleave", function (e) {
+        if (e.pointerType === "mouse") { clear(); note.innerHTML = initial; }
+      });
+    });
   }
 
   // Moins d'animations demandé : on fige les animations intégrées aux schémas SVG
@@ -104,7 +110,7 @@
     if (!reduceMotion.matches) return;
     document.querySelectorAll("svg").forEach(function (svg) {
       if (!svg.pauseAnimations) return;
-      if (svg.id === "topo" && svg.setCurrentTime) svg.setCurrentTime(4);
+      if (svg.classList.contains("topo") && svg.setCurrentTime) svg.setCurrentTime(4);
       svg.pauseAnimations();
     });
   }
@@ -240,7 +246,8 @@
      « fiche-num » : le navigateur le capture et le fait glisser jusqu'au grand
      numéro de la fiche (repris par js/head.js à l'arrivée). On note aussi s'il
      était rempli (souris dessus) pour qu'il arrive dans le même état.
-     Uniquement si le navigateur gère les transitions entre pages. */
+     Uniquement si le navigateur gère les transitions (entre pages, ou dans la
+     page quand js/nav.js change le contenu sans rechargement). */
   function alpha(color) { // "rgba(255, 138, 107, 0.4)" → 0.4 ; "rgb(…)" → 1
     var m = color.match(/rgba?\(([^)]+)\)/);
     var parts = m ? m[1].split(",") : [];
@@ -248,7 +255,7 @@
   }
 
   function initFicheMorph() {
-    if (!("onpagereveal" in window)) return;
+    if (!("onpagereveal" in window) && !document.startViewTransition) return;
     document.addEventListener("click", function (e) {
       if (reduceMotion.matches || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       var card = e.target.closest && e.target.closest("a.entry");
@@ -262,13 +269,20 @@
       try {
         sessionStorage.setItem("tg-vt-num", JSON.stringify({ to: new URL(card.href).pathname, filled: alpha(getComputedStyle(num).color) > 0.5 }));
       } catch (err) { /* stockage indisponible : simple fondu */ }
-    });
+    }, true); // phase de capture : avant js/nav.js, qui prend le clic en charge ensuite
   }
 
-  pauseSvgAnimations();
+  // Une seule fois : le bouton de thème est dans l'en-tête, qui reste en place
   initTheme();
-  initSchema();
-  initCopy();
-  initForm();
   initFicheMorph();
+
+  // À chaque page, y compris quand le contenu change sans rechargement (js/nav.js)
+  function initPage() {
+    pauseSvgAnimations();
+    initSchema();
+    initCopy();
+    initForm();
+  }
+  initPage();
+  document.addEventListener("tg:page", initPage);
 })();

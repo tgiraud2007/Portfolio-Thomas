@@ -184,6 +184,8 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
 .fig { position: relative; background: var(--grain-img) var(--surface); border: 1px solid var(--rule); padding: 20px 20px 16px; box-shadow: var(--shadow); }
 .fig__head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); padding-bottom: 10px; border-bottom: 1px dashed var(--rule); }
 .fig svg { width: 100%; height: auto; display: block; margin-top: 8px; overflow: visible; }
+/* Schémas en deux versions : large (ordinateur) et verticale (téléphone, ≤ 640 px) */
+.fig .fig__tall { display: none; }
 .fig img { display: block; width: 100%; height: auto; margin-top: 8px; border: 1px solid var(--rule); } /* captures d'écran (voir README) */
 .fig__note { margin-top: 12px; min-height: 4.5em; font-size: 14px; line-height: 1.5; color: var(--ink-2); border-left: 2px solid var(--red); padding-left: 12px; }
 .fig__note b { color: var(--ink); font-weight: 600; }
@@ -543,9 +545,13 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
   .timeline::before, .timeline::after { left: 4px; }
   .timeline .when::after { right: auto; left: -26px; }
   .skills > div { grid-template-columns: 1fr; gap: 4px; }
-  /* Schémas : pleine largeur, et une taille minimale lisible (texte ≥ 10 px).
-     S'il dépasse l'écran, le schéma défile horizontalement ; une ombre sur
-     le bord indique qu'il y a une suite. --fig-min est réglé sur chaque figure. */
+  /* Schémas : pleine largeur. Ceux qui ont une version verticale
+     (.fig__tall) l'affichent à la place de la version large. Les autres
+     gardent une taille minimale lisible (texte ≥ 10 px) : s'ils dépassent
+     l'écran, ils défilent horizontalement ; une ombre sur le bord indique
+     qu'il y a une suite. --fig-min est réglé sur chaque figure. */
+  .fig .fig__wide { display: none; }
+  .fig .fig__tall { display: block; }
   .prose > .fig { margin-inline: calc(-1 * var(--gutter)); border-inline: 0; padding-inline: var(--gutter); }
   .fig__scroll {
     overflow-x: auto; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter);
@@ -564,11 +570,17 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
 }
 
 /* ---------- Transitions entre les pages ----------
-   Chaque page est un vrai chargement ; quand le navigateur le permet (View
-   Transitions entre documents : Chrome, Edge, Safari 18.2+), l'en-tête reste
-   fixe et le contenu passe par un fondu court. Ailleurs : navigation classique.
-   L'arrivée de la page et le numéro qui glisse sont réglés dans js/head.js. */
+   Les pages changent sans rechargement (js/nav.js, Swup) : seul le contenu
+   (<main id="contenu">) est remplacé, l'en-tête reste fixe et le contenu passe
+   par un fondu court. Le fondu est fait par le navigateur (View Transitions,
+   réglages ci-dessous) ; sans View Transitions, par le CSS (.transition-page).
+   @view-transition sert quand la page se charge en entier (script pas encore
+   prêt) : même fondu, entre deux documents. Le numéro qui glisse est réglé
+   dans js/head.js et css/motion.css. */
 @view-transition { navigation: auto; }
+/* Fondu en CSS (navigateurs sans View Transitions) : classes posées par Swup sur <html> */
+html:not(.swup-native).is-changing .transition-page { transition: opacity .18s ease-out; }
+html:not(.swup-native).is-animating .transition-page { opacity: 0; }
 .masthead { view-transition-name: masthead; }
 ::view-transition-group(masthead) { animation: none; }
 ::view-transition-old(masthead), ::view-transition-new(masthead) { animation: none; }

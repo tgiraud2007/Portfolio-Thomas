@@ -107,7 +107,7 @@ for (const mod of fs.readdirSync(path.join(root, "js/modules")).filter((f) => f.
 }
 write("js/app.js", app);
 
-const assets = ["css/style.css", "css/motion.css", "js/head.js", "js/main.js", "js/app.js"];
+const assets = ["css/style.css", "css/motion.css", "js/head.js", "js/main.js", "js/vendor/swup.js", "js/nav.js", "js/app.js"];
 const versions = Object.fromEntries(assets.map((a) => [a, hash(a)]));
 
 /* ---------- 3. Content-Security-Policy ---------- */

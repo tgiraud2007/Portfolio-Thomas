@@ -51,9 +51,11 @@
   } catch (e) { /* pas grave : le menu se corrige au chargement */ }
 
   // 4. Arrivée sur la page
-  window.addEventListener("pagereveal", function (e) {
-    applyTheme();
-
+  //    Numéro qui glisse, côté arrivée : renvoie la fonction qui range tout à la
+  //    fin de la transition, ou null s'il n'y a rien à faire (animate = false :
+  //    on fait seulement le ménage). Aussi utilisé par js/nav.js quand la page
+  //    change sans rechargement.
+  window.tgMorph = function (animate) {
     var morph = null;
     try {
       morph = JSON.parse(sessionStorage.getItem(MORPH_KEY));
@@ -64,23 +66,28 @@
     // sinon l'ancien numéro tenterait de glisser à l'envers
     document.querySelectorAll(".num").forEach(function (n) { n.style.viewTransitionName = ""; });
 
-    var vt = e.viewTransition;
-    if (!vt) return;
-
-    root.classList.add("page-enter");
-    setTimeout(function () { root.classList.remove("page-enter", "has-morph"); }, 900);
-
     var num = document.querySelector(".page-num");
-    if (!num || !morph || morph.to !== location.pathname) return;
+    if (!animate || !num || !morph || morph.to !== location.pathname) return null;
     num.style.viewTransitionName = "fiche-num";
     root.classList.add("vt-num", "has-morph"); // réglages de css/motion.css, section 2
     // Le numéro se pose dans l'état de départ (rempli s'il l'était), puis se vide en douceur
     if (morph.filled) num.classList.add("is-arriving");
-    var done = function () {
+    return function () {
       num.style.viewTransitionName = "";
-      root.classList.remove("vt-num");
+      root.classList.remove("vt-num", "has-morph");
       num.classList.remove("is-arriving");
     };
-    vt.finished.then(done, done);
+  };
+
+  window.addEventListener("pagereveal", function (e) {
+    applyTheme();
+    var vt = e.viewTransition;
+    if (!vt) { window.tgMorph(false); return; }
+
+    root.classList.add("page-enter");
+    setTimeout(function () { root.classList.remove("page-enter", "has-morph"); }, 900);
+
+    var done = window.tgMorph(true);
+    if (done) vt.finished.then(done, done);
   });
 })();

@@ -7,7 +7,7 @@
 <meta name="description" content="TP de BTS SIO SISR : mise en place d'un domaine Active Directory sous Windows Server 2022 avec GPO, DNS, DHCP, partages NTFS et messagerie hMailServer.">
 <link rel="canonical" href="https://thomasgiraud.me/realisations/active-directory.html">
 <!-- @head -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-7G4NffcoUbtmTyAm8msTk2cry5QawXSEulsyFpII/6c='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; base-uri 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; base-uri 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Thomas Giraud · Portfolio BTS SIO SISR">
@@ -28,13 +28,12 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="expect" href="#contenu" blocking="render">
-<link rel="stylesheet" href="/css/style.css?v=61e4b126">
+<link rel="stylesheet" href="/css/style.css?v=888901ef">
 <link rel="stylesheet" href="/css/motion.css?v=64a091c8">
 <link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-<script src="/js/head.js?v=3394851c"></script>
-<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/CV/*"}}]},"eagerness":"moderate"}]}</script>
+<script src="/js/head.js?v=b751d03f"></script>
 <!-- /@head -->
 </head>
 <body>
@@ -61,7 +60,7 @@
 </header>
 <!-- /@header -->
 
-<main id="contenu">
+<main id="contenu" class="transition-page">
   <header class="wrap page-head">
     <p class="crumbs"><a href="/">Accueil</a> / <a href="/#realisations">Réalisations</a> / 03</p>
     <p class="page-num" aria-hidden="true">03</p>
@@ -75,8 +74,8 @@
     <div class="prose">
       <figure class="fig">
         <div class="fig__head"><span>Fig. 1 · Schéma de la maquette</span><span>VirtualBox</span></div>
-        <div class="fig__scroll" style="--fig-min: 640px">
-        <svg viewBox="0 -6 820 306" role="img" aria-labelledby="f-ad">
+        <div class="fig__art">
+        <svg class="fig__wide" viewBox="0 -6 820 306" role="img" aria-labelledby="f-ad">
           <title id="f-ad">Schéma : un contrôleur de domaine (AD DS, DNS, DHCP) et un serveur de messagerie reliés par un réseau interne à un client Windows 10 et un client Debian.</title>
           <g stroke-width="1.4">
             <path class="s-dim" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round" d="M110 150 H710"/>
@@ -98,6 +97,30 @@
           <text class="t-dim" x="40" y="146">Réseau</text>
           <text class="t-dim" x="40" y="160">interne</text>
           <text class="t-red" x="290" y="186" style="font-size:11px">GPO, jonction au domaine</text>
+        </svg>
+        <svg class="fig__tall" viewBox="0 0 340 300" role="img" aria-labelledby="f-ad-m">
+          <title id="f-ad-m">Schéma : un contrôleur de domaine (AD DS, DNS, DHCP) et un serveur de messagerie reliés par un réseau interne à un client Windows 10 et un client Debian.</title>
+          <g stroke-width="1.4">
+            <path class="s-dim" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round" d="M10 150 H250"/>
+            <path class="s-ink" d="M60 150 V110"/><rect class="s-ink" x="10" y="40" width="100" height="70" rx="2"/>
+            <path class="s-ink" stroke-width="1" d="M10 63 H110 M10 86 H110"/>
+            <path class="s-ink" d="M240 150 V110"/><rect class="s-ink" x="190" y="40" width="100" height="70" rx="2"/>
+            <path class="s-ink" stroke-width="1" d="M190 40 L240 76 L290 40"/>
+            <path class="s-ink" d="M70 150 V200"/><rect class="s-ink" x="20" y="200" width="100" height="62" rx="2"/><path class="s-ink" d="M55 262 v12 h30 v-12"/>
+            <path class="s-ink" d="M230 150 V200"/><rect class="s-ink" x="200" y="200" width="100" height="62" rx="2"/><path class="s-ink" d="M235 262 v12 h30 v-12"/>
+            <path class="s-red" stroke-width="1.2" stroke-dasharray="4 5" d="M110 75 C 160 90, 182 150, 200 196"/>
+            <path class="s-red" stroke-width="1.2" d="M193 191 L201 198 L203 188"/>
+          </g>
+          <text class="t-ink" x="10" y="16">Contrôleur de domaine</text>
+          <text class="t-dim" x="10" y="31">AD DS · DNS · DHCP</text>
+          <text class="t-ink" x="190" y="16">Messagerie</text>
+          <text class="t-dim" x="190" y="31">hMailServer</text>
+          <text class="t-dim" x="258" y="147">Réseau</text>
+          <text class="t-dim" x="258" y="161">interne</text>
+          <text class="t-red" x="92" y="174" style="font-size:11px">GPO, jonction</text>
+          <text class="t-red" x="92" y="188" style="font-size:11px">au domaine</text>
+          <text class="t-ink" x="20" y="292">Debian</text>
+          <text class="t-ink" x="200" y="292">Windows 10</text>
         </svg>
         </div>
         <figcaption><b>La maquette.</b> Un contrôleur de domaine sous Windows Server 2022, un serveur de messagerie et deux postes clients.</figcaption>
@@ -164,8 +187,10 @@
     <p>© 2026 Thomas Giraud</p>
   </div>
 </footer>
-<script src="/js/main.js?v=e66a18d3" defer></script>
-<script type="module" fetchpriority="low" src="/js/app.js?v=d0f89297"></script>
+<script src="/js/main.js?v=086d4a31" defer></script>
+<script src="/js/vendor/swup.js?v=5581a31f" defer></script>
+<script src="/js/nav.js?v=5e596a03" defer></script>
+<script type="module" fetchpriority="low" src="/js/app.js?v=2aa5a833"></script>
 <!-- /@footer -->
 </body>
 </html>
