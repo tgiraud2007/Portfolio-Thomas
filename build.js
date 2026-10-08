@@ -9,8 +9,8 @@
       commentaires est réécrit : on modifie _partials/, jamais les pages.
       Les balises Open Graph (aperçu LinkedIn, Discord…) sont déduites du
       <title>, de la <meta name="description"> et du <link rel="canonical">
-      de chaque page. Image d'aperçu : assets/og/<nom-de-la-fiche>.png si elle
-      existe (voir _outils/og-images.mjs), sinon assets/og-image.png.
+      de chaque page. Image d'aperçu : assets/og/<nom-de-la-fiche>.jpg si elle
+      existe (voir _outils/og-images.mjs), sinon assets/og-image.jpg.
 
    2. Empreintes (?v=…) sur les CSS et les JS, pour que les visiteurs
       récupèrent la nouvelle version après une mise en ligne.
@@ -64,7 +64,7 @@ function pageInfo(page, html) {
   const description = (html.match(/<meta name="description" content="([^"]*)">/) || [])[1] || "";
   const url = (html.match(/<link rel="canonical" href="([^"]*)">/) || [])[1] || SITE + "/";
   const slug = path.basename(page, ".html");
-  const og = page.startsWith("realisations/") && exists(`assets/og/${slug}.png`) ? `/assets/og/${slug}.png` : "/assets/og-image.png";
+  const og = page.startsWith("realisations/") && exists(`assets/og/${slug}.jpg`) ? `/assets/og/${slug}.jpg` : "/assets/og-image.jpg";
   // ?v=empreinte : LinkedIn, Discord… gardent les images en mémoire selon leur adresse ;
   // l'empreinte change quand l'image change, ils récupèrent donc la nouvelle.
   return { title, description, url, image: `${SITE}${og}?v=${hash(og.slice(1))}` };
@@ -73,11 +73,12 @@ function pageInfo(page, html) {
 function fillPartials(page, html) {
   const info = pageInfo(page, html);
   const head = partial.head
-    // (fonctions de remplacement : un « $ » dans un texte ne serait pas interprété)
-    .replace("{{title}}", () => attr(info.title))
-    .replace("{{description}}", () => info.description)
-    .replace("{{url}}", () => info.url)
-    .replace("{{image}}", () => info.image);
+    // replaceAll : un même repère peut servir plusieurs fois ; fonctions de
+    // remplacement : un « $ » dans un texte ne serait pas interprété
+    .replaceAll("{{title}}", () => attr(info.title))
+    .replaceAll("{{description}}", () => info.description)
+    .replaceAll("{{url}}", () => info.url)
+    .replaceAll("{{image}}", () => info.image);
   return html
     .replace(/(<!-- @head -->)[\s\S]*?(<!-- \/@head -->)/, (_, open, close) => `${open}\n${head}\n${close}`)
     .replace(/(<!-- @header ?(\w*) -->)[\s\S]*?(<!-- \/@header -->)/, (_, open, current, close) => {

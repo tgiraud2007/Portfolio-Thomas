@@ -30,7 +30,7 @@ js/modules/                Un fichier par fonction, chacun avec une fonction ini
   skill-filter.js          Puces « Compétences » ↔ fiches (accueil)
   nav-current.js           Menu : « Accueil » ou « Réalisations » souligné selon la position
   reveal.js                Apparitions au défilement
-assets/                    Favicon, icônes, image de partage (og-image.png)
+assets/                    Favicon, icônes, image de partage (og-image.jpg)
 assets/og/                 Image de partage de chaque fiche (fabriquées par _outils/og-images.mjs)
 assets/fonts/              Polices hébergées localement (Fraunces, Instrument Sans, IBM Plex Mono, licence SIL OFL)
 CV/                        CV téléchargeable (CV-Thomas-Giraud-BTS-SIO-SISR.pdf)

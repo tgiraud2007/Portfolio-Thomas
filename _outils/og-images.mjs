@@ -2,9 +2,9 @@
    Images d'aperçu (LinkedIn, Discord, WhatsApp…)
    --------------------------------------------------------------------------
    Fabrique, en 1200 × 630, aux couleurs du site :
-   - pour chaque page de realisations/ : assets/og/<nom>.png (numéro, titre
+   - pour chaque page de realisations/ : assets/og/<nom>.jpg (numéro, titre
      de la fiche et son schéma) ;
-   - pour l'accueil et les autres pages : assets/og-image.png (ton nom, ta
+   - pour l'accueil et les autres pages : assets/og-image.jpg (ton nom, ta
      présentation et la ligne « Recherche un stage » de l'accueil).
    build.js les utilise ensuite automatiquement dans les balises og:image.
 
@@ -104,13 +104,13 @@ for (const file of fiches) {
   const res = await send("Runtime.evaluate", { expression: compose, awaitPromise: true });
   if (res.result.exceptionDetails) { console.error(file, ":", res.result.exceptionDetails.exception?.description); continue; }
   await sleep(400);
-  const shot = await send("Page.captureScreenshot", { format: "png" });
-  const out = path.join(outDir, file.replace(/\.html$/, ".png"));
+  const shot = await send("Page.captureScreenshot", { format: "jpeg", quality: 90 }); // JPEG : le format que les réseaux sociaux traitent le mieux
+  const out = path.join(outDir, file.replace(/\.html$/, ".jpg"));
   fs.writeFileSync(out, Buffer.from(shot.result.data, "base64"));
   console.log("image :", path.relative(root, out));
 }
 
-/* ---------- Image de l'accueil (et des autres pages) : assets/og-image.png ----------
+/* ---------- Image de l'accueil (et des autres pages) : assets/og-image.jpg ----------
    Ton nom, la présentation et la ligne « Recherche un stage » de l'accueil
    (reprise telle quelle, avec la pastille verte et le trait au stylo). */
 const composeHome = `(() => {
@@ -148,9 +148,9 @@ const home = await send("Runtime.evaluate", { expression: composeHome, awaitProm
 if (home.result.exceptionDetails) console.error("accueil :", home.result.exceptionDetails.exception?.description);
 else {
   await sleep(400);
-  const shot = await send("Page.captureScreenshot", { format: "png" });
-  fs.writeFileSync(path.join(root, "assets", "og-image.png"), Buffer.from(shot.result.data, "base64"));
-  console.log("image : assets/og-image.png (accueil)");
+  const shot = await send("Page.captureScreenshot", { format: "jpeg", quality: 90 });
+  fs.writeFileSync(path.join(root, "assets", "og-image.jpg"), Buffer.from(shot.result.data, "base64"));
+  console.log("image : assets/og-image.jpg (accueil)");
 }
 
 ws.close();
