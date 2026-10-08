@@ -65,7 +65,9 @@ function pageInfo(page, html) {
   const url = (html.match(/<link rel="canonical" href="([^"]*)">/) || [])[1] || SITE + "/";
   const slug = path.basename(page, ".html");
   const og = page.startsWith("realisations/") && exists(`assets/og/${slug}.png`) ? `/assets/og/${slug}.png` : "/assets/og-image.png";
-  return { title, description, url, image: SITE + og };
+  // ?v=empreinte : LinkedIn, Discord… gardent les images en mémoire selon leur adresse ;
+  // l'empreinte change quand l'image change, ils récupèrent donc la nouvelle.
+  return { title, description, url, image: `${SITE}${og}?v=${hash(og.slice(1))}` };
 }
 
 function fillPartials(page, html) {
