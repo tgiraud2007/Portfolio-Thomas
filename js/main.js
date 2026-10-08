@@ -284,19 +284,22 @@
      (js/nav.js au changement de page, js/modules/nav-current.js en défilant),
      ou que le menu change de taille. Animation : css/style.css. */
   function initNavInk() {
-    var nav = document.querySelector(".masthead nav");
+    var masthead = document.querySelector(".masthead");
+    var nav = masthead && masthead.querySelector("nav");
     if (!nav || !window.MutationObserver) return;
+    // Placé dans l'en-tête (et pas dans le menu) : rien ne bouge dans le menu,
+    // le bouton de thème garde sa place sur téléphone
     var ink = document.createElement("span");
     ink.className = "nav-ink";
     ink.setAttribute("aria-hidden", "true");
-    nav.appendChild(ink);
+    masthead.appendChild(ink);
     root.classList.add("has-ink");
     var place = function () {
       var a = root.classList.contains("at-realisations")
         ? nav.querySelector('a[data-nav="realisations"]')
         : nav.querySelector("a[aria-current]");
       if (!a) { ink.style.opacity = "0"; return; } // page sans rubrique (404)
-      var n = nav.getBoundingClientRect();
+      var n = masthead.getBoundingClientRect();
       var r = a.getBoundingClientRect();
       ink.style.opacity = "";
       ink.style.width = r.width + "px";

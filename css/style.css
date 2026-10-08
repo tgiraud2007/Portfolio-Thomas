@@ -126,7 +126,7 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
 .brand { text-decoration: none; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .brand__name { font-family: var(--serif); font-weight: 600; font-size: 22px; letter-spacing: -.01em; }
 .brand__tag { font: 12px var(--mono); letter-spacing: .04em; color: var(--ink-2); }
-.masthead nav { position: relative; display: flex; align-items: center; gap: 20px; }
+.masthead nav { display: flex; align-items: center; gap: 20px; }
 .masthead nav ul { display: flex; flex-wrap: wrap; gap: 8px 22px; list-style: none; font-size: 15px; font-weight: 500; }
 .masthead nav a { position: relative; text-decoration: none; background: linear-gradient(var(--red), var(--red)) 0 100% / 0 2px no-repeat; padding-bottom: 2px; transition: background-size var(--t-ui) var(--ease); }
 /* Zone de clic agrandie (confort au doigt), sans rien changer au dessin */
