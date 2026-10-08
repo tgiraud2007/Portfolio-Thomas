@@ -65,6 +65,7 @@ export function init() {
   const group = document.querySelector(".skill-filter");
   if (!list || !group) return;
 
+  committed = "";
   chips = Array.from(group.querySelectorAll(".chip"));
   items = Array.from(list.children);
   count = document.getElementById("fiches-count");

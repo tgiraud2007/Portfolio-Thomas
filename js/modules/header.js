@@ -48,6 +48,7 @@ function onScroll() {
 }
 
 export function init() {
+  if (masthead) return; // déjà en place : l'en-tête ne change pas d'une page à l'autre
   masthead = document.querySelector(".masthead");
   if (!masthead) return;
 

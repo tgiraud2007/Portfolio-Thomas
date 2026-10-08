@@ -24,8 +24,10 @@ css/style.css              Styles (thèmes clair et sombre, transitions entre le
 css/motion.css             Animations : apparitions, frise du Parcours, numéro qui glisse, trait au stylo
 js/head.js                 Avant l'affichage : thème, intro de l'accueil, arrivée sur une page
 js/main.js                 Thème, schéma interactif, copie de l'e-mail, formulaire, numéro qui glisse (départ)
+js/nav.js                  Changement de page sans rechargement (Swup) : fondu, menu, défilement, bouton retour
+js/vendor/swup.js          Bibliothèque Swup et ses extensions Preload et A11y (licence MIT, ne pas modifier)
 js/app.js                  Charge les modules ci-dessous (après l'affichage de la page)
-js/modules/                Un fichier par fonction, chacun avec une fonction init() :
+js/modules/                Un fichier par fonction, chacun avec une fonction init() (relancée à chaque page) :
   header.js                En-tête collant (caché en descendant sur téléphone)
   skill-filter.js          Puces « Compétences » ↔ fiches (accueil)
   nav-current.js           Menu : « Accueil » ou « Réalisations » souligné selon la position
@@ -57,11 +59,19 @@ Les dossiers qui commencent par `_` ne sont pas publiés par GitHub Pages.
 
   Déposer l'image dans `assets/projects/` (PNG, JPEG ou WebP, environ 1200 px de large). Masquer les mots de passe et les informations sensibles avant de publier (noms de clients, adresses IP publiques).
 
-- **Un schéma SVG** : sur téléphone, il garde une taille lisible et défile horizontalement. La largeur minimale se règle sur son conteneur : `<div class="fig__scroll" style="--fig-min: 540px">`.
+- **Un schéma SVG** : chaque schéma des fiches existe en deux versions, dans `<div class="fig__art">` : `<svg class="fig__wide">` (ordinateur) et `<svg class="fig__tall">` (téléphone, 640 px et moins, dessin vertical d'environ 340 de large). Modifier les deux. Un schéma sans version téléphone se place dans `<div class="fig__scroll" style="--fig-min: 540px">` : sur téléphone, il garde une taille lisible et défile horizontalement.
 
 ## Navigation entre les pages
 
-Chaque page est un vrai chargement (liens directs, bouton retour, référencement et lecteurs d'écran fonctionnent normalement). Les transitions sont faites par le navigateur (View Transitions entre documents, `@view-transition` dans `css/style.css`) : fondu court, en-tête fixe, et numéro de la fiche qui glisse depuis l'accueil. Chrome, Edge et Safari 18.2+ les affichent ; les autres navigateurs font une navigation classique. Les pages sont préchargées au survol des liens (`<script type="speculationrules">` dans `_partials/head.html`).
+Les pages changent sans rechargement, comme sur une seule page : `js/nav.js` (avec la bibliothèque [Swup](https://swup.js.org), dans `js/vendor/swup.js`) récupère la page demandée en arrière-plan et remplace seulement le contenu (`<main id="contenu" class="transition-page">`). L'en-tête, le menu et le pied de page restent en place ; le contenu passe par un fondu court, et le numéro de la fiche glisse depuis l'accueil. L'adresse change normalement : liens directs, bouton retour (on retrouve sa position), référencement et lecteurs d'écran (le titre de la nouvelle page est annoncé) fonctionnent comme avant.
+
+- Le fondu est fait par le navigateur (View Transitions, réglages dans `css/style.css`) ; sans View Transitions, par le CSS (`.transition-page`).
+- Les pages des liens visibles ou survolés sont préchargées : le changement est immédiat.
+- Après chaque changement de page, l'événement `tg:page` relance ce qui dépend du contenu : `initPage()` dans `js/main.js` et les `init()` des modules.
+- Le CV (PDF) et les liens externes s'ouvrent normalement. Pour qu'un lien du site fasse un vrai chargement, lui ajouter `data-no-swup`.
+- En cas de problème (page introuvable, erreur réseau, script bloqué), le navigateur charge la page normalement.
+
+Mettre Swup à jour : `npm pack swup @swup/preload-plugin @swup/a11y-plugin` dans un dossier temporaire, puis recopier dans `js/vendor/swup.js` les fichiers `dist/Swup.umd.js` et `dist/index.umd.js` (dans cet ordre, sans les lignes `sourceMappingURL`), et relancer `node build.js`.
 
 Toutes les animations respectent le réglage « réduire les animations » du système : dans ce cas, le site s'affiche sans mouvement.
 

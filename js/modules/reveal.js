@@ -45,6 +45,7 @@ function show(entries) {
 }
 
 export function init() {
+  if (observer) { observer.disconnect(); observer = null; } // page précédente
   if (reduceMotion.matches || !("IntersectionObserver" in window)) return;
   const below = Array.from(document.querySelectorAll(SELECTEUR))
     .filter((el) => el.getBoundingClientRect().top > window.innerHeight);
