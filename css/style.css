@@ -136,6 +136,19 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
    affichage, puis tenue à jour par js/modules/nav-current.js) */
 .at-realisations .masthead nav a[data-nav="accueil"]:not(:hover) { background-size: 0 2px; }
 .at-realisations .masthead nav a[data-nav="realisations"] { background-size: 100% 2px; }
+/* Trait qui se déplace (js/main.js, initNavInk) : un seul trait rouge, placé sous
+   la rubrique en cours. Il remplace le soulignement de cette rubrique (le
+   survol garde le sien). Quand la rubrique change dans la page (accueil ↔
+   réalisations en défilant), il glisse en CSS ; quand la page change, c'est
+   le navigateur qui le fait glisser (View Transitions, nom « nav-ink »). */
+.has-ink .masthead nav a[aria-current]:not(:hover),
+.has-ink.at-realisations .masthead nav a[data-nav="realisations"]:not(:hover) { background-size: 0 2px; }
+.nav-ink { position: absolute; left: 0; top: 0; height: 2px; background: var(--red); pointer-events: none; view-transition-name: nav-ink; }
+.nav-ink.is-ready { transition: transform .45s var(--ease), width .45s var(--ease), opacity .2s; }
+.swup-native.is-changing .nav-ink { transition: none; } /* changement de page : le navigateur anime */
+/* Changement de page : plus de soulignement de survol, un seul trait à l'écran,
+   celui qui part de l'ancienne rubrique et arrive sous la nouvelle */
+.has-ink.is-changing .masthead nav a { background-size: 0 2px; transition: none; }
 /* Lien CV : en pastille, pour qu'on le repère tout de suite sur chaque page */
 .masthead nav .nav-cv { display: inline-flex; align-items: center; gap: 5px; padding: 3px 11px 3px 10px; margin: -3px 0; border: 1px solid var(--ink); border-radius: 99px; background: none; transition: background var(--t-fast), color var(--t-fast); }
 .masthead nav .nav-cv:hover { background: var(--ink); color: var(--bg); }
@@ -583,6 +596,10 @@ html:not(.swup-native).is-animating .transition-page { opacity: 0; }
 .masthead { view-transition-name: masthead; }
 ::view-transition-group(masthead) { animation: none; }
 ::view-transition-old(masthead), ::view-transition-new(masthead) { animation: none; }
+/* Trait du menu : il glisse et change de largeur au-dessus de l'en-tête */
+::view-transition-group(nav-ink) { z-index: 3; animation-duration: .45s; animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
+::view-transition-old(nav-ink) { animation: none; opacity: 0; }
+::view-transition-new(nav-ink) { animation: none; height: 100%; }
 /* L'ancienne page s'efface très vite, la nouvelle apparaît juste après :
    pas de textes superposés (effet « double exposition »), et un passage
    par le fond de page de quelques images seulement. */
@@ -633,7 +650,7 @@ html:not(.swup-native).is-rendering.slide-prev.is-animating .transition-page { t
    - l'en-tête n'est pas animé à part ;
    - pas de transitions de couleur, sinon les boutons changeraient en retard. */
 .theme-vt::view-transition-old(root), .theme-vt::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
-.theme-vt .masthead { view-transition-name: none !important; }
+.theme-vt .masthead, .theme-vt .nav-ink { view-transition-name: none !important; }
 .theme-vt *, .theme-vt *::before, .theme-vt *::after { transition: none !important; }
 /* Tache d'encre : la capture « après » est dévoilée par un cercle au bord flou
    (90 px de fondu), centré sur le bouton (--vt-x, --vt-y). Son rayon --vt-r
