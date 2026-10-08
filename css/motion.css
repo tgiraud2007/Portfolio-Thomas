@@ -6,7 +6,7 @@
    A. Les APPARITIONS (fiches, chiffres, pictos, filets, blocs du Parcours)
       Déclenchées par js/modules/reveal.js : quand un élément arrive vraiment
       à l'écran, il reçoit la classe .is-in et joue une animation complète
-      de ~0,7 s. Avantages : elle se voit quelle que soit la vitesse de
+      de ~0,6 s. Avantages : elle se voit quelle que soit la vitesse de
       défilement, et elle ne peut pas rester bloquée à mi-chemin.
       Seuls les éléments situés SOUS l'écran au chargement sont concernés :
       ce qui est déjà visible s'affiche tout de suite, jamais pâle.
@@ -18,6 +18,8 @@
         animation-range: …          → sur quel morceau du défilement
       Outil pratique : https://scroll-driven-animations.style/tools/view-timeline/ranges/
 
+   Durées et courbe : variables --t-… et --ease dans css/style.css.
+
    Règles de sécurité :
    - sans JavaScript, ou si le navigateur ne connaît pas ces animations,
      la page s'affiche finie, rien n'est caché ;
@@ -28,17 +30,17 @@
 
 
 /* ---------- 1. Accueil : trait au stylo sous « Recherche un stage » ----------
-   Retracé à chaque affichage de l'accueil (actualisation ou retour sur la
-   page). Ne bloque rien : le texte est lisible dès le début.
+   Retracé à chaque affichage de l'accueil. Ne bloque rien : le texte est
+   lisible dès le début.
    Le tracé est un vrai chemin SVG (index.html) : pathLength="1" permet de
    le « dessiner » en faisant glisser un tiret de longueur 1 (dashoffset 1 → 0).
    La courbe imite un geste de stylo : départ hésitant, accélération, fin freinée.
-   Au premier chargement, il attend que le titre soit apparu (1,1 s) ; ensuite
-   (.no-intro : le titre ne s'anime plus), il part presque tout de suite. */
+   Au premier chargement, il attend que le nom soit apparu (0,75 s) ; ensuite
+   (.no-intro : le nom ne s'anime plus), il part presque tout de suite. */
 .scribble path {
   stroke-dasharray: 1 2; /* tiret de longueur 1, puis un grand vide : aucun point parasite au départ */
   stroke-dashoffset: 0;
-  animation: scribble-draw .75s cubic-bezier(.55, .08, .3, 1) 1.1s both;
+  animation: scribble-draw .75s cubic-bezier(.55, .08, .3, 1) .75s both;
 }
 .no-intro .scribble path { animation-delay: .3s; }
 @keyframes scribble-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
@@ -46,8 +48,9 @@
 
 
 /* ---------- 2. Numéro qui glisse (accueil → fiche) ----------
-   Le nom « fiche-num » et la classe .vt-num (sur <html>) sont posés par
-   js/modules/fiche-transition.js, seulement à l'aller.
+   Le nom « fiche-num » est posé au clic par js/main.js (initFicheMorph) sur
+   le numéro de la carte, puis à l'arrivée par js/head.js sur le grand numéro
+   de la fiche, avec la classe .vt-num sur <html>. Seulement à l'aller.
    - le numéro glisse en 0,6 s, départ progressif et arrivée freinée ;
    - il garde son apparence pendant le vol et en se posant, puis se vide
      en douceur pour prendre le style de la fiche ;
@@ -71,22 +74,22 @@
    --reveal-delay : petit décalage quand plusieurs éléments arrivent ensemble. */
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
-  transition: opacity .7s var(--ease), transform .8s var(--ease);
+  transform: translateY(18px);
+  transition: opacity var(--t-reveal) var(--ease), transform var(--t-reveal) var(--ease);
   transition-delay: var(--reveal-delay, 0s);
 }
 .reveal.is-in { opacity: 1; transform: none; }
 
 /* Fiches du sommaire : en plus, le picto se dessine trait par trait */
-.entry.reveal .glyph * { stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s var(--ease); transition-delay: calc(var(--reveal-delay, 0s) + .3s); }
+.entry.reveal .glyph * { stroke-dashoffset: 1; transition: stroke-dashoffset var(--t-draw) var(--ease); transition-delay: calc(var(--reveal-delay, 0s) + .25s); }
 .entry.reveal.is-in .glyph * { stroke-dashoffset: 0; }
 
 /* Chiffres : pas de fondu du bloc, la valeur sort de sous sa ligne */
 .stat b { clip-path: inset(-.3em -.5em 0 -.5em); } /* coupe seulement le bas : effet de « masque » */
 .stat b > * { display: inline-block; }
 .stat.reveal { opacity: 1; transform: none; }
-.stat.reveal b > * { transform: translateY(105%); transition: transform .9s var(--ease); transition-delay: var(--reveal-delay, 0s); }
-.stat.reveal > span { opacity: 0; transform: translateY(12px); transition: opacity .6s var(--ease), transform .6s var(--ease); transition-delay: calc(var(--reveal-delay, 0s) + .25s); }
+.stat.reveal b > * { transform: translateY(105%); transition: transform .8s var(--ease); transition-delay: var(--reveal-delay, 0s); }
+.stat.reveal > span { opacity: 0; transform: translateY(12px); transition: opacity var(--t-reveal) var(--ease), transform var(--t-reveal) var(--ease); transition-delay: calc(var(--reveal-delay, 0s) + .2s); }
 .stat.reveal.is-in b > *, .stat.reveal.is-in > span { opacity: 1; transform: none; }
 
 /* Intertitres des fiches : le filet au-dessus se trace de gauche à droite */
@@ -94,7 +97,7 @@
 .prose h2.reveal::before {
   content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px;
   background: var(--ink); transform: scaleX(0); transform-origin: 0 50%;
-  transition: transform 1s var(--ease); transition-delay: calc(var(--reveal-delay, 0s) + .1s);
+  transition: transform var(--t-draw) var(--ease); transition-delay: calc(var(--reveal-delay, 0s) + .1s);
 }
 .prose h2.reveal.is-in::before { transform: scaleX(1); }
 
@@ -128,13 +131,17 @@
 
   /* ---------- 5. Barre de lecture sous l'en-tête (pages de réalisation) ----------
      Elle suit le défilement de toute la page : scroll(root).
-     Activée par l'attribut data-progress sur <header class="masthead">. */
+     Activée par l'attribut data-progress sur <header class="masthead">
+     (posé par build.js sur les fiches). */
   .masthead[data-progress]::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
     background: var(--red); transform: scaleX(0); transform-origin: 0 50%;
     animation: bar-grow linear both;
     animation-timeline: scroll(root block);
   }
+  /* Sur téléphone, l'en-tête se cache en descendant (js/modules/header.js) :
+     la barre, elle, reste visible tout en haut de l'écran. */
+  .masthead.is-hidden[data-progress]::after { translate: 0 2px; }
   @keyframes bar-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 }
 

@@ -3,8 +3,9 @@
    --------------------------------------------------------------------------
    Relie les compétences (les mêmes catégories que sur la page Parcours) aux
    fiches de réalisation :
-   - clic sur une compétence → les fiches qui la mobilisent restent en avant,
-     les autres s'estompent (rien n'est masqué, rien ne bouge dans la page) ;
+   - clic sur une compétence → les fiches qui la mobilisent ont leur filet du
+     haut en rouge et leur numéro plein, les autres passent en retrait (décor
+     estompé, texte toujours lisible ; rien n'est masqué, rien ne bouge) ;
      nouveau clic, ou « Toutes », pour revenir à l'affichage normal ;
    - survol d'une compétence à la souris → aperçu, sans rien valider ;
    - survol ou focus d'une fiche → ses compétences s'allument dans la liste.
@@ -13,8 +14,8 @@
    data-skills="reseaux services…" et chaque bouton data-skill="reseaux".
    Pour ajouter une fiche ou une compétence, il suffit de modifier le HTML.
 
-   Test : cliquer sur « Réseaux » → seules 01 et 06 restent nettes et le
-   compteur annonce « 2 fiches ». Survoler la fiche 03 → « Services et
+   Test : cliquer sur « Réseaux » → les fiches 01, 02, 05 et 06 sont marquées
+   et le compteur annonce « 4 fiches ». Survoler la fiche 04 → « Services et
    supervision » et « Linux » s'allument.
    ========================================================================== */
 
@@ -24,12 +25,6 @@ let items = [];
 let count = null;
 let initialCount = "";
 let committed = ""; // compétence choisie par clic ("" = toutes)
-const cleanups = [];
-
-function on(el, type, fn) {
-  el.addEventListener(type, fn);
-  cleanups.push(() => el.removeEventListener(type, fn));
-}
 
 function skillsOf(li) {
   return (li.dataset.skills || "").split(/\s+/).filter(Boolean);
@@ -74,28 +69,19 @@ export function init() {
   items = Array.from(list.children);
   count = document.getElementById("fiches-count");
   initialCount = count ? count.textContent : "";
-  committed = "";
   group.classList.add("is-ready"); // le CSS rend les puces cliquables seulement maintenant
 
   chips.forEach((chip) => {
-    on(chip, "click", () => choose(chip.dataset.skill));
+    chip.addEventListener("click", () => choose(chip.dataset.skill));
     // Aperçu au survol, uniquement avec une vraie souris (pas au toucher)
-    on(chip, "pointerenter", (e) => { if (e.pointerType === "mouse") apply(chip.dataset.skill, false); });
-    on(chip, "pointerleave", (e) => { if (e.pointerType === "mouse") apply(committed, false); });
+    chip.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") apply(chip.dataset.skill, false); });
+    chip.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") apply(committed, false); });
   });
 
   items.forEach((li) => {
-    on(li, "mouseenter", () => lightChips(li, true));
-    on(li, "mouseleave", () => lightChips(li, false));
-    on(li, "focusin", () => lightChips(li, true));
-    on(li, "focusout", () => lightChips(li, false));
+    li.addEventListener("mouseenter", () => lightChips(li, true));
+    li.addEventListener("mouseleave", () => lightChips(li, false));
+    li.addEventListener("focusin", () => lightChips(li, true));
+    li.addEventListener("focusout", () => lightChips(li, false));
   });
-}
-
-export function destroy() {
-  cleanups.splice(0).forEach((fn) => fn());
-  list = null;
-  chips = [];
-  items = [];
-  count = null;
 }

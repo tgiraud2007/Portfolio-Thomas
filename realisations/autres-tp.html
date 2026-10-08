@@ -3,34 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Autres TP · Thomas Giraud</title>
+<title>Autres TP : GLPI, MediaWiki, ZeroShell · Thomas Giraud</title>
 <meta name="description" content="Autres TP de BTS SIO SISR : installation de GLPI sur Windows, de MediaWiki sous IIS et routage entre trois sous-réseaux avec ZeroShell.">
 <link rel="canonical" href="https://thomasgiraud.me/realisations/autres-tp.html">
-<meta property="og:title" content="Autres TP · Thomas Giraud">
-<meta property="og:image" content="https://thomasgiraud.me/assets/og-image.png">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<!-- @head -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-7G4NffcoUbtmTyAm8msTk2cry5QawXSEulsyFpII/6c='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thomas Giraud · Portfolio BTS SIO SISR">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://thomasgiraud.me/realisations/autres-tp.html">
+<meta property="og:title" content="Autres TP : GLPI, MediaWiki, ZeroShell · Thomas Giraud">
+<meta property="og:description" content="Autres TP de BTS SIO SISR : installation de GLPI sur Windows, de MediaWiki sous IIS et routage entre trois sous-réseaux avec ZeroShell.">
+<meta property="og:image" content="https://thomasgiraud.me/assets/og/autres-tp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f3eee4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
 <link rel="expect" href="#contenu" blocking="render">
-<link rel="preload" href="../assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/style.css?v=5119dbb1">
-<link rel="stylesheet" href="../css/motion.css?v=28621d12">
-<script>(function(){try{var t=localStorage.getItem("tg-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
-<script>/* Attente des polices (1 s max) : le contenu s'affiche directement dans la bonne police, au lieu d'apparaître en Georgia puis de changer d'un coup. Voir .fonts-wait dans css/style.css?v=5119dbb1. */(function(){var d=document.documentElement,f=document.fonts;if(!f||!f.load)return;d.classList.add("fonts-wait");var done=function(){d.classList.remove("fonts-wait");};Promise.all(["600 1em Fraunces","400 1em Fraunces","italic 400 1em Fraunces","400 1em \"Instrument Sans\"","600 1em \"Instrument Sans\"","400 1em \"IBM Plex Mono\""].map(function(x){return f.load(x);})).then(done,done);setTimeout(done,1000);})();</script>
+<link rel="stylesheet" href="/css/style.css?v=fe70af3b">
+<link rel="stylesheet" href="/css/motion.css?v=e6360512">
+<link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/js/head.js?v=3394851c"></script>
+<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/CV/*"}}]},"eagerness":"moderate"}]}</script>
+<!-- /@head -->
 </head>
 <body>
+<!-- @header realisations -->
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 
 <header class="masthead" data-progress>
   <div class="wrap">
-    <a class="brand" href="../index.html"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR<span class="brand__year"> · 2026-2027</span></span></a>
+    <a class="brand" href="/"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR<span class="brand__year"> · 2026-2027</span></span></a>
     <nav aria-label="Navigation principale">
       <ul>
-        <li><a href="../index.html">Accueil</a></li>
-        <li><a href="../index.html#realisations" aria-current="page">Réalisations</a></li>
-        <li><a href="../parcours.html">Parcours</a></li>
-        <li><a href="../contact.html">Contact</a></li>
-        <li><a class="nav-cv" href="../CV/cv.pdf">CV<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6.5M3.2 5.4 6 8.2l2.8-2.8M2 10.5h8"/></svg><span class="visually-hidden"> (PDF)</span></a></li>
+        <li><a href="/" data-nav="accueil">Accueil</a></li>
+        <li><a href="/#realisations" data-nav="realisations" aria-current="true">Réalisations</a></li>
+        <li><a href="/parcours.html" data-nav="parcours">Parcours</a></li>
+        <li><a href="/contact.html" data-nav="contact">Contact</a></li>
+        <li><a class="nav-cv" href="/CV/CV-Thomas-Giraud-BTS-SIO-SISR.pdf">CV<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6.5M3.2 5.4 6 8.2l2.8-2.8M2 10.5h8"/></svg><span class="visually-hidden"> (PDF)</span></a></li>
       </ul>
       <button class="theme-toggle" type="button" aria-label="Changer de thème">
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
@@ -39,10 +56,11 @@
     </nav>
   </div>
 </header>
+<!-- /@header -->
 
 <main id="contenu">
   <header class="wrap page-head">
-    <p class="crumbs"><a href="../index.html">Accueil</a> / <a href="../index.html#realisations">Réalisations</a> / 06</p>
+    <p class="crumbs"><a href="/">Accueil</a> / <a href="/#realisations">Réalisations</a> / 06</p>
     <p class="page-num" aria-hidden="true">06</p>
     <p class="kicker">Réalisation 06 · Formation</p>
     <h1>Autres <em>TP</em></h1>
@@ -53,9 +71,10 @@
     <article>
       <p class="label">Routage</p>
       <h2>Routage avec ZeroShell</h2>
-      <p>Routage entre trois sous-réseaux avec le routeur Linux ZeroShell, dans VirtualBox : routes statiques et passerelles par défaut.</p>
-      <figure class="fig fig--mini">
+      <p>Routage entre trois sous-réseaux avec le routeur Linux ZeroShell, dans VirtualBox&nbsp;: routes statiques et passerelles par défaut.</p>
+      <figure class="fig">
         <div class="fig__head"><span>Fig. 1 · Schéma de principe</span></div>
+        <div class="fig__scroll" style="--fig-min: 320px">
         <svg viewBox="0 0 400 250" role="img" aria-labelledby="f-zeroshell">
           <title id="f-zeroshell">Schéma de principe : le routeur ZeroShell relie trois sous-réseaux. Un paquet passe du sous-réseau 1 au sous-réseau 3 en traversant le routeur.</title>
           <defs><path id="p-route" d="M70 176 V130 H190 V84 H210 V130 H330 V176"/></defs>
@@ -76,46 +95,52 @@
             <animate attributeName="opacity" dur="4s" begin="1s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;.04;.6;.66;1"/>
           </circle>
         </svg>
+        </div>
       </figure>
       <ul class="tags"><li>ZeroShell</li><li>Routage statique</li><li>VirtualBox</li></ul>
+      <p class="mini__ref"><span class="bloc">Bloc 2</span>Installer, tester et déployer une solution d'infrastructure réseau</p>
     </article>
     <article>
       <p class="label">Gestion de parc</p>
       <h2>GLPI</h2>
       <p>Installation de GLPI, logiciel de gestion de parc et d'assistance, sur Windows.</p>
       <ul class="tags"><li>GLPI</li><li>Windows</li></ul>
+      <p class="mini__ref"><span class="bloc">Bloc 1</span>Gérer le patrimoine informatique</p>
     </article>
     <article>
       <p class="label">Documentation</p>
       <h2>MediaWiki</h2>
       <p>Installation d'un wiki MediaWiki sur Windows Server, avec le serveur web IIS.</p>
       <ul class="tags"><li>MediaWiki</li><li>Windows Server</li><li>IIS</li></ul>
+      <p class="mini__ref"><span class="bloc">Bloc 1</span>Mettre à disposition des utilisateurs un service informatique</p>
     </article>
   </div>
 
   <nav class="pager" aria-label="Autres réalisations">
     <div class="wrap">
-      <a href="stage-aberia.html"><span class="label">← Précédente</span><strong>Stage chez Aberia Télécommunications</strong></a>
-      <a href="../index.html#realisations"><span class="label">Retour →</span><strong>Toutes les réalisations</strong></a>
+      <a href="/realisations/ipfire.html"><span class="label"><span class="arr arr--back" aria-hidden="true">←</span> Précédente</span><strong>Publier un serveur web derrière IPFire</strong></a>
+      <a href="/#realisations"><span class="label">Retour <span class="arr" aria-hidden="true">→</span></span><strong>Toutes les réalisations</strong></a>
     </div>
   </nav>
 </main>
 
+<!-- @footer -->
 <footer class="site-footer">
   <div class="wrap">
     <p class="who">Thomas Giraud <span>· BTS SIO SISR · Servian (34)</span></p>
     <ul>
-      <li><a href="../index.html#realisations">Réalisations</a></li>
-      <li><a href="../parcours.html">Parcours</a></li>
-      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="/#realisations">Réalisations</a></li>
+      <li><a href="/parcours.html">Parcours</a></li>
+      <li><a href="/contact.html">Contact</a></li>
       <li><a href="https://www.linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener">LinkedIn</a></li>
       <li><a href="https://github.com/tgiraud2007" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="../CV/cv.pdf">CV (PDF)</a></li>
+      <li><a href="/CV/CV-Thomas-Giraud-BTS-SIO-SISR.pdf">CV (PDF)</a></li>
     </ul>
     <p>© 2026 Thomas Giraud</p>
   </div>
 </footer>
-<script src="../js/main.js?v=31f69c1c" defer></script>
-<script type="module" fetchpriority="low" src="../js/app.js?v=e6ff1a2c"></script>
+<script src="/js/main.js?v=e66a18d3" defer></script>
+<script type="module" fetchpriority="low" src="/js/app.js?v=d0f89297"></script>
+<!-- /@footer -->
 </body>
 </html>

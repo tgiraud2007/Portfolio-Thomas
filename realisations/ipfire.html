@@ -6,31 +6,48 @@
 <title>Pare-feu IPFire · Thomas Giraud</title>
 <meta name="description" content="TP de BTS SIO SISR : pare-feu IPFire entre Internet et un réseau local, avec rejet par défaut, NAT et publication d'un serveur web par redirection de port.">
 <link rel="canonical" href="https://thomasgiraud.me/realisations/ipfire.html">
+<!-- @head -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-7G4NffcoUbtmTyAm8msTk2cry5QawXSEulsyFpII/6c='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thomas Giraud · Portfolio BTS SIO SISR">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://thomasgiraud.me/realisations/ipfire.html">
 <meta property="og:title" content="Pare-feu IPFire · Thomas Giraud">
-<meta property="og:image" content="https://thomasgiraud.me/assets/og-image.png">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<meta property="og:description" content="TP de BTS SIO SISR : pare-feu IPFire entre Internet et un réseau local, avec rejet par défaut, NAT et publication d'un serveur web par redirection de port.">
+<meta property="og:image" content="https://thomasgiraud.me/assets/og/ipfire.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f3eee4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
 <link rel="expect" href="#contenu" blocking="render">
-<link rel="preload" href="../assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/style.css?v=5119dbb1">
-<link rel="stylesheet" href="../css/motion.css?v=28621d12">
-<script>(function(){try{var t=localStorage.getItem("tg-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
-<script>/* Attente des polices (1 s max) : le contenu s'affiche directement dans la bonne police, au lieu d'apparaître en Georgia puis de changer d'un coup. Voir .fonts-wait dans css/style.css?v=5119dbb1. */(function(){var d=document.documentElement,f=document.fonts;if(!f||!f.load)return;d.classList.add("fonts-wait");var done=function(){d.classList.remove("fonts-wait");};Promise.all(["600 1em Fraunces","400 1em Fraunces","italic 400 1em Fraunces","400 1em \"Instrument Sans\"","600 1em \"Instrument Sans\"","400 1em \"IBM Plex Mono\""].map(function(x){return f.load(x);})).then(done,done);setTimeout(done,1000);})();</script>
+<link rel="stylesheet" href="/css/style.css?v=fe70af3b">
+<link rel="stylesheet" href="/css/motion.css?v=e6360512">
+<link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/js/head.js?v=3394851c"></script>
+<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/CV/*"}}]},"eagerness":"moderate"}]}</script>
+<!-- /@head -->
 </head>
 <body>
+<!-- @header realisations -->
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 
 <header class="masthead" data-progress>
   <div class="wrap">
-    <a class="brand" href="../index.html"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR<span class="brand__year"> · 2026-2027</span></span></a>
+    <a class="brand" href="/"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR<span class="brand__year"> · 2026-2027</span></span></a>
     <nav aria-label="Navigation principale">
       <ul>
-        <li><a href="../index.html">Accueil</a></li>
-        <li><a href="../index.html#realisations" aria-current="page">Réalisations</a></li>
-        <li><a href="../parcours.html">Parcours</a></li>
-        <li><a href="../contact.html">Contact</a></li>
-        <li><a class="nav-cv" href="../CV/cv.pdf">CV<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6.5M3.2 5.4 6 8.2l2.8-2.8M2 10.5h8"/></svg><span class="visually-hidden"> (PDF)</span></a></li>
+        <li><a href="/" data-nav="accueil">Accueil</a></li>
+        <li><a href="/#realisations" data-nav="realisations" aria-current="true">Réalisations</a></li>
+        <li><a href="/parcours.html" data-nav="parcours">Parcours</a></li>
+        <li><a href="/contact.html" data-nav="contact">Contact</a></li>
+        <li><a class="nav-cv" href="/CV/CV-Thomas-Giraud-BTS-SIO-SISR.pdf">CV<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6.5M3.2 5.4 6 8.2l2.8-2.8M2 10.5h8"/></svg><span class="visually-hidden"> (PDF)</span></a></li>
       </ul>
       <button class="theme-toggle" type="button" aria-label="Changer de thème">
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
@@ -39,12 +56,13 @@
     </nav>
   </div>
 </header>
+<!-- /@header -->
 
 <main id="contenu">
   <header class="wrap page-head">
-    <p class="crumbs"><a href="../index.html">Accueil</a> / <a href="../index.html#realisations">Réalisations</a> / 04</p>
-    <p class="page-num" aria-hidden="true">04</p>
-    <p class="kicker">Réalisation 04 · Formation</p>
+    <p class="crumbs"><a href="/">Accueil</a> / <a href="/#realisations">Réalisations</a> / 05</p>
+    <p class="page-num" aria-hidden="true">05</p>
+    <p class="kicker">Réalisation 05 · Formation</p>
     <h1>Publier un serveur web derrière <em>IPFire</em></h1>
     <p class="chapo">Un pare-feu IPFire entre Internet et un réseau local, avec un serveur web accessible depuis l'extérieur.</p>
     <ul class="tags"><li>IPFire</li><li>Zones RED / GREEN</li><li>NAT</li><li>Redirection de port</li><li>VirtualBox</li></ul>
@@ -53,8 +71,9 @@
   <div class="wrap article">
     <div class="prose">
       <figure class="fig" aria-labelledby="fig-cap">
-      <div class="fig__head"><span id="fig-cap">Fig. 1 · Pare-feu IPFire</span><span>Survolez un équipement</span></div>
-      <svg id="topo" viewBox="0 0 520 380" role="img" aria-labelledby="fig-title">
+      <div class="fig__head"><span id="fig-cap">Fig. 1 · Pare-feu IPFire</span><span><span class="hint-hover">Survolez un équipement</span><span class="hint-touch">Touchez un équipement</span></span></div>
+      <div class="fig__scroll" style="--fig-min: 460px">
+      <svg id="topo" viewBox="0 0 520 380" role="group" aria-labelledby="fig-title">
       <title id="fig-title">Schéma : Internet relié à IPFire par la zone RED, IPFire relié au réseau local par la zone GREEN. Un paquet est redirigé vers le serveur web, un autre est rejeté par le pare-feu.</title>
       <defs>
       <path id="p-ok" d="M120 100 H380 V203 H350 V280" />
@@ -94,15 +113,16 @@
       <text class="t-ink" x="440" y="208">Switch</text>
       <text class="t-ink" x="310" y="368">Serveur web</text>
       <text class="t-ink" x="456" y="306">Poste</text>
-      
+
       <g class="node" tabindex="0" role="button" aria-label="Internet, zone RED" data-note="&lt;b&gt;Zone RED.&lt;/b&gt; L'interface d'IPFire côté Internet. Tout ce qui arrive par ici est considéré comme non fiable."><rect class="hit" x="40" y="45" width="120" height="115"/><rect class="halo" x="44" y="52" width="112" height="82" rx="8"/></g>
-      <g class="node" tabindex="0" role="button" aria-label="Pare-feu IPFire" data-note="&lt;b&gt;IPFire.&lt;/b&gt; Entrant et sortant : rejet par défaut, seuls les flux déclarés passent. NAT pour la navigation du LAN et une redirection de port vers le serveur web."><rect class="hit" x="222" y="62" width="96" height="96"/><rect class="halo" x="222" y="62" width="96" height="76" rx="4"/></g>
-      <g class="node" tabindex="0" role="button" aria-label="Commutateur, zone GREEN" data-note="&lt;b&gt;Zone GREEN.&lt;/b&gt; Le réseau local : les postes et le serveur web, derrière le pare-feu."><rect class="hit" x="322" y="182" width="160" height="42"/><rect class="halo" x="322" y="182" width="116" height="42" rx="4"/></g>
+      <g class="node" tabindex="0" role="button" aria-label="Pare-feu IPFire" data-note="&lt;b&gt;IPFire.&lt;/b&gt; Entrant et sortant&nbsp;: rejet par défaut, seuls les flux déclarés passent. NAT pour la navigation du LAN et une redirection de port vers le serveur web."><rect class="hit" x="222" y="62" width="96" height="96"/><rect class="halo" x="222" y="62" width="96" height="76" rx="4"/></g>
+      <g class="node" tabindex="0" role="button" aria-label="Commutateur, zone GREEN" data-note="&lt;b&gt;Zone GREEN.&lt;/b&gt; Le réseau local&nbsp;: les postes et le serveur web, derrière le pare-feu."><rect class="hit" x="322" y="182" width="160" height="42"/><rect class="halo" x="322" y="182" width="116" height="42" rx="4"/></g>
       <g class="node" tabindex="0" role="button" aria-label="Serveur web" data-note="&lt;b&gt;Serveur web.&lt;/b&gt; Publié sur Internet par une seule redirection de port depuis la zone RED."><rect class="hit" x="306" y="272" width="84" height="104"/><rect class="halo" x="310" y="272" width="80" height="86" rx="4"/></g>
       <g class="node" tabindex="0" role="button" aria-label="Poste client" data-note="&lt;b&gt;Poste du LAN.&lt;/b&gt; Sort vers Internet via le NAT d'IPFire, uniquement sur les ports autorisés."><rect class="hit" x="380" y="272" width="80" height="80"/><rect class="halo" x="380" y="272" width="76" height="70" rx="4"/></g>
       </svg>
-      <p class="fig__note" id="fig-note" aria-live="polite"><b>Deux paquets arrivent d'Internet.</b> Le vert est redirigé vers le serveur web ; le rouge est rejeté par la politique par défaut du pare-feu.</p>
-      <div class="fig__legend"><span><i class="f-green" style="background:var(--green)"></i>Autorisé (redirection de port)</span><span><i style="background:var(--red)"></i>Rejeté par défaut</span></div>
+      </div>
+      <p class="fig__note" id="fig-note" aria-live="polite"><b>Deux paquets arrivent d'Internet.</b> Le vert est redirigé vers le serveur web&nbsp;; le rouge est rejeté par la politique par défaut du pare-feu.</p>
+      <div class="fig__legend"><span><i class="f-green"></i>Autorisé (redirection de port)</span><span><i class="f-red"></i>Rejeté par défaut</span></div>
       </figure>
 
       <h2>Contexte</h2>
@@ -110,8 +130,8 @@
 
       <h2>Ce que j'ai fait</h2>
       <ul class="list">
-        <li>Installation d'IPFire avec deux interfaces : <b>RED</b> (côté Internet) et <b>GREEN</b> (réseau local).</li>
-        <li>Politique par défaut : rejet des connexions entrantes et sortantes ; seuls les flux déclarés sont autorisés.</li>
+        <li>Installation d'IPFire avec deux interfaces&nbsp;: <b>RED</b> (côté Internet) et <b>GREEN</b> (réseau local).</li>
+        <li>Politique par défaut&nbsp;: rejet des connexions entrantes et sortantes&nbsp;; seuls les flux déclarés sont autorisés.</li>
         <li>NAT pour permettre aux postes du LAN d'aller sur Internet.</li>
         <li>Redirection de port depuis la zone RED vers le serveur web du LAN.</li>
       </ul>
@@ -130,8 +150,8 @@
       <div class="ref">
         <h2>Compétences du BTS</h2>
         <ul>
-          <li>Installer, tester et déployer une solution d'infrastructure réseau</li>
-          <li>Assurer la cybersécurité d'une infrastructure réseau, d'un système, d'un service</li>
+          <li><span class="bloc">Bloc 2</span>Installer, tester et déployer une solution d'infrastructure réseau</li>
+          <li><span class="bloc">Bloc 3</span>Assurer la cybersécurité d'une infrastructure réseau, d'un système, d'un service</li>
         </ul>
       </div>
     </aside>
@@ -139,27 +159,29 @@
 
   <nav class="pager" aria-label="Autres réalisations">
     <div class="wrap">
-      <a href="nagios.html"><span class="label">← Précédente</span><strong>Superviser ses serveurs avec Nagios</strong></a>
-      <a href="stage-aberia.html"><span class="label">Suivante →</span><strong>Stage chez Aberia Télécommunications</strong></a>
+      <a href="/realisations/nagios.html"><span class="label"><span class="arr arr--back" aria-hidden="true">←</span> Précédente</span><strong>Superviser ses serveurs avec Nagios</strong></a>
+      <a href="/realisations/autres-tp.html"><span class="label">Suivante <span class="arr" aria-hidden="true">→</span></span><strong>Autres TP&nbsp;: GLPI, MediaWiki, ZeroShell</strong></a>
     </div>
   </nav>
 </main>
 
+<!-- @footer -->
 <footer class="site-footer">
   <div class="wrap">
     <p class="who">Thomas Giraud <span>· BTS SIO SISR · Servian (34)</span></p>
     <ul>
-      <li><a href="../index.html#realisations">Réalisations</a></li>
-      <li><a href="../parcours.html">Parcours</a></li>
-      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="/#realisations">Réalisations</a></li>
+      <li><a href="/parcours.html">Parcours</a></li>
+      <li><a href="/contact.html">Contact</a></li>
       <li><a href="https://www.linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener">LinkedIn</a></li>
       <li><a href="https://github.com/tgiraud2007" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="../CV/cv.pdf">CV (PDF)</a></li>
+      <li><a href="/CV/CV-Thomas-Giraud-BTS-SIO-SISR.pdf">CV (PDF)</a></li>
     </ul>
     <p>© 2026 Thomas Giraud</p>
   </div>
 </footer>
-<script src="../js/main.js?v=31f69c1c" defer></script>
-<script type="module" fetchpriority="low" src="../js/app.js?v=e6ff1a2c"></script>
+<script src="/js/main.js?v=e66a18d3" defer></script>
+<script type="module" fetchpriority="low" src="/js/app.js?v=d0f89297"></script>
+<!-- /@footer -->
 </body>
 </html>

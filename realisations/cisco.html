@@ -3,34 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Réseaux sous Packet Tracer · Thomas Giraud</title>
+<title>Réseaux d'entreprise sous Packet Tracer · Thomas Giraud</title>
 <meta name="description" content="TP de BTS SIO SISR : maquettes de réseaux d'entreprise sous Cisco Packet Tracer. VLAN, spanning tree, routage statique, RIP, OSPF, route flottante, NAT et DHCP en ligne de commande.">
 <link rel="canonical" href="https://thomasgiraud.me/realisations/cisco.html">
+<!-- @head -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-7G4NffcoUbtmTyAm8msTk2cry5QawXSEulsyFpII/6c='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thomas Giraud · Portfolio BTS SIO SISR">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://thomasgiraud.me/realisations/cisco.html">
 <meta property="og:title" content="Réseaux d'entreprise sous Packet Tracer · Thomas Giraud">
-<meta property="og:image" content="https://thomasgiraud.me/assets/og-image.png">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<meta property="og:description" content="TP de BTS SIO SISR : maquettes de réseaux d'entreprise sous Cisco Packet Tracer. VLAN, spanning tree, routage statique, RIP, OSPF, route flottante, NAT et DHCP en ligne de commande.">
+<meta property="og:image" content="https://thomasgiraud.me/assets/og/cisco.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f3eee4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
 <link rel="expect" href="#contenu" blocking="render">
-<link rel="preload" href="../assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/style.css?v=5119dbb1">
-<link rel="stylesheet" href="../css/motion.css?v=28621d12">
-<script>(function(){try{var t=localStorage.getItem("tg-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
-<script>/* Attente des polices (1 s max) : le contenu s'affiche directement dans la bonne police, au lieu d'apparaître en Georgia puis de changer d'un coup. Voir .fonts-wait dans css/style.css?v=5119dbb1. */(function(){var d=document.documentElement,f=document.fonts;if(!f||!f.load)return;d.classList.add("fonts-wait");var done=function(){d.classList.remove("fonts-wait");};Promise.all(["600 1em Fraunces","400 1em Fraunces","italic 400 1em Fraunces","400 1em \"Instrument Sans\"","600 1em \"Instrument Sans\"","400 1em \"IBM Plex Mono\""].map(function(x){return f.load(x);})).then(done,done);setTimeout(done,1000);})();</script>
+<link rel="stylesheet" href="/css/style.css?v=fe70af3b">
+<link rel="stylesheet" href="/css/motion.css?v=e6360512">
+<link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/js/head.js?v=3394851c"></script>
+<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/CV/*"}}]},"eagerness":"moderate"}]}</script>
+<!-- /@head -->
 </head>
 <body>
+<!-- @header realisations -->
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 
 <header class="masthead" data-progress>
   <div class="wrap">
-    <a class="brand" href="../index.html"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR<span class="brand__year"> · 2026-2027</span></span></a>
+    <a class="brand" href="/"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR<span class="brand__year"> · 2026-2027</span></span></a>
     <nav aria-label="Navigation principale">
       <ul>
-        <li><a href="../index.html">Accueil</a></li>
-        <li><a href="../index.html#realisations" aria-current="page">Réalisations</a></li>
-        <li><a href="../parcours.html">Parcours</a></li>
-        <li><a href="../contact.html">Contact</a></li>
-        <li><a class="nav-cv" href="../CV/cv.pdf">CV<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6.5M3.2 5.4 6 8.2l2.8-2.8M2 10.5h8"/></svg><span class="visually-hidden"> (PDF)</span></a></li>
+        <li><a href="/" data-nav="accueil">Accueil</a></li>
+        <li><a href="/#realisations" data-nav="realisations" aria-current="true">Réalisations</a></li>
+        <li><a href="/parcours.html" data-nav="parcours">Parcours</a></li>
+        <li><a href="/contact.html" data-nav="contact">Contact</a></li>
+        <li><a class="nav-cv" href="/CV/CV-Thomas-Giraud-BTS-SIO-SISR.pdf">CV<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6.5M3.2 5.4 6 8.2l2.8-2.8M2 10.5h8"/></svg><span class="visually-hidden"> (PDF)</span></a></li>
       </ul>
       <button class="theme-toggle" type="button" aria-label="Changer de thème">
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
@@ -39,12 +56,13 @@
     </nav>
   </div>
 </header>
+<!-- /@header -->
 
 <main id="contenu">
   <header class="wrap page-head">
-    <p class="crumbs"><a href="../index.html">Accueil</a> / <a href="../index.html#realisations">Réalisations</a> / 01</p>
-    <p class="page-num" aria-hidden="true">01</p>
-    <p class="kicker">Réalisation 01 · Formation</p>
+    <p class="crumbs"><a href="/">Accueil</a> / <a href="/#realisations">Réalisations</a> / 02</p>
+    <p class="page-num" aria-hidden="true">02</p>
+    <p class="kicker">Réalisation 02 · Formation</p>
     <h1>Réseaux d'entreprise sous <em>Packet Tracer</em></h1>
     <p class="chapo">Plusieurs maquettes de réseaux d'entreprise sous Cisco Packet Tracer, configurées entièrement en ligne de commande.</p>
     <ul class="tags"><li>Cisco IOS</li><li>VLAN</li><li>Spanning tree</li><li>RIP</li><li>OSPF</li><li>NAT</li><li>DHCP</li></ul>
@@ -54,6 +72,7 @@
     <div class="prose">
       <figure class="fig">
         <div class="fig__head"><span>Fig. 1 · Schéma de principe</span><span>Routage inter-VLAN</span></div>
+        <div class="fig__scroll" style="--fig-min: 560px">
         <svg viewBox="0 0 640 320" role="img" aria-labelledby="f-cisco">
           <title id="f-cisco">Schéma : un routeur Cisco relié par un trunk 802.1Q à deux commutateurs, chacun portant un VLAN différent. Un serveur DHCP est joint depuis l'autre VLAN par relais.</title>
           <g stroke-width="1.6">
@@ -77,7 +96,8 @@
           <text class="t-dim" x="232" y="296">(ip helper-address)</text>
           <text class="t-dim" x="528" y="268">Poste</text>
         </svg>
-        <figcaption><b>Schéma de principe.</b> Les topologies variaient d'un TP à l'autre ; celui-ci résume le routage inter-VLAN avec relais DHCP.</figcaption>
+        </div>
+        <figcaption><b>Schéma de principe.</b> Les topologies variaient d'un TP à l'autre&nbsp;; celui-ci résume le routage inter-VLAN avec relais DHCP.</figcaption>
       </figure>
 
       <h2>Contexte</h2>
@@ -85,14 +105,14 @@
 
       <h2>Ce que j'ai configuré</h2>
       <ul class="list">
-        <li><b>Commutation</b> : VLAN, ports d'accès, liens trunk 802.1Q, spanning tree.</li>
-        <li><b>Routage</b> : routage inter-VLAN par sous-interfaces (router-on-a-stick), routes statiques, route flottante (route de secours avec une distance administrative plus élevée), routage dynamique avec RIP et OSPF.</li>
-        <li><b>Services</b> : DHCP, y compris relayé d'un VLAN à l'autre avec <code>ip helper-address</code> ; DNS ; serveur web.</li>
+        <li><b>Commutation</b>&nbsp;: VLAN, ports d'accès, liens trunk 802.1Q, spanning tree.</li>
+        <li><b>Routage</b>&nbsp;: routage inter-VLAN par sous-interfaces (router-on-a-stick), routes statiques, route flottante (route de secours avec une distance administrative plus élevée), routage dynamique avec RIP et OSPF.</li>
+        <li><b>Services</b>&nbsp;: DHCP, y compris relayé d'un VLAN à l'autre avec <code>ip helper-address</code>&nbsp;; DNS&nbsp;; serveur web.</li>
         <li><b>NAT</b> pour l'accès à l'extérieur.</li>
       </ul>
 
       <h2>Extrait de commandes</h2>
-      <p>Routage inter-VLAN sur le routeur : une sous-interface par VLAN, et le relais vers le serveur DHCP.</p>
+      <p>Routage inter-VLAN sur le routeur&nbsp;: une sous-interface par VLAN, et le relais vers le serveur DHCP.</p>
 <pre><code>interface g0/0.10
  encapsulation dot1Q 10
  ip helper-address …</code></pre>
@@ -110,8 +130,8 @@
       <div class="ref">
         <h2>Compétences du BTS</h2>
         <ul>
-          <li>Concevoir une solution d'infrastructure réseau</li>
-          <li>Installer, tester et déployer une solution d'infrastructure réseau</li>
+          <li><span class="bloc">Bloc 2</span>Concevoir une solution d'infrastructure réseau</li>
+          <li><span class="bloc">Bloc 2</span>Installer, tester et déployer une solution d'infrastructure réseau</li>
         </ul>
       </div>
     </aside>
@@ -119,27 +139,29 @@
 
   <nav class="pager" aria-label="Autres réalisations">
     <div class="wrap">
-      <a href="../index.html#realisations"><span class="label">← Retour</span><strong>Toutes les réalisations</strong></a>
-      <a href="active-directory.html"><span class="label">Suivante →</span><strong>Un domaine Active Directory de A à Z</strong></a>
+      <a href="/realisations/stage-aberia.html"><span class="label"><span class="arr arr--back" aria-hidden="true">←</span> Précédente</span><strong>Stage chez Aberia Télécommunications</strong></a>
+      <a href="/realisations/active-directory.html"><span class="label">Suivante <span class="arr" aria-hidden="true">→</span></span><strong>Un domaine Active Directory de A à Z</strong></a>
     </div>
   </nav>
 </main>
 
+<!-- @footer -->
 <footer class="site-footer">
   <div class="wrap">
     <p class="who">Thomas Giraud <span>· BTS SIO SISR · Servian (34)</span></p>
     <ul>
-      <li><a href="../index.html#realisations">Réalisations</a></li>
-      <li><a href="../parcours.html">Parcours</a></li>
-      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="/#realisations">Réalisations</a></li>
+      <li><a href="/parcours.html">Parcours</a></li>
+      <li><a href="/contact.html">Contact</a></li>
       <li><a href="https://www.linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener">LinkedIn</a></li>
       <li><a href="https://github.com/tgiraud2007" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="../CV/cv.pdf">CV (PDF)</a></li>
+      <li><a href="/CV/CV-Thomas-Giraud-BTS-SIO-SISR.pdf">CV (PDF)</a></li>
     </ul>
     <p>© 2026 Thomas Giraud</p>
   </div>
 </footer>
-<script src="../js/main.js?v=31f69c1c" defer></script>
-<script type="module" fetchpriority="low" src="../js/app.js?v=e6ff1a2c"></script>
+<script src="/js/main.js?v=e66a18d3" defer></script>
+<script type="module" fetchpriority="low" src="/js/app.js?v=d0f89297"></script>
+<!-- /@footer -->
 </body>
 </html>

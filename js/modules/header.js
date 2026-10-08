@@ -17,12 +17,11 @@ const mobile = window.matchMedia("(max-width: 640px)");
 const THRESHOLD = 6; // px de défilement ignorés (évite de clignoter sur les petits mouvements)
 
 let masthead = null;
-let resizeObserver = null;
 let lastY = null; // dernière position connue (null = pas encore mesurée)
 let ticking = false;
 
 function setHidden(hidden) {
-  if (masthead) masthead.classList.toggle("is-hidden", hidden);
+  masthead.classList.toggle("is-hidden", hidden);
 }
 
 function update() {
@@ -48,29 +47,15 @@ function onScroll() {
   }
 }
 
-function onFocusIn() {
-  setHidden(false); // navigation au clavier : le menu doit être visible
-}
-
 export function init() {
   masthead = document.querySelector(".masthead");
   if (!masthead) return;
-  lastY = null; // mesuré au premier défilement (lire scrollY ici forcerait un calcul de mise en page)
 
-  resizeObserver = new ResizeObserver(([entry]) => {
+  new ResizeObserver(([entry]) => {
     const h = Math.round(entry.borderBoxSize?.[0]?.blockSize ?? masthead.offsetHeight);
     root.style.setProperty("--header-h", h + "px");
-  });
-  resizeObserver.observe(masthead);
+  }).observe(masthead);
 
   window.addEventListener("scroll", onScroll, { passive: true });
-  masthead.addEventListener("focusin", onFocusIn);
-}
-
-export function destroy() {
-  window.removeEventListener("scroll", onScroll);
-  if (masthead) masthead.removeEventListener("focusin", onFocusIn);
-  if (resizeObserver) resizeObserver.disconnect();
-  masthead = null;
-  resizeObserver = null;
+  masthead.addEventListener("focusin", () => setHidden(false)); // navigation au clavier : le menu doit être visible
 }

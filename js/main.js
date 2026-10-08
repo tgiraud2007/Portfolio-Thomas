@@ -1,19 +1,18 @@
 /* Portfolio Thomas Giraud
-   - navigation fluide entre les pages (le contenu est remplacé sans recharger la page)
-   - thème clair / sombre, schéma interactif, copie de l'e-mail, formulaire de contact
+   - thème clair / sombre, schéma interactif, copie de l'e-mail, formulaire de contact ;
+   - repère la carte cliquée sur l'accueil, pour que son numéro glisse jusqu'à la fiche.
+   Les transitions entre les pages sont faites par le navigateur (View Transitions
+   entre documents : @view-transition dans css/style.css, et js/head.js).
    Les animations, l'en-tête collant et le filtre par compétence sont dans
-   js/app.js et js/modules/ (branchés via les événements tg:before-swap / tg:after-swap). */
+   js/app.js et js/modules/. */
 (function () {
   "use strict";
 
   var root = document.documentElement;
   var THEME_KEY = "tg-theme";
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  /* =====================================================================
-     Fonctions de page : relancées après chaque changement de page
-     ===================================================================== */
-
+  /* ---------- Thème ---------- */
   function currentTheme() {
     var forced = root.getAttribute("data-theme");
     if (forced) return forced;
@@ -33,37 +32,53 @@
         var apply = function () {
           root.setAttribute("data-theme", next);
           try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* stockage indisponible */ }
+          // Couleur de la barre du navigateur sur téléphone
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            m.setAttribute("content", next === "dark" ? "#16140f" : "#f3eee4");
+          });
           label();
         };
-        if (!document.startViewTransition || reduceMotion) { apply(); return; }
+        if (!document.startViewTransition || reduceMotion.matches) { apply(); return; }
 
-        /* Le nouveau thème s'étend en cercle depuis le bouton (View Transitions) :
-           le navigateur capture la page avant et après le changement, puis on
-           découpe la capture « après » avec un cercle qui grandit.
-           Rayon final = distance du bouton au coin de l'écran le plus éloigné. */
+        /* Le nouveau thème s'étend depuis le bouton comme une tache d'encre
+           (View Transitions) : le navigateur capture la page avant et après le
+           changement, puis on dévoile la capture « après » avec un cercle au bord
+           flou qui grandit (masque radial, voir « Changement de thème » dans
+           css/style.css). Pendant ce temps, l'icône pivote (lune ↔ soleil).
+           Rayon final = distance du bouton au coin de l'écran le plus éloigné,
+           plus la largeur du flou. */
         var r = btn.getBoundingClientRect();
         var x = r.left + r.width / 2;
         var y = r.top + r.height / 2;
         var end = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
-        root.classList.add("theme-vt"); // voir « Changement de thème » dans css/style.css
+        var soft = !!(window.CSS && CSS.registerProperty); // bord flou : il faut pouvoir animer une variable CSS (@property)
+        root.style.setProperty("--vt-x", x + "px");
+        root.style.setProperty("--vt-y", y + "px");
+        root.classList.add("theme-vt");
+        if (soft) root.classList.add("theme-vt--soft");
         var transition = document.startViewTransition(apply);
         transition.ready.then(function () {
-          root.animate(
-            { clipPath: ["circle(0px at " + x + "px " + y + "px)", "circle(" + end + "px at " + x + "px " + y + "px)"] },
-            { duration: 550, easing: "cubic-bezier(.2, .7, .1, 1)", pseudoElement: "::view-transition-new(root)" }
-          );
+          // fill: "forwards" : le cercle reste ouvert jusqu'à la toute fin de la transition.
+          // Sans ça, il se referme une image avant la fin et l'ancien thème réapparaît (flash).
+          var timing = { duration: 800, easing: "cubic-bezier(.55, 0, .25, 1)", fill: "forwards", pseudoElement: "::view-transition-new(root)" };
+          if (soft) {
+            root.animate({ "--vt-r": ["0px", end + 90 + "px"] }, timing);
+          } else { // navigateurs plus anciens : cercle à bord net
+            root.animate({ clipPath: ["circle(0px at " + x + "px " + y + "px)", "circle(" + end + "px at " + x + "px " + y + "px)"] }, timing);
+          }
         }).catch(function () {});
-        transition.finished.then(function () { root.classList.remove("theme-vt"); }, function () { root.classList.remove("theme-vt"); });
+        var cleanup = function () { root.classList.remove("theme-vt", "theme-vt--soft"); };
+        transition.finished.then(cleanup, cleanup);
       });
     });
   }
 
+  /* ---------- Schéma interactif (fiche IPFire) ---------- */
   function initSchema() {
     var svg = document.getElementById("topo");
     var note = document.getElementById("fig-note");
     if (!svg || !note) return;
     var initial = note.innerHTML;
-    if (reduceMotion && svg.pauseAnimations) svg.pauseAnimations();
     var nodes = svg.querySelectorAll(".node");
     var clear = function () { nodes.forEach(function (n) { n.classList.remove("is-active"); }); };
     nodes.forEach(function (node) {
@@ -82,15 +97,35 @@
     svg.addEventListener("mouseleave", function () { clear(); note.innerHTML = initial; });
   }
 
+  // Moins d'animations demandé : on fige les animations intégrées aux schémas SVG
+  // (paquets qui circulent). Sur la fiche IPFire, on fige l'image où le paquet
+  // vert est en route, pour que la note sous le schéma reste juste.
+  function pauseSvgAnimations() {
+    if (!reduceMotion.matches) return;
+    document.querySelectorAll("svg").forEach(function (svg) {
+      if (!svg.pauseAnimations) return;
+      if (svg.id === "topo" && svg.setCurrentTime) svg.setCurrentTime(4);
+      svg.pauseAnimations();
+    });
+  }
+
+  /* ---------- Copie de l'e-mail ---------- */
   function initCopy() {
     document.querySelectorAll("[data-copy]").forEach(function (btn) {
+      var label = btn.textContent; // texte d'origine, gardé une fois pour toutes
+      var status = document.getElementById(btn.getAttribute("aria-describedby"));
+      var timer = null;
+      var done = function (msg) {
+        clearTimeout(timer);
+        btn.textContent = msg;
+        if (status) status.textContent = msg === "Copié" ? "Adresse e-mail copiée" : msg; // annoncé aux lecteurs d'écran
+        timer = setTimeout(function () {
+          btn.textContent = label;
+          if (status) status.textContent = "";
+        }, 2000);
+      };
       btn.addEventListener("click", function () {
         var text = btn.getAttribute("data-copy");
-        var done = function (msg) {
-          var old = btn.textContent;
-          btn.textContent = msg;
-          setTimeout(function () { btn.textContent = old; }, 2000);
-        };
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(text).then(function () { done("Copié"); }, function () { done("Sélectionnez l'adresse"); });
         } else {
@@ -100,221 +135,140 @@
     });
   }
 
+  /* ---------- Formulaire de contact ----------
+     - envoi en cours : le bouton affiche un petit cercle qui tourne ;
+     - erreur : le bouton fait un léger « non » de la tête, le message s'affiche ;
+     - envoyé : les champs s'effacent et laissent place à un petit schéma (le
+       message part de « Vous », arrive chez « Thomas », coche verte), dans
+       une carte qui garde sa hauteur (rien ne saute dans la page). Le titre
+       « Message envoyé. » reçoit le focus : les lecteurs d'écran l'annoncent. */
   function initForm() {
     var form = document.getElementById("contact-form");
     if (!form) return;
     var msg = document.getElementById("form-msg");
     var submit = form.querySelector("button[type=submit]");
+    var fields = Array.prototype.slice.call(form.querySelectorAll("[required]"));
+    var fieldsBox = document.getElementById("form-fields");
+    var done = document.getElementById("form-done");
+    var again = document.getElementById("form-again");
+
+    // Le message reste dans la page (vide = invisible) : les lecteurs d'écran
+    // annoncent alors son contenu dès qu'il change.
     var show = function (text, isError) {
       msg.textContent = text;
       msg.classList.toggle("is-error", !!isError);
-      msg.hidden = false;
     };
+    // Petit « non » de la tête du bouton (relancé à chaque erreur)
+    var shake = function () {
+      submit.classList.remove("is-shake");
+      void submit.offsetWidth; // force le navigateur à repartir de zéro
+      submit.classList.add("is-shake");
+    };
+    submit.addEventListener("animationend", function () { submit.classList.remove("is-shake"); });
+
+    var showDone = function () {
+      if (!fieldsBox || !done) { show("Message envoyé. Merci, je vous réponds rapidement.", false); return; }
+      form.style.minHeight = form.offsetHeight + "px"; // la carte garde sa hauteur
+      var swap = function () {
+        fieldsBox.hidden = true;
+        fieldsBox.classList.remove("is-leaving");
+        done.hidden = false;
+        form.classList.add("is-sent");
+        done.querySelector(".form__done-title").focus({ preventScroll: true });
+      };
+      if (reduceMotion.matches) { swap(); return; }
+      fieldsBox.classList.add("is-leaving"); // les champs s'effacent vers le haut…
+      setTimeout(swap, 280);                 // … puis le schéma d'envoi se joue
+    };
+    if (again) {
+      again.addEventListener("click", function () {
+        form.classList.remove("is-sent");
+        done.hidden = true;
+        fieldsBox.hidden = false;
+        form.style.minHeight = "";
+        form.querySelector("input").focus();
+      });
+    }
+    // Message d'erreur sous un champ (texte pris dans data-error)
+    var check = function (field) {
+      var ok = field.checkValidity();
+      var error = document.getElementById(field.getAttribute("aria-describedby"));
+      field.setAttribute("aria-invalid", ok ? "false" : "true");
+      if (error) error.textContent = ok ? "" : error.getAttribute("data-error");
+      return ok;
+    };
+    fields.forEach(function (field) {
+      // Une fois signalé, le champ se corrige en direct
+      field.addEventListener("input", function () {
+        if (field.getAttribute("aria-invalid") === "true") check(field);
+      });
+    });
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var firstInvalid = null;
-      form.querySelectorAll("[required]").forEach(function (field) {
-        var ok = field.checkValidity();
-        field.setAttribute("aria-invalid", ok ? "false" : "true");
-        if (!ok && !firstInvalid) firstInvalid = field;
-      });
-      if (firstInvalid) {
-        show("Il manque une information : remplissez votre nom, un e-mail valide et votre message.", true);
-        firstInvalid.focus();
+      var invalid = fields.filter(function (field) { return !check(field); });
+      if (invalid.length) {
+        show(invalid.length > 1 ? "Il manque " + invalid.length + " informations, signalées sous les champs." : "Il manque une information, signalée sous le champ.", true);
+        shake();
+        invalid[0].focus();
         return;
       }
       submit.disabled = true;
+      submit.classList.add("is-sending");
       submit.textContent = "Envoi…";
+      show("", false);
       fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } })
         .then(function (res) {
           if (!res.ok) throw new Error("HTTP " + res.status);
           form.reset();
-          show("Message envoyé. Merci, je vous réponds rapidement.", false);
+          showDone();
         })
         .catch(function () {
           show("L'envoi n'a pas fonctionné. Écrivez-moi directement à tgiraud0604@gmail.com.", true);
+          shake();
         })
         .then(function () {
           submit.disabled = false;
+          submit.classList.remove("is-sending");
           submit.textContent = "Envoyer";
         });
     });
   }
 
-  // Moins d'animations demandé : on fige les animations intégrées aux schémas SVG (paquets qui circulent)
-  function pauseSvgAnimations() {
-    if (!reduceMotion) return;
-    document.querySelectorAll("svg").forEach(function (svg) { if (svg.pauseAnimations) svg.pauseAnimations(); });
+  /* ---------- Numéro qui glisse (accueil → fiche), côté départ ----------
+     Au clic sur une carte du sommaire, son numéro reçoit le nom de transition
+     « fiche-num » : le navigateur le capture et le fait glisser jusqu'au grand
+     numéro de la fiche (repris par js/head.js à l'arrivée). On note aussi s'il
+     était rempli (souris dessus) pour qu'il arrive dans le même état.
+     Uniquement si le navigateur gère les transitions entre pages. */
+  function alpha(color) { // "rgba(255, 138, 107, 0.4)" → 0.4 ; "rgb(…)" → 1
+    var m = color.match(/rgba?\(([^)]+)\)/);
+    var parts = m ? m[1].split(",") : [];
+    return parts.length === 4 ? parseFloat(parts[3]) : 1;
   }
 
-  function initPage() {
-    pauseSvgAnimations();
-    initTheme();
-    initSchema();
-    initCopy();
-    initForm();
-  }
-
-  /* =====================================================================
-     Navigation fluide
-     Au clic sur un lien interne, la page suivante est téléchargée puis son
-     contenu remplace celui de la page actuelle : pas de rechargement, donc
-     pas de flash (polices, styles et en-tête restent en place).
-     En cas de problème, on retombe sur une navigation classique.
-     ===================================================================== */
-
-  var canRoute = window.fetch && window.history && history.pushState && window.DOMParser && location.protocol.indexOf("http") === 0;
-  var cache = {};
-  var currentPage = pageUrl(location.href);
-  var enterTimer = null;
-
-  // Barre de chargement : n'apparaît que si la page met plus de 150 ms à arriver
-  var bar = document.createElement("div");
-  bar.id = "nav-progress";
-  bar.setAttribute("aria-hidden", "true");
-  root.appendChild(bar);
-  var barTimer = null;
-  function progressStart() {
-    clearTimeout(barTimer);
-    bar.className = "";
-    barTimer = setTimeout(function () { bar.className = "is-loading"; }, 150);
-  }
-  function progressEnd() {
-    clearTimeout(barTimer);
-    if (bar.className === "is-loading") {
-      bar.className = "is-done";
-      setTimeout(function () { bar.className = ""; }, 600);
-    } else {
-      bar.className = "";
-    }
-  }
-
-  function pageUrl(href) {
-    var url = new URL(href, location.href);
-    url.hash = "";
-    return url.href;
-  }
-
-  function isInternalPage(a) {
-    if (!a || a.target === "_blank" || a.hasAttribute("download")) return false;
-    var href = a.getAttribute("href");
-    if (!href || href.charAt(0) === "#" || /^(mailto|tel):/.test(href)) return false;
-    var url = new URL(a.href, location.href);
-    if (url.origin !== location.origin) return false;
-    return /(\.html|\/)$/.test(url.pathname) && !/404\.html$/.test(url.pathname);
-  }
-
-  function load(url) {
-    if (!cache[url]) {
-      cache[url] = fetch(url, { credentials: "same-origin" }).then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.text();
-      }).catch(function (err) { delete cache[url]; throw err; });
-    }
-    return cache[url];
-  }
-
-  // Saut instantané (behavior: "instant") : sans ça, la règle CSS
-  // scroll-behavior: smooth fait défiler la nouvelle page pendant la
-  // transition, et on la voit « remonter ».
-  function scrollToTarget(hash, y) {
-    var target = hash && document.getElementById(decodeURIComponent(hash.slice(1)));
-    if (target) target.scrollIntoView({ behavior: "instant" });
-    else window.scrollTo({ top: y || 0, behavior: "instant" });
-  }
-
-  /* Événements pour les modules de js/app.js (animations, en-tête, filtres) :
-     - "tg:before-swap" juste avant que la page actuelle soit remplacée
-       (le moment de tout arrêter proprement) ;
-     - "tg:after-swap" juste après que la nouvelle page est en place.
-     detail.from / detail.to = adresses de l'ancienne et de la nouvelle page. */
-  function emit(name, detail) {
-    document.dispatchEvent(new CustomEvent(name, { detail: detail }));
-  }
-
-  function swap(html, hash, y, detail) {
-    var doc = new DOMParser().parseFromString(html, "text/html");
-    document.title = doc.title;
-    var desc = doc.querySelector('meta[name="description"]');
-    var here = document.querySelector('meta[name="description"]');
-    if (desc && here) here.setAttribute("content", desc.getAttribute("content"));
-    doc.querySelectorAll("script").forEach(function (s) { s.remove(); });
-    document.body.innerHTML = doc.body.innerHTML;
-    root.classList.add("no-intro"); // l'animation d'entrée de l'accueil ne se joue qu'au premier chargement
-    document.body.classList.add("page-enter");
-    clearTimeout(enterTimer);
-    enterTimer = setTimeout(function () { document.body.classList.remove("page-enter"); }, 900);
-    initPage();
-    emit("tg:after-swap", detail); // avant le défilement : les modules peuvent encore ajuster la page
-    scrollToTarget(hash, y);
-    var main = document.getElementById("contenu");
-    if (main) { main.setAttribute("tabindex", "-1"); main.focus({ preventScroll: true }); }
-  }
-
-  function navigate(href, opts) {
-    opts = opts || {};
-    var url = pageUrl(href);
-    var hash = new URL(href, location.href).hash;
-    progressStart();
-    return load(url).then(function (html) {
-      progressEnd();
-      if (opts.push) {
-        history.replaceState({ y: window.scrollY }, "", location.href);
-        history.pushState({ y: 0 }, "", href);
-      }
-      var detail = { from: currentPage, to: url };
-      currentPage = url;
-      emit("tg:before-swap", detail);
-      var run = function () { swap(html, hash, opts.y, detail); };
-      if (document.startViewTransition && !reduceMotion) {
-        // La transition peut être annulée (onglet en arrière-plan…) : la page change quand même,
-        // on évite juste une erreur inutile dans la console.
-        document.startViewTransition(run).ready.catch(function () {});
-      } else run();
-    }).catch(function () {
-      progressEnd();
-      location.href = href; // navigation classique
-    });
-  }
-
-  if (canRoute) {
-    // L'en-tête <head> n'est pas remplacé d'une page à l'autre : ses liens relatifs
-    // (icône d'onglet, manifeste) seraient cherchés au mauvais endroit depuis
-    // realisations/… → on les transforme une fois pour toutes en adresses complètes.
-    document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"], link[rel="manifest"]').forEach(function (l) {
-      l.setAttribute("href", l.href);
-    });
-
-    // y: 0 et non window.scrollY : lire scrollY ici forcerait le navigateur à
-    // calculer toute la mise en page pendant le chargement (≈ 200 ms bloquées
-    // sur mobile). La vraie position est enregistrée au moment de quitter la page.
-    history.replaceState({ y: 0 }, "", location.href);
-
+  function initFicheMorph() {
+    if (!("onpagereveal" in window)) return;
     document.addEventListener("click", function (e) {
-      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      var a = e.target.closest && e.target.closest("a");
-      if (!isInternalPage(a)) return;
-      var target = new URL(a.href, location.href);
-      // lien vers une ancre de la page actuelle : défilement normal
-      if (pageUrl(a.href) === pageUrl(location.href) && target.hash) return;
-      e.preventDefault();
-      navigate(a.href, { push: true });
-    });
-
-    // Préchargement au survol ou au toucher : la page est souvent prête avant le clic
-    var prefetch = function (e) {
-      var a = e.target.closest && e.target.closest("a");
-      if (isInternalPage(a)) load(pageUrl(a.href)).catch(function () {});
-    };
-    document.addEventListener("mouseover", prefetch, { passive: true });
-    document.addEventListener("touchstart", prefetch, { passive: true });
-
-    window.addEventListener("popstate", function (e) {
-      // simple saut d'ancre dans la même page : pas besoin de recharger le contenu
-      if (pageUrl(location.href) === currentPage) { scrollToTarget(location.hash, e.state && e.state.y); return; }
-      navigate(location.href, { y: e.state && e.state.y });
+      if (reduceMotion.matches || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var card = e.target.closest && e.target.closest("a.entry");
+      if (!card) return;
+      var num = card.querySelector(".num");
+      if (!num) return;
+      var r = num.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return; // numéro hors de l'écran : fondu normal
+      document.querySelectorAll(".num").forEach(function (n) { n.style.viewTransitionName = ""; }); // un seul nom à la fois
+      num.style.viewTransitionName = "fiche-num";
+      try {
+        sessionStorage.setItem("tg-vt-num", JSON.stringify({ to: new URL(card.href).pathname, filled: alpha(getComputedStyle(num).color) > 0.5 }));
+      } catch (err) { /* stockage indisponible : simple fondu */ }
     });
   }
 
-  initPage();
+  pauseSvgAnimations();
+  initTheme();
+  initSchema();
+  initCopy();
+  initForm();
+  initFicheMorph();
 })();

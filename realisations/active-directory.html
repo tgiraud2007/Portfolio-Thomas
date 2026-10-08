@@ -6,31 +6,48 @@
 <title>Domaine Active Directory · Thomas Giraud</title>
 <meta name="description" content="TP de BTS SIO SISR : mise en place d'un domaine Active Directory sous Windows Server 2022 avec GPO, DNS, DHCP, partages NTFS et messagerie hMailServer.">
 <link rel="canonical" href="https://thomasgiraud.me/realisations/active-directory.html">
+<!-- @head -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-7G4NffcoUbtmTyAm8msTk2cry5QawXSEulsyFpII/6c='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thomas Giraud · Portfolio BTS SIO SISR">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://thomasgiraud.me/realisations/active-directory.html">
 <meta property="og:title" content="Domaine Active Directory · Thomas Giraud">
-<meta property="og:image" content="https://thomasgiraud.me/assets/og-image.png">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<meta property="og:description" content="TP de BTS SIO SISR : mise en place d'un domaine Active Directory sous Windows Server 2022 avec GPO, DNS, DHCP, partages NTFS et messagerie hMailServer.">
+<meta property="og:image" content="https://thomasgiraud.me/assets/og/active-directory.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f3eee4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
 <link rel="expect" href="#contenu" blocking="render">
-<link rel="preload" href="../assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/style.css?v=5119dbb1">
-<link rel="stylesheet" href="../css/motion.css?v=28621d12">
-<script>(function(){try{var t=localStorage.getItem("tg-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
-<script>/* Attente des polices (1 s max) : le contenu s'affiche directement dans la bonne police, au lieu d'apparaître en Georgia puis de changer d'un coup. Voir .fonts-wait dans css/style.css?v=5119dbb1. */(function(){var d=document.documentElement,f=document.fonts;if(!f||!f.load)return;d.classList.add("fonts-wait");var done=function(){d.classList.remove("fonts-wait");};Promise.all(["600 1em Fraunces","400 1em Fraunces","italic 400 1em Fraunces","400 1em \"Instrument Sans\"","600 1em \"Instrument Sans\"","400 1em \"IBM Plex Mono\""].map(function(x){return f.load(x);})).then(done,done);setTimeout(done,1000);})();</script>
+<link rel="stylesheet" href="/css/style.css?v=fe70af3b">
+<link rel="stylesheet" href="/css/motion.css?v=e6360512">
+<link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/js/head.js?v=3394851c"></script>
+<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/CV/*"}}]},"eagerness":"moderate"}]}</script>
+<!-- /@head -->
 </head>
 <body>
+<!-- @header realisations -->
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 
 <header class="masthead" data-progress>
   <div class="wrap">
-    <a class="brand" href="../index.html"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR<span class="brand__year"> · 2026-2027</span></span></a>
+    <a class="brand" href="/"><span class="brand__name">Thomas Giraud</span><span class="brand__tag">BTS SIO SISR<span class="brand__year"> · 2026-2027</span></span></a>
     <nav aria-label="Navigation principale">
       <ul>
-        <li><a href="../index.html">Accueil</a></li>
-        <li><a href="../index.html#realisations" aria-current="page">Réalisations</a></li>
-        <li><a href="../parcours.html">Parcours</a></li>
-        <li><a href="../contact.html">Contact</a></li>
-        <li><a class="nav-cv" href="../CV/cv.pdf">CV<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6.5M3.2 5.4 6 8.2l2.8-2.8M2 10.5h8"/></svg><span class="visually-hidden"> (PDF)</span></a></li>
+        <li><a href="/" data-nav="accueil">Accueil</a></li>
+        <li><a href="/#realisations" data-nav="realisations" aria-current="true">Réalisations</a></li>
+        <li><a href="/parcours.html" data-nav="parcours">Parcours</a></li>
+        <li><a href="/contact.html" data-nav="contact">Contact</a></li>
+        <li><a class="nav-cv" href="/CV/CV-Thomas-Giraud-BTS-SIO-SISR.pdf">CV<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6.5M3.2 5.4 6 8.2l2.8-2.8M2 10.5h8"/></svg><span class="visually-hidden"> (PDF)</span></a></li>
       </ul>
       <button class="theme-toggle" type="button" aria-label="Changer de thème">
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
@@ -39,12 +56,13 @@
     </nav>
   </div>
 </header>
+<!-- /@header -->
 
 <main id="contenu">
   <header class="wrap page-head">
-    <p class="crumbs"><a href="../index.html">Accueil</a> / <a href="../index.html#realisations">Réalisations</a> / 02</p>
-    <p class="page-num" aria-hidden="true">02</p>
-    <p class="kicker">Réalisation 02 · Formation</p>
+    <p class="crumbs"><a href="/">Accueil</a> / <a href="/#realisations">Réalisations</a> / 03</p>
+    <p class="page-num" aria-hidden="true">03</p>
+    <p class="kicker">Réalisation 03 · Formation</p>
     <h1>Un domaine <em>Active Directory</em> de A à Z</h1>
     <p class="chapo">Mise en place d'un domaine Active Directory sous Windows Server 2022, dans un réseau virtuel VirtualBox.</p>
     <ul class="tags"><li>Windows Server 2022</li><li>AD DS</li><li>GPO</li><li>DNS</li><li>DHCP</li><li>NTFS</li><li>hMailServer</li></ul>
@@ -54,6 +72,7 @@
     <div class="prose">
       <figure class="fig">
         <div class="fig__head"><span>Fig. 1 · Schéma de la maquette</span><span>VirtualBox</span></div>
+        <div class="fig__scroll" style="--fig-min: 640px">
         <svg viewBox="0 -6 820 306" role="img" aria-labelledby="f-ad">
           <title id="f-ad">Schéma : un contrôleur de domaine (AD DS, DNS, DHCP) et un serveur de messagerie reliés par un réseau interne à un client Windows 10 et un client Debian.</title>
           <g stroke-width="1.4">
@@ -77,6 +96,7 @@
           <text class="t-dim" x="40" y="160">interne</text>
           <text class="t-red" x="290" y="186" style="font-size:11px">GPO, jonction au domaine</text>
         </svg>
+        </div>
         <figcaption><b>La maquette.</b> Un contrôleur de domaine sous Windows Server 2022, un serveur de messagerie et deux postes clients.</figcaption>
       </figure>
 
@@ -87,8 +107,8 @@
       <ul class="list">
         <li>Installation du rôle AD DS et promotion du serveur en contrôleur de domaine.</li>
         <li>Création d'utilisateurs et de groupes.</li>
-        <li><b>GPO</b> : verrouillage de session, connexion automatique des lecteurs réseau selon le service, blocage du panneau de configuration pour les utilisateurs standard.</li>
-        <li><b>DHCP</b> avec plage d'exclusion et réservations ; <b>DNS</b> avec zones de recherche directe et inverse.</li>
+        <li><b>GPO</b>&nbsp;: verrouillage de session, connexion automatique des lecteurs réseau selon le service, blocage du panneau de configuration pour les utilisateurs standard.</li>
+        <li><b>DHCP</b> avec plage d'exclusion et réservations&nbsp;; <b>DNS</b> avec zones de recherche directe et inverse.</li>
         <li>Partages de dossiers avec droits NTFS.</li>
         <li>Messagerie interne avec hMailServer.</li>
       </ul>
@@ -111,8 +131,8 @@
       <div class="ref">
         <h2>Compétences du BTS</h2>
         <ul>
-          <li>Installer, tester et déployer une solution d'infrastructure réseau</li>
-          <li>Mettre à disposition des utilisateurs un service informatique</li>
+          <li><span class="bloc">Bloc 2</span>Installer, tester et déployer une solution d'infrastructure réseau</li>
+          <li><span class="bloc">Bloc 1</span>Mettre à disposition des utilisateurs un service informatique</li>
         </ul>
       </div>
     </aside>
@@ -120,27 +140,29 @@
 
   <nav class="pager" aria-label="Autres réalisations">
     <div class="wrap">
-      <a href="cisco.html"><span class="label">← Précédente</span><strong>Réseaux d'entreprise sous Packet Tracer</strong></a>
-      <a href="nagios.html"><span class="label">Suivante →</span><strong>Superviser ses serveurs avec Nagios</strong></a>
+      <a href="/realisations/cisco.html"><span class="label"><span class="arr arr--back" aria-hidden="true">←</span> Précédente</span><strong>Réseaux d'entreprise sous Packet Tracer</strong></a>
+      <a href="/realisations/nagios.html"><span class="label">Suivante <span class="arr" aria-hidden="true">→</span></span><strong>Superviser ses serveurs avec Nagios</strong></a>
     </div>
   </nav>
 </main>
 
+<!-- @footer -->
 <footer class="site-footer">
   <div class="wrap">
     <p class="who">Thomas Giraud <span>· BTS SIO SISR · Servian (34)</span></p>
     <ul>
-      <li><a href="../index.html#realisations">Réalisations</a></li>
-      <li><a href="../parcours.html">Parcours</a></li>
-      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="/#realisations">Réalisations</a></li>
+      <li><a href="/parcours.html">Parcours</a></li>
+      <li><a href="/contact.html">Contact</a></li>
       <li><a href="https://www.linkedin.com/in/thomas-giraud-403baa25a" target="_blank" rel="noopener">LinkedIn</a></li>
       <li><a href="https://github.com/tgiraud2007" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="../CV/cv.pdf">CV (PDF)</a></li>
+      <li><a href="/CV/CV-Thomas-Giraud-BTS-SIO-SISR.pdf">CV (PDF)</a></li>
     </ul>
     <p>© 2026 Thomas Giraud</p>
   </div>
 </footer>
-<script src="../js/main.js?v=31f69c1c" defer></script>
-<script type="module" fetchpriority="low" src="../js/app.js?v=e6ff1a2c"></script>
+<script src="/js/main.js?v=e66a18d3" defer></script>
+<script type="module" fetchpriority="low" src="/js/app.js?v=d0f89297"></script>
+<!-- /@footer -->
 </body>
 </html>

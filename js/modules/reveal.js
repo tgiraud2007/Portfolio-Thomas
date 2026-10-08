@@ -8,7 +8,7 @@
 
    - Ce qui est déjà visible au chargement n'est jamais caché.
    - L'animation se déclenche quand 15 % de l'élément est à l'écran, et se
-     joue en entier (≈ 0,7 s), quelle que soit la vitesse de défilement.
+     joue en entier (≈ 0,6 s), quelle que soit la vitesse de défilement.
    - Plusieurs éléments qui arrivent en même temps sont légèrement décalés.
    - prefers-reduced-motion : rien n'est caché, rien ne bouge.
 
@@ -29,7 +29,6 @@ const DECALAGE = 0.08; // secondes entre deux éléments qui arrivent ensemble
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let observer = null;
-let frame = 0;
 
 function show(entries) {
   const arriving = entries.filter((e) => e.isIntersecting).map((e) => e.target);
@@ -47,22 +46,12 @@ function show(entries) {
 
 export function init() {
   if (reduceMotion.matches || !("IntersectionObserver" in window)) return;
-  // On attend l'image suivante : après un changement de page, la position de
-  // défilement (ancre #realisations…) n'est définitive qu'à ce moment-là.
-  frame = requestAnimationFrame(() => {
-    const below = Array.from(document.querySelectorAll(SELECTEUR))
-      .filter((el) => el.getBoundingClientRect().top > window.innerHeight);
-    if (!below.length) return;
-    observer = new IntersectionObserver(show, { threshold: 0.15 });
-    below.forEach((el) => {
-      el.classList.add("reveal");
-      observer.observe(el);
-    });
+  const below = Array.from(document.querySelectorAll(SELECTEUR))
+    .filter((el) => el.getBoundingClientRect().top > window.innerHeight);
+  if (!below.length) return;
+  observer = new IntersectionObserver(show, { threshold: 0.15 });
+  below.forEach((el) => {
+    el.classList.add("reveal");
+    observer.observe(el);
   });
-}
-
-export function destroy() {
-  cancelAnimationFrame(frame);
-  if (observer) observer.disconnect();
-  observer = null;
 }
