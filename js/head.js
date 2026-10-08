@@ -82,6 +82,10 @@
   window.addEventListener("pagereveal", function (e) {
     applyTheme();
     var vt = e.viewTransition;
+    // Page rechargée : pas d'animation (rien ne change, seule la page se recharge)
+    var nav = null;
+    try { nav = performance.getEntriesByType("navigation")[0]; } catch (err) { /* rien */ }
+    if (vt && nav && nav.type === "reload") { vt.skipTransition(); vt = null; }
     if (!vt) { window.tgMorph(false); return; }
 
     root.classList.add("page-enter");
