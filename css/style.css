@@ -234,7 +234,7 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
 .sommaire__head h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(36px, 4.5vw, 56px); line-height: 1; letter-spacing: -.03em; }
 .sommaire__head h2 em { font-weight: 400; color: var(--ink-2); }
 .entries { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 48px; list-style: none; }
-.entry { position: relative; isolation: isolate; display: grid; grid-template-columns: 88px 1fr 72px; gap: 18px; align-items: start; padding: 28px 0; border-top: 1px solid var(--ink); text-decoration: none; height: 100%; }
+.entry { position: relative; isolation: isolate; display: grid; grid-template-columns: 88px 1fr 72px; gap: 18px; align-items: start; padding: 28px 0; border-top: 1px solid var(--ink); text-decoration: none; height: 100%; transition: border-color var(--t-ui) var(--ease), box-shadow var(--t-ui) var(--ease); }
 /* Fond qui monte au survol : on agrandit un calque (transform), sans recalculer la mise en page */
 .entry::after { content: ""; position: absolute; inset: 0; background: var(--bg-2); z-index: -1; transform: scaleY(0); transform-origin: 50% 100%; transition: transform var(--t-ui) var(--ease); }
 .entry:hover::after, .entry:focus-visible::after { transform: none; }
@@ -261,7 +261,7 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
    s'estompe : le texte reste lisible (contraste ≥ 4,5:1), car ces fiches
    restent des liens. */
 .entries > li .num, .entries > li .glyph { transition: opacity var(--t-ui) var(--ease), color var(--t-ui); }
-.entries > li .entry { transition: border-color var(--t-ui) var(--ease), box-shadow var(--t-ui) var(--ease); }
+/* (la transition du filet est sur .entry, plus haut ; pendant une apparition, css/motion.css la combine avec le fondu) */
 .entries[data-active] > li:not(.is-match) :is(.num, .glyph) { opacity: .25; }
 .entries[data-active] > li:not(.is-match) h3 { color: var(--ink-2); }
 .entries[data-active] > li.is-match .num { color: var(--red); }

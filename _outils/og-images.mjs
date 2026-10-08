@@ -83,7 +83,7 @@ const compose = `(() => {
     html, body { height: 630px; overflow: hidden; }
     body > :not(.og) { display: none !important; }
     .og { position: fixed; inset: 0; display: grid; grid-template-columns: minmax(0, 1fr) 470px; gap: 48px; align-items: center;
-          padding: 70px 64px 56px 72px; background: var(--grain-img) var(--bg); border-top: 14px solid var(--ink); }
+          padding: 60px 64px 60px 72px; background: var(--grain-img) var(--bg); }
     .og .kicker { font-size: 17px; }
     .og__title { font-family: var(--serif-display); font-weight: 600; font-size: \${long ? 62 : 76}px; line-height: .98; letter-spacing: -.035em;
                  font-variation-settings: "opsz" 144; margin: 20px 0 30px; text-wrap: balance; }
@@ -129,7 +129,7 @@ const composeHome = `(() => {
     html, body { height: 630px; overflow: hidden; }
     body > :not(.og) { display: none !important; }
     .og--home { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 0;
-                padding: 56px 80px 64px; background: var(--grain-img) var(--bg); border-top: 14px solid var(--ink); }
+                padding: 60px 80px; background: var(--grain-img) var(--bg); }
     .og--home .kicker { font-size: 18px; }
     .og__name { font-family: var(--serif-display); font-weight: 600; font-size: 150px; line-height: .95; letter-spacing: -.04em;
                 font-variation-settings: "opsz" 144; margin: 22px 0 26px; }

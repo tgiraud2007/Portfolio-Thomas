@@ -80,7 +80,14 @@
 }
 .reveal.is-in { opacity: 1; transform: none; }
 
-/* Fiches du sommaire : en plus, le picto se dessine trait par trait */
+/* Fiches du sommaire : le fondu d'apparition s'ajoute à la transition du filet
+   (filtre des compétences, css/style.css), sans la remplacer */
+.entry.reveal {
+  transition: opacity var(--t-reveal) var(--ease), transform var(--t-reveal) var(--ease),
+              border-color var(--t-ui) var(--ease), box-shadow var(--t-ui) var(--ease);
+  transition-delay: var(--reveal-delay, 0s), var(--reveal-delay, 0s), 0s, 0s;
+}
+/* En plus, le picto se dessine trait par trait */
 .entry.reveal .glyph * { stroke-dashoffset: 1; transition: stroke-dashoffset var(--t-draw) var(--ease); transition-delay: calc(var(--reveal-delay, 0s) + .25s); }
 .entry.reveal.is-in .glyph * { stroke-dashoffset: 0; }
 
