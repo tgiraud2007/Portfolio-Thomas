@@ -547,8 +547,8 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
   .brand { gap: 10px; }
   .brand__name { font-size: 20px; }
   .brand__tag { font-size: 10.5px; letter-spacing: .02em; }
-  /* L'en-tête se cache en descendant : pas besoin de réserver sa hauteur au-dessus des ancres */
-  html { scroll-padding-top: 16px; }
+  /* Les ancres s'arrêtent sous l'en-tête, comme sur ordinateur : il reste
+     affiché pendant les défilements automatiques (js/modules/header.js) */
   /* Titres moyens : la taille optique « 144 » (faite pour les très grands
      titres) et l'interlettrage serré collaient les mots (« accueillezun »).
      À cette taille, Fraunces choisit seul sa taille optique. */

@@ -7,6 +7,9 @@
    2. Sur téléphone (≤ 640 px), l'en-tête fait deux lignes et prendrait trop
       de place : il se cache quand on descend et revient dès qu'on remonte.
       Sur ordinateur, il reste toujours visible.
+      Seul un défilement fait par le visiteur compte (doigt qui glisse,
+      molette, touches) : les sauts automatiques (ancre, position retrouvée,
+      page qui se décale quand les polices arrivent) ne le cachent jamais.
 
    Test : sur téléphone (ou fenêtre étroite), descendre → l'en-tête disparaît ;
    remonter un peu → il revient. Tabuler jusqu'au menu le fait aussi revenir.
@@ -20,6 +23,9 @@ let masthead = null;
 let lastY = null; // dernière position connue (null = pas encore mesurée)
 let ticking = false;
 let calmUntil = 0; // après un changement de page : on ignore les défilements un court instant
+let lastGesture = -Infinity; // dernier défilement fait par le visiteur
+const GESTURE_MS = 1200; // le défilement continue un peu après le doigt (élan)
+const SCROLL_KEYS = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "];
 
 function setHidden(hidden) {
   masthead.classList.toggle("is-hidden", hidden);
@@ -28,7 +34,13 @@ function setHidden(hidden) {
 function update() {
   ticking = false;
   const y = window.scrollY;
-  if (lastY === null || performance.now() < calmUntil) { lastY = y; return; } // on prend juste la mesure
+  const now = performance.now();
+  // Pas un défilement du visiteur (ou juste après un changement de page) : on prend juste la mesure
+  if (lastY === null || now < calmUntil || now - lastGesture > GESTURE_MS) {
+    lastY = y;
+    if (y < masthead.offsetHeight) setHidden(false);
+    return;
+  }
   const delta = y - lastY;
   if (!mobile.matches || y < masthead.offsetHeight) {
     setHidden(false); // sur ordinateur, ou tout en haut de la page : toujours visible
@@ -70,5 +82,9 @@ export function init() {
   }).observe(masthead);
 
   window.addEventListener("scroll", onScroll, { passive: true });
+  const gesture = () => { lastGesture = performance.now(); };
+  window.addEventListener("touchmove", gesture, { passive: true }); // un simple toucher (lien) ne compte pas
+  window.addEventListener("wheel", gesture, { passive: true });
+  window.addEventListener("keydown", (e) => { if (SCROLL_KEYS.includes(e.key)) gesture(); });
   masthead.addEventListener("focusin", () => setHidden(false)); // navigation au clavier : le menu doit être visible
 }
