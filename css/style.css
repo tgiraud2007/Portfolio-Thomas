@@ -571,15 +571,14 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
 
 /* ---------- Transitions entre les pages ----------
    Les pages changent sans rechargement (js/nav.js, Swup) : seul le contenu
-   (<main id="contenu">) est remplacé, l'en-tête reste fixe et le contenu passe
-   par un fondu court. Le fondu est fait par le navigateur (View Transitions,
-   réglages ci-dessous) ; sans View Transitions, par le CSS (.transition-page).
-   @view-transition sert quand la page se charge en entier (script pas encore
-   prêt) : même fondu, entre deux documents. Le numéro qui glisse est réglé
+   (<main id="contenu">) est remplacé, l'en-tête reste fixe et le contenu glisse
+   de côté (ou passe par un fondu court). L'animation est faite par le
+   navigateur (View Transitions, réglages ci-dessous) ; sans View Transitions,
+   par le CSS (.transition-page). @view-transition sert quand la page se charge
+   en entier (script pas encore prêt) : fondu, entre deux documents. Le numéro qui glisse est réglé
    dans js/head.js et css/motion.css. */
 @view-transition { navigation: auto; }
 /* Fondu en CSS (navigateurs sans View Transitions) : classes posées par Swup sur <html> */
-html:not(.swup-native).is-changing .transition-page { transition: opacity .18s ease-out; }
 html:not(.swup-native).is-animating .transition-page { opacity: 0; }
 .masthead { view-transition-name: masthead; }
 ::view-transition-group(masthead) { animation: none; }
@@ -591,6 +590,22 @@ html:not(.swup-native).is-animating .transition-page { opacity: 0; }
 ::view-transition-new(root) { animation: .2s ease-out .14s both vt-fade-in; }
 @keyframes vt-fade-out { to { opacity: 0; } }
 @keyframes vt-fade-in { from { opacity: 0; } }
+/* Glissement latéral, dans l'ordre du menu (js/nav.js pose .slide-next ou
+   .slide-prev sur <html>) : on avance → l'ancienne page part vers la gauche
+   et la nouvelle arrive par la droite ; on recule → l'inverse. Décalage court
+   (64 px) avec fondu : on sent le sens sans traverser tout l'écran. */
+.slide-next::view-transition-old(root) { animation: .2s cubic-bezier(.3, 0, .8, .15) both vt-out-left; }
+.slide-next::view-transition-new(root) { animation: .34s cubic-bezier(0, 0, .2, 1) .16s both vt-in-right; }
+.slide-prev::view-transition-old(root) { animation: .2s cubic-bezier(.3, 0, .8, .15) both vt-out-right; }
+.slide-prev::view-transition-new(root) { animation: .34s cubic-bezier(0, 0, .2, 1) .16s both vt-in-left; }
+@keyframes vt-out-left { to { opacity: 0; transform: translateX(-64px); } }
+@keyframes vt-out-right { to { opacity: 0; transform: translateX(64px); } }
+@keyframes vt-in-right { from { opacity: 0; transform: translateX(64px); } }
+@keyframes vt-in-left { from { opacity: 0; transform: translateX(-64px); } }
+/* Sans View Transitions : la nouvelle page arrive du bon côté (le départ reste un fondu) */
+html:not(.swup-native).is-changing .transition-page { transition: opacity .18s ease-out, transform .26s cubic-bezier(0, 0, .2, 1); }
+html:not(.swup-native).is-rendering.slide-next.is-animating .transition-page { transform: translateX(48px); }
+html:not(.swup-native).is-rendering.slide-prev.is-animating .transition-page { transform: translateX(-48px); }
 
 /* Entrée de la nouvelle page (.page-enter sur <html>, posée par js/head.js) :
    les blocs montent légèrement, presque ensemble (0,6 s en tout), pour ne pas

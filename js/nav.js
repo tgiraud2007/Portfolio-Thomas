@@ -7,9 +7,12 @@
    L'adresse change normalement : bouton retour, liens partagés, Google et
    lecteurs d'écran fonctionnent comme avant.
 
-   - Animation : fondu court du contenu (View Transitions du navigateur, les
-     mêmes réglages qu'avant : @view-transition dans css/style.css). Sans View
-     Transitions : fondu en CSS (.transition-page, css/style.css).
+   - Animation : le contenu glisse de côté, dans l'ordre du menu (Accueil →
+     fiches 01 à 06 → Parcours → Contact) : vers la gauche quand on avance,
+     vers la droite quand on recule. Classes .slide-next / .slide-prev sur
+     <html>, réglages dans css/style.css (View Transitions du navigateur ;
+     sans elles, en CSS sur .transition-page). Page sans place dans l'ordre
+     (404) : simple fondu.
    - Numéro qui glisse (accueil → fiche) : repéré au clic par js/main.js,
      posé à l'arrivée par window.tgMorph (js/head.js).
    - Préchargement : les pages des liens visibles ou survolés sont récupérées
@@ -32,6 +35,22 @@
   var root = document.documentElement;
   var positions = {}; // position de défilement de chaque page quittée (bouton retour)
   var morphDone = null;
+  var slide = "";
+  var fromRank = null; // place de la page quittée, notée avant que le contenu change
+
+  // Place d'une page dans l'ordre du menu : Accueil 0, fiches 1,01 à 1,06
+  // (d'après leur grand numéro), Parcours 2, Contact 3 ; null = aucune (404)
+  function rank(url, doc) {
+    var path = url.split(/[?#]/)[0];
+    if (path === "/" || path === "/index.html") return 0;
+    if (path.indexOf("/realisations/") === 0) {
+      var num = doc.querySelector(".page-num");
+      return 1 + (num ? parseInt(num.textContent, 10) || 0 : 0) / 100;
+    }
+    if (path === "/parcours.html") return 2;
+    if (path === "/contact.html") return 3;
+    return null;
+  }
 
   // Liens vers autre chose qu'une page du site (CV en PDF, sitemap…) : navigation normale
   function isPage(url) {
@@ -65,7 +84,12 @@
   });
 
   swup.hooks.on("visit:start", function (visit) {
+    // L'animation ne démarre qu'une fois la page reçue : sinon, si elle n'est
+    // pas encore préchargée, le navigateur fige l'écran pendant le chargement
+    // (le numéro « saute »), et au-delà de 4 s il annule l'animation.
+    visit.animation.wait = true;
     positions[visit.from.url] = window.scrollY;
+    fromRank = rank(visit.from.url, document);
     root.classList.add("no-intro"); // l'intro de l'accueil ne se rejoue pas
   });
 
@@ -84,6 +108,11 @@
     }
     root.classList.toggle("at-realisations", visit.to.hash === "#realisations");
     if (window.tgMorph) morphDone = window.tgMorph(visit.animation.native && visit.animation.animate);
+
+    // Sens du glissement (pas quand le numéro de la fiche glisse : fondu seul)
+    var to = visit.to.document ? rank(visit.to.url, visit.to.document) : null;
+    slide = !morphDone && fromRank !== null && to !== null && fromRank !== to ? (to > fromRank ? "slide-next" : "slide-prev") : "";
+    if (slide) root.classList.add(slide);
   });
 
   // Défilement : en haut de la nouvelle page, sur l'ancre demandée, ou là où
@@ -105,5 +134,6 @@
 
   swup.hooks.on("visit:end", function () {
     if (morphDone) { morphDone(); morphDone = null; }
+    if (slide) { root.classList.remove(slide); slide = ""; }
   });
 })();
