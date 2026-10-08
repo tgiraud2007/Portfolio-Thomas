@@ -123,9 +123,16 @@
       window.scrollTo({ top: saved, left: 0, behavior: "instant" });
       return;
     }
+    // Ancre (ex. /#realisations) : juste sous l'en-tête, qui reste affiché à
+    // l'arrivée (sur téléphone aussi, où il ne se cache qu'en faisant défiler)
     var anchor = visit.to.hash && swup.getAnchorElement(visit.to.hash);
-    if (anchor) anchor.scrollIntoView({ behavior: "instant" });
-    else window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    var top = 0;
+    if (anchor) {
+      var masthead = document.querySelector(".masthead");
+      var margin = parseFloat(getComputedStyle(anchor).scrollMarginTop) || 0;
+      top = anchor.getBoundingClientRect().top + window.scrollY - (masthead ? masthead.offsetHeight : 0) - 12 - margin;
+    }
+    window.scrollTo({ top: Math.max(0, top), left: 0, behavior: "instant" });
   });
 
   swup.hooks.on("page:view", function () {
