@@ -84,6 +84,10 @@
   });
 
   swup.hooks.on("visit:start", function (visit) {
+    // L'animation ne démarre qu'une fois la page reçue : sinon, si elle n'est
+    // pas encore préchargée, le navigateur fige l'écran pendant le chargement
+    // (le numéro « saute »), et au-delà de 4 s il annule l'animation.
+    visit.animation.wait = true;
     positions[visit.from.url] = window.scrollY;
     fromRank = rank(visit.from.url, document);
     root.classList.add("no-intro"); // l'intro de l'accueil ne se rejoue pas

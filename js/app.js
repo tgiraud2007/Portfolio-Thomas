@@ -17,7 +17,7 @@
    ========================================================================== */
 
 const MODULES = [
-  () => import("./modules/header.js?v=20aa79f0"),       // en-tête collant
+  () => import("./modules/header.js?v=27f829ce"),       // en-tête collant
   () => import("./modules/skill-filter.js?v=b0e6414a"), // compétences ↔ fiches (accueil)
   () => import("./modules/nav-current.js?v=a308ac63"),  // menu : Accueil / Réalisations souligné
   () => import("./modules/reveal.js?v=e7252de7"),       // apparitions au défilement

@@ -48,7 +48,14 @@ function onScroll() {
 }
 
 export function init() {
-  if (masthead) return; // déjà en place : l'en-tête ne change pas d'une page à l'autre
+  if (masthead) {
+    // Changement de page (l'en-tête reste en place) : il réapparaît, et le saut
+    // de défilement de la nouvelle page (haut de page, position retrouvée au
+    // retour) ne compte pas comme « on descend »
+    lastY = null;
+    setHidden(false);
+    return;
+  }
   masthead = document.querySelector(".masthead");
   if (!masthead) return;
 

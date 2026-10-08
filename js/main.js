@@ -262,8 +262,13 @@
       if (!card) return;
       var num = card.querySelector(".num");
       if (!num) return;
+      // Numéro caché (hors de l'écran, ou plus qu'à moitié sous l'en-tête collant) :
+      // pas de glissement, la page change normalement
       var r = num.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) return; // numéro hors de l'écran : fondu normal
+      var masthead = document.querySelector(".masthead");
+      var top = masthead ? Math.max(0, masthead.getBoundingClientRect().bottom) : 0;
+      var middle = (r.top + r.bottom) / 2;
+      if (middle < top || middle > window.innerHeight) return;
       document.querySelectorAll(".num").forEach(function (n) { n.style.viewTransitionName = ""; }); // un seul nom à la fois
       num.style.viewTransitionName = "fiche-num";
       try {
