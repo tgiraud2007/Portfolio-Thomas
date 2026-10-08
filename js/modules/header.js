@@ -19,6 +19,7 @@ const THRESHOLD = 6; // px de défilement ignorés (évite de clignoter sur les 
 let masthead = null;
 let lastY = null; // dernière position connue (null = pas encore mesurée)
 let ticking = false;
+let calmUntil = 0; // après un changement de page : on ignore les défilements un court instant
 
 function setHidden(hidden) {
   masthead.classList.toggle("is-hidden", hidden);
@@ -27,7 +28,7 @@ function setHidden(hidden) {
 function update() {
   ticking = false;
   const y = window.scrollY;
-  if (lastY === null) { lastY = y; return; } // premier défilement : on prend juste la mesure
+  if (lastY === null || performance.now() < calmUntil) { lastY = y; return; } // on prend juste la mesure
   const delta = y - lastY;
   if (!mobile.matches || y < masthead.offsetHeight) {
     setHidden(false); // sur ordinateur, ou tout en haut de la page : toujours visible
@@ -52,7 +53,11 @@ export function init() {
     // Changement de page (l'en-tête reste en place) : il réapparaît, et le saut
     // de défilement de la nouvelle page (haut de page, position retrouvée au
     // retour) ne compte pas comme « on descend »
+    // Pendant 0,6 s, aucun défilement ne le cache : sur téléphone, le navigateur
+    // ajuste encore la position juste après l'arrivée (ancre #realisations,
+    // polices, barre d'adresse), ce qui le faisait remonter à moitié.
     lastY = null;
+    calmUntil = performance.now() + 600;
     setHidden(false);
     return;
   }
