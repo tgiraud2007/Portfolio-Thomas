@@ -277,8 +277,42 @@
     }, true); // phase de capture : avant js/nav.js, qui prend le clic en charge ensuite
   }
 
+  /* ---------- Trait du menu qui se déplace ----------
+     Un trait rouge (span.nav-ink) sous la rubrique en cours : le lien avec
+     aria-current, ou « Réalisations » quand l'accueil est sur les réalisations
+     (.at-realisations). Il se replace tout seul dès que l'un ou l'autre change
+     (js/nav.js au changement de page, js/modules/nav-current.js en défilant),
+     ou que le menu change de taille. Animation : css/style.css. */
+  function initNavInk() {
+    var nav = document.querySelector(".masthead nav");
+    if (!nav || !window.MutationObserver) return;
+    var ink = document.createElement("span");
+    ink.className = "nav-ink";
+    ink.setAttribute("aria-hidden", "true");
+    nav.appendChild(ink);
+    root.classList.add("has-ink");
+    var place = function () {
+      var a = root.classList.contains("at-realisations")
+        ? nav.querySelector('a[data-nav="realisations"]')
+        : nav.querySelector("a[aria-current]");
+      if (!a) { ink.style.opacity = "0"; return; } // page sans rubrique (404)
+      var n = nav.getBoundingClientRect();
+      var r = a.getBoundingClientRect();
+      ink.style.opacity = "";
+      ink.style.width = r.width + "px";
+      ink.style.transform = "translate(" + (r.left - n.left) + "px, " + (r.bottom - n.top - 2) + "px)";
+    };
+    place();
+    requestAnimationFrame(function () { ink.classList.add("is-ready"); }); // pas d'animation à l'arrivée
+    new MutationObserver(place).observe(nav, { subtree: true, attributes: true, attributeFilter: ["aria-current"] });
+    new MutationObserver(place).observe(root, { attributes: true, attributeFilter: ["class"] });
+    if (window.ResizeObserver) new ResizeObserver(place).observe(nav);
+    if (document.fonts) document.fonts.ready.then(place);
+  }
+
   // Une seule fois : le bouton de thème est dans l'en-tête, qui reste en place
   initTheme();
+  initNavInk();
   initFicheMorph();
 
   // À chaque page, y compris quand le contenu change sans rechargement (js/nav.js)

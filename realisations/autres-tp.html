@@ -28,7 +28,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="expect" href="#contenu" blocking="render">
-<link rel="stylesheet" href="/css/style.css?v=11b1fac0">
+<link rel="stylesheet" href="/css/style.css?v=ea9ab21f">
 <link rel="stylesheet" href="/css/motion.css?v=64a091c8">
 <link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
@@ -76,8 +76,8 @@
       <p>Routage entre trois sous-réseaux avec le routeur Linux ZeroShell, dans VirtualBox&nbsp;: routes statiques et passerelles par défaut.</p>
       <figure class="fig">
         <div class="fig__head"><span>Fig. 1 · Schéma de principe</span></div>
-        <div class="fig__scroll" style="--fig-min: 320px">
-        <svg viewBox="0 0 400 250" role="img" aria-labelledby="f-zeroshell">
+        <div class="fig__art">
+        <svg class="fig__wide" viewBox="0 0 400 250" role="img" aria-labelledby="f-zeroshell">
           <title id="f-zeroshell">Schéma de principe : le routeur ZeroShell relie trois sous-réseaux. Un paquet passe du sous-réseau 1 au sous-réseau 3 en traversant le routeur.</title>
           <defs><path id="p-route" d="M70 176 V130 H190 V84 H210 V130 H330 V176"/></defs>
           <g class="s-ink" stroke-width="1.5">
@@ -94,6 +94,27 @@
           <text class="t-dim" x="20" y="244" style="font-size:11px">Routes statiques · passerelles par défaut</text>
           <circle class="f-green" r="5" opacity="0">
             <animateMotion dur="4s" begin="1s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.6;1" calcMode="linear"><mpath href="#p-route"/></animateMotion>
+            <animate attributeName="opacity" dur="4s" begin="1s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;.04;.6;.66;1"/>
+          </circle>
+        </svg>
+        <svg class="fig__tall" viewBox="0 0 270 284" role="img" aria-labelledby="f-zeroshell-m">
+          <title id="f-zeroshell-m">Schéma de principe : le routeur ZeroShell relie trois sous-réseaux. Un paquet passe du sous-réseau 1 au sous-réseau 3 en traversant le routeur.</title>
+          <defs><path id="p-route-m" d="M60 100 H24 V32 H75 H24 V210 H60"/></defs>
+          <g class="s-ink" stroke-width="1.5">
+            <rect x="75" y="10" width="120" height="44" rx="3"/>
+            <path stroke-width="1" d="M75 32 H24 V210 M24 100 H60 M24 155 H60 M24 210 H60"/>
+            <rect x="60" y="80" width="200" height="40" rx="3"/>
+            <rect x="60" y="135" width="200" height="40" rx="3"/>
+            <rect x="60" y="190" width="200" height="40" rx="3"/>
+          </g>
+          <text class="t-ink" x="135" y="37" text-anchor="middle">ZeroShell</text>
+          <text class="t-ink" x="76" y="104">Réseau 1</text>
+          <text class="t-ink" x="76" y="159">Réseau 2</text>
+          <text class="t-ink" x="76" y="214">Réseau 3</text>
+          <text class="t-dim" x="24" y="258" style="font-size:11px">Routes statiques ·</text>
+          <text class="t-dim" x="24" y="274" style="font-size:11px">passerelles par défaut</text>
+          <circle class="f-green" r="5" opacity="0">
+            <animateMotion dur="4s" begin="1s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.6;1" calcMode="linear"><mpath href="#p-route-m"/></animateMotion>
             <animate attributeName="opacity" dur="4s" begin="1s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;.04;.6;.66;1"/>
           </circle>
         </svg>
@@ -141,9 +162,9 @@
     <p>© 2026 Thomas Giraud</p>
   </div>
 </footer>
-<script src="/js/main.js?v=1213c48c" defer></script>
+<script src="/js/main.js?v=5498384d" defer></script>
 <script src="/js/vendor/swup.js?v=5581a31f" defer></script>
-<script src="/js/nav.js?v=aebdcc18" defer></script>
+<script src="/js/nav.js?v=f349c128" defer></script>
 <script type="module" fetchpriority="low" src="/js/app.js?v=0752346b"></script>
 <!-- /@footer -->
 </body>
