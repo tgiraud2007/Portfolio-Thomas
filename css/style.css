@@ -131,18 +131,25 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
 .masthead nav a { position: relative; text-decoration: none; background: linear-gradient(var(--red), var(--red)) 0 100% / 0 2px no-repeat; padding-bottom: 2px; transition: background-size var(--t-ui) var(--ease); }
 /* Zone de clic agrandie (confort au doigt), sans rien changer au dessin */
 .masthead nav a::after { content: ""; position: absolute; inset: -10px -6px; }
-.masthead nav a:hover, .masthead nav a[aria-current] { background-size: 100% 2px; } /* page actuelle, ou section actuelle de l'accueil (js/modules/nav-current.js) */
+.masthead nav a[aria-current] { background-size: 100% 2px; } /* page actuelle, ou section actuelle de l'accueil (js/modules/nav-current.js) */
+/* Survol : seulement avec une vraie souris. Au doigt, le dernier lien touché
+   reste « survolé » et resterait souligné à côté de la rubrique en cours. */
+@media (hover: hover) { .masthead nav a:hover { background-size: 100% 2px; } }
 /* Accueil, sur les réalisations (classe posée par js/head.js dès le premier
    affichage, puis tenue à jour par js/modules/nav-current.js) */
-.at-realisations .masthead nav a[data-nav="accueil"]:not(:hover) { background-size: 0 2px; }
+.at-realisations .masthead nav a[data-nav="accueil"] { background-size: 0 2px; }
 .at-realisations .masthead nav a[data-nav="realisations"] { background-size: 100% 2px; }
 /* Trait qui se déplace (js/main.js, initNavInk) : un seul trait rouge, placé sous
    la rubrique en cours. Il remplace le soulignement de cette rubrique (le
    survol garde le sien). Quand la rubrique change dans la page (accueil ↔
    réalisations en défilant), il glisse en CSS ; quand la page change, c'est
    le navigateur qui le fait glisser (View Transitions, nom « nav-ink »). */
-.has-ink .masthead nav a[aria-current]:not(:hover),
-.has-ink.at-realisations .masthead nav a[data-nav="realisations"]:not(:hover) { background-size: 0 2px; }
+.has-ink .masthead nav a[aria-current],
+.has-ink.at-realisations .masthead nav a[data-nav="realisations"] { background-size: 0 2px; }
+@media (hover: hover) {
+  .has-ink .masthead nav a:hover,
+  .at-realisations .masthead nav a[data-nav="accueil"]:hover { background-size: 100% 2px; }
+}
 .nav-ink { position: absolute; left: 0; top: 0; height: 2px; background: var(--red); pointer-events: none; view-transition-name: nav-ink; }
 .nav-ink.is-ready { transition: transform .45s var(--ease), width .45s var(--ease), opacity .2s; }
 .swup-native.is-changing .nav-ink { transition: none; } /* changement de page : le navigateur anime */
