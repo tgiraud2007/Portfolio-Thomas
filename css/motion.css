@@ -156,10 +156,23 @@ html.is-flying:not(.swup-native).is-changing .transition-page { transition: opac
 }
 
 
+/* ---------- 4 bis. Frise du Parcours sur téléphone (js/modules/frise.js) ----------
+   Le trait et les points suivent le défilement calculé en JavaScript, qui ne
+   bouge pas avec la barre d'adresse du navigateur : les animations CSS
+   ci-dessus sont coupées. */
+.timeline.frise-js::after { animation: none; transform: scaleY(var(--frise-p, 0)); }
+.timeline.frise-js .when::after {
+  animation: none; background: var(--bg); transform: scale(.7);
+  transition: background .25s var(--ease), transform .25s var(--ease);
+}
+.timeline.frise-js > li.is-on .when::after { background: var(--red); transform: none; }
+
+
 /* ---------- Impression : tout à l'état final ---------- */
 @media print {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal, .reveal b > *, .reveal > span { opacity: 1 !important; transform: none !important; }
   .prose h2.reveal::before { transform: none !important; }
   .entry.reveal .glyph * { stroke-dashoffset: 0 !important; }
+  .timeline.frise-js::after, .timeline.frise-js .when::after { transform: none !important; background: var(--red) !important; }
 }

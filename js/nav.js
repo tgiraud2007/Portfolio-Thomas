@@ -107,6 +107,10 @@
     old.style.cssText = "position:fixed;margin:0;z-index:20;pointer-events:none;" +
       "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px";
     document.body.appendChild(old);
+    // La copie repart au début de chaque zone qui défile en largeur (puces des
+    // compétences sur téléphone…) : on lui rend la position laissée par le visiteur
+    var from = main.querySelectorAll("*"), to = old.querySelectorAll("*");
+    for (var i = 0; i < from.length; i++) if (from[i].scrollLeft) to[i].scrollLeft = from[i].scrollLeft;
   }
   function fadeOld(duration, dx) {
     var el = old;

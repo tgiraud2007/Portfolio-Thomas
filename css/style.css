@@ -404,6 +404,8 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
 .field { display: grid; gap: 6px; align-content: start; }
 .field label { font-weight: 600; font-size: 15px; }
 .field label span { font-weight: 400; color: var(--ink-2); }
+.req { font-weight: 600; color: var(--red); }
+.form__note { font-size: 13px; color: var(--ink-2); margin-bottom: -6px; }
 .field input, .field textarea { font: 16px/1.5 var(--sans); color: var(--ink); background: var(--field); border: 1px solid var(--field-border); border-radius: 4px; padding: 10px 12px; width: 100%; }
 .field textarea { min-height: 160px; resize: vertical; }
 .field input:focus, .field textarea:focus { outline: 2px solid var(--red); outline-offset: 0; border-color: transparent; }
@@ -518,9 +520,14 @@ a:hover .arr--back, a:focus-visible .arr--back { transform: translateX(-3px); } 
     flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
     margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter));
     padding: 2px var(--gutter) 6px;
-    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
-    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    --fade-l: 0px; --fade-r: 40px;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
   }
+  /* js/modules/skill-filter.js : fondu seulement du côté où il reste des puces */
+  .skill-filter.is-scrollable { --fade-r: 0px; }
+  .skill-filter.has-more-left { --fade-l: 32px; }
+  .skill-filter.has-more-right { --fade-r: 40px; }
   .skill-filter::-webkit-scrollbar { display: none; }
   .chip, .skill-filter .label, .skill-filter__more { flex: none; white-space: nowrap; }
 }
@@ -617,6 +624,12 @@ html:not(.swup-native).is-animating .transition-page { opacity: 0; }
 @keyframes vt-in-left { from { opacity: 0; transform: translateX(-64px); } }
 /* Sans View Transitions : la nouvelle page arrive du bon côté (le départ reste un fondu) */
 html:not(.swup-native).is-changing .transition-page { transition: opacity .16s ease-out, transform .22s cubic-bezier(0, 0, .2, 1); }
+/* Téléphone : pas de barre de défilement pour la page. Le saut de défilement à
+   l'arrivée (ancre, haut de page) la faisait apparaître un instant, à droite. */
+@media (pointer: coarse) {
+  html { scrollbar-width: none; }
+  html::-webkit-scrollbar { display: none; }
+}
 /* Copie figée de l'ancienne page (js/nav.js, freezeOld) : rien n'y bouge plus */
 .page-old, .page-old * { animation: none !important; transition: none !important; }
 html:not(.swup-native).is-rendering.slide-next.is-animating .transition-page { transform: translateX(48px); }

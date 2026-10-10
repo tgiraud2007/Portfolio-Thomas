@@ -31,6 +31,7 @@ js/modules/                Un fichier par fonction, chacun avec une fonction ini
   header.js                En-tête collant (caché en descendant sur téléphone)
   skill-filter.js          Puces « Compétences » ↔ fiches (accueil)
   nav-current.js           Menu : « Accueil » ou « Réalisations » souligné selon la position
+  frise.js                 Frise du Parcours sur téléphone (trait qui ne saute plus avec la barre d'adresse)
   reveal.js                Apparitions au défilement
 assets/                    Favicon, icônes, image de partage (og-image.jpg)
 assets/og/                 Image de partage de chaque fiche (fabriquées par _outils/og-images.mjs)

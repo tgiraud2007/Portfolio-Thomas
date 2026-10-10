@@ -17,9 +17,10 @@
    ========================================================================== */
 
 const MODULES = [
-  () => import("./modules/header.js?v=797d153f"),       // en-tête collant
-  () => import("./modules/skill-filter.js?v=b0e6414a"), // compétences ↔ fiches (accueil)
+  () => import("./modules/header.js?v=d72b8bba"),       // en-tête collant
+  () => import("./modules/skill-filter.js?v=20044d93"), // compétences ↔ fiches (accueil)
   () => import("./modules/nav-current.js?v=a308ac63"),  // menu : Accueil / Réalisations souligné
+  () => import("./modules/frise.js?v=8688e0da"),        // frise du Parcours (téléphone)
   () => import("./modules/reveal.js?v=e7252de7"),       // apparitions au défilement
 ];
 

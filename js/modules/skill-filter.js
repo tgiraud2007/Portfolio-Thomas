@@ -14,6 +14,9 @@
    data-skills="reseaux services…" et chaque bouton data-skill="reseaux".
    Pour ajouter une fiche ou une compétence, il suffit de modifier le HTML.
 
+   Sur tablette et téléphone, les puces tiennent sur une ligne qui défile :
+   un fondu indique de quel côté il en reste.
+
    Test : cliquer sur « Réseaux » → les fiches 01, 02, 05 et 06 sont marquées
    et le compteur annonce « 4 fiches ». Survoler la fiche 04 → « Services et
    supervision » et « Linux » s'allument.
@@ -25,6 +28,7 @@ let items = [];
 let count = null;
 let initialCount = "";
 let committed = ""; // compétence choisie par clic ("" = toutes)
+let onResize = null;
 
 function skillsOf(li) {
   return (li.dataset.skills || "").split(/\s+/).filter(Boolean);
@@ -55,6 +59,21 @@ function choose(skill) {
   apply(committed, true);
 }
 
+/* Fondus à gauche / à droite selon ce qui reste à faire défiler */
+function watchEdges(group) {
+  const update = () => {
+    const max = group.scrollWidth - group.clientWidth;
+    group.classList.toggle("is-scrollable", max > 4);
+    group.classList.toggle("has-more-left", max > 4 && group.scrollLeft > 4);
+    group.classList.toggle("has-more-right", max > 4 && group.scrollLeft < max - 4);
+  };
+  group.addEventListener("scroll", update, { passive: true });
+  if (onResize) window.removeEventListener("resize", onResize);
+  onResize = update;
+  window.addEventListener("resize", onResize);
+  update();
+}
+
 function lightChips(li, lit) {
   const skills = li ? skillsOf(li) : [];
   chips.forEach((c) => c.classList.toggle("is-lit", lit && skills.includes(c.dataset.skill)));
@@ -71,6 +90,7 @@ export function init() {
   count = document.getElementById("fiches-count");
   initialCount = count ? count.textContent : "";
   group.classList.add("is-ready"); // le CSS rend les puces cliquables seulement maintenant
+  watchEdges(group);
 
   chips.forEach((chip) => {
     chip.addEventListener("click", () => choose(chip.dataset.skill));

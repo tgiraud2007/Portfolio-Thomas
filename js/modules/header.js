@@ -21,6 +21,7 @@ const THRESHOLD = 6; // px de défilement ignorés (évite de clignoter sur les 
 
 let masthead = null;
 let lastY = null; // dernière position connue (null = pas encore mesurée)
+let lastH = 0; // hauteur de l'écran à la dernière mesure
 let ticking = false;
 let calmUntil = 0; // après un changement de page : on ignore les défilements un court instant
 let lastGesture = -Infinity; // dernier défilement fait par le visiteur
@@ -38,7 +39,13 @@ function update() {
   // Pas un défilement du visiteur (pendant ou juste après un changement de page,
   // .is-changing posée par Swup) : on prend juste la mesure
   const changing = root.classList.contains("is-changing");
-  if (lastY === null || changing || now < calmUntil || now - lastGesture > GESTURE_MS) {
+  // La barre d'adresse du navigateur se cache ou revient : la hauteur de l'écran
+  // change et, près du bas de la page, la position saute de quelques pixels
+  // sans que le visiteur ait défilé. On reprend la mesure, sans rien cacher.
+  const h = window.innerHeight;
+  const resized = h !== lastH;
+  lastH = h;
+  if (lastY === null || resized || changing || now < calmUntil || now - lastGesture > GESTURE_MS) {
     lastY = y;
     if (y < masthead.offsetHeight) setHidden(false);
     return;

@@ -28,8 +28,8 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="expect" href="#contenu" blocking="render">
-<link rel="stylesheet" href="/css/style.css?v=c3dbcca8">
-<link rel="stylesheet" href="/css/motion.css?v=f5ac0933">
+<link rel="stylesheet" href="/css/style.css?v=7605b945">
+<link rel="stylesheet" href="/css/motion.css?v=7e72ce45">
 <link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -84,14 +84,15 @@
       <h2 id="t-form" class="visually-hidden">Formulaire de contact</h2>
       <form class="form" id="contact-form" action="https://formspree.io/f/xeovrdvk" method="POST" novalidate>
         <div class="form__fields" id="form-fields">
+          <p class="form__note"><b class="req" aria-hidden="true">*</b> Champs obligatoires</p>
           <div class="row">
             <div class="field">
-              <label for="f-name">Nom</label>
+              <label for="f-name">Nom <b class="req" aria-hidden="true">*</b></label>
               <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err">
               <p class="field__error" id="f-name-err" data-error="Indiquez votre nom."></p>
             </div>
             <div class="field">
-              <label for="f-email">E-mail</label>
+              <label for="f-email">E-mail <b class="req" aria-hidden="true">*</b></label>
               <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-err">
               <p class="field__error" id="f-email-err" data-error="Indiquez un e-mail valide, par exemple nom@entreprise.fr."></p>
             </div>
@@ -101,7 +102,7 @@
             <input id="f-subject" name="_subject" type="text">
           </div>
           <div class="field">
-            <label for="f-message">Message</label>
+            <label for="f-message">Message <b class="req" aria-hidden="true">*</b></label>
             <textarea id="f-message" name="message" required aria-describedby="f-message-err" placeholder="Ex. : proposition de stage au sein de…"></textarea>
             <p class="field__error" id="f-message-err" data-error="Écrivez votre message."></p>
           </div>
@@ -147,8 +148,8 @@
 </footer>
 <script src="/js/main.js?v=773e8d04" defer></script>
 <script src="/js/vendor/swup.js?v=5581a31f" defer></script>
-<script src="/js/nav.js?v=4f80fd9b" defer></script>
-<script type="module" fetchpriority="low" src="/js/app.js?v=ae949d5e"></script>
+<script src="/js/nav.js?v=7f24b7f6" defer></script>
+<script type="module" fetchpriority="low" src="/js/app.js?v=ecea6cc5"></script>
 <!-- /@footer -->
 </body>
 </html>
